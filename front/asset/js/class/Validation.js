@@ -1,6 +1,5 @@
 /**
- *
- *
+ * Allow validate data from user form
  * @export
  * @class Validation
  */

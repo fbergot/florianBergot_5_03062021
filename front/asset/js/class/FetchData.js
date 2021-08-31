@@ -1,6 +1,5 @@
 /**
- *
- * 
+ * Allow fetch data in API
  * @export
  * @class FetchData
  */
