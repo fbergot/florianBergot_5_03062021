@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startServer" : "node server"
+    "startServer" : "node server",
+    "sassWatch" : "sass ./front/asset/scss/style.scss ./front/asset/css/style.css --watch"
   },
   "author": "",
   "license": "ISC",
