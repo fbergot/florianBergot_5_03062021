@@ -20,6 +20,10 @@ export default class FetchData {
      */
     constructor(baseUri) {
         this.baseUri = baseUri;
+        this.headers = {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'text/json'
+        };
     }
 
     /**
@@ -28,7 +32,7 @@ export default class FetchData {
      * @returns {FetchData Instance}
      * @memberof FetchData
      */
-    static getInstance() {
+    static _getInstance() {
         if (this.instance === null) {
             this.instance = new FetchData(this.baseUri);
             return this.instance;
@@ -44,9 +48,21 @@ export default class FetchData {
      * @memberof FetchData
      */
     getData(uri, objOptions) {
+        // verifs type
+        if (typeof uri !== 'string') {
+            throw Error('Invalid type of uri parameter');
+        }
+
         const URL = `${this.baseUri}${uri}`;
-        const PromiseData = window.fetch(URL, {} || objOptions)
-            .then(response => response.json())
+        const options = objOptions ? { ...objOptions, headers: this.headers } : { headers: this.headers };
+        // call API
+        const PromiseData = window.fetch(URL, options)
+            .then(response => {
+                if (response.ok) return response.json();
+                else if (response.status >= 400) {
+                    throw Error('Problem with server or connection');
+                }
+            })
             .then(data => data)
             .catch(err => console.error(err));
         return PromiseData;
