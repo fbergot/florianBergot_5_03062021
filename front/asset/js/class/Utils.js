@@ -15,7 +15,7 @@ export default class Utils {
      * @memberof Utils
      */
     static workWithJSON(data, vSwitch) {
-        if (typeof data === "object" || typeof data === "string") {
+        if ((typeof data === "object" || typeof data === "string") && typeof vSwitch === 'string') {
             switch (vSwitch) {
                 case "toJSON":
                     return JSON.stringify(data);
@@ -26,7 +26,7 @@ export default class Utils {
             }          
         }
         // if bad type of locals identifiants
-        throw Error('Invalid type of data parameter');
+        throw Error('Invalid type(s) of parameter(s)');
     }
 
    

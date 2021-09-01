@@ -48,7 +48,7 @@ export default class FetchData {
      * @memberof FetchData
      */
     getData(uri, objOptions) {
-        // verifs type
+        // verifs type (objOption tested after ..)
         if (typeof uri !== 'string') {
             throw Error('Invalid type of uri parameter');
         }

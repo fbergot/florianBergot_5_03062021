@@ -20,6 +20,10 @@ console.log(datatest)
 
 
 function test2() {
-    const inst = new UpdateHeaderBasket("#basketProduct");
-    inst.update(2, "up");
+    try {
+        const inst = new UpdateHeaderBasket("#basketProduct");
+        inst.update(2, "up");
+    } catch (err) {
+        console.error(err);
+    }
 }
