@@ -2,17 +2,20 @@ import FetchData from "./class/FetchData.js";
 import Utils from "./class/Utils.js";
 import UpdateHeaderBasket from "./class/UpdateHeaderBasket.js";
 
+// juste pour tester ....
 document.querySelector('#fetch').addEventListener('click', test);
 document.querySelector('#inc').addEventListener('click', test2);
 
-// juste pour tester ....
 
 async function test() {
-
     const instance = FetchData._getInstance();
-    const data = await instance.getData("/", { method: "GET" });
+    try {
+        const data = await instance.getData("/", { method: "GET" });
+        console.log(data);
+    } catch (err) {
+        console.error(err);
+    }
 
-    console.log(data);
 }
 
 const datatest = Utils.workWithJSON({t : 'test'}, "toJSON");

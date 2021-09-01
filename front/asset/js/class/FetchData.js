@@ -60,7 +60,7 @@ export default class FetchData {
             .then(response => {
                 if (response.ok) return response.json();
                 else if (response.status >= 400) {
-                    throw Error('Problem with server or connection');
+                    throw Error('Problem with server, connection or request');
                 }
             })
             .then(data => data)
