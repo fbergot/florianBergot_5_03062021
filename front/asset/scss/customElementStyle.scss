@@ -1,0 +1,61 @@
+custom-card::part(container) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* customCard in noDesc (data-attr, index) */
+custom-card::part(card) {
+    width: 85%;
+    margin-top: 1.5rem;
+    border-radius: .7rem .7rem 0 0;
+    box-shadow: 2px 2px 3px 3px rgb(192, 191, 191);
+}
+
+custom-card::part(_link) {
+    text-decoration: none;
+}
+
+custom-card::part(productImg) {
+    width: 100%;
+    border-radius: .7rem .7rem 0 0;
+    object-fit: cover;
+}
+
+custom-card::part(productTitle) {
+    text-align: center;
+    color: #000;
+    margin: .8rem 0 .5rem 0;
+    font-size: 1.3rem;
+}
+
+/* customCard in fullDesc (data-attr, produit) */
+
+custom-card::part(cardFull) {
+    border: 1px solid blue;
+    width: 250px;
+}
+
+custom-card::part(_linkFull) {
+    text-decoration: none;
+}
+
+custom-card::part(productImgFull) {
+    width: 100%;
+    object-fit: cover;
+}
+
+custom-card::part(contDescrFull) {
+}
+
+custom-card::part(productTitle) {
+    text-align: center;
+    color: #000;
+    margin: .8rem 0 .5rem 0;
+    font-size: 25px;
+}
+custom-card::part(productContPriceFull) {
+    
+}

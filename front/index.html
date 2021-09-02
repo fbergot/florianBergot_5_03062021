@@ -7,20 +7,25 @@
     <title>Orinoco</title>
     <link rel="stylesheet" href="./asset/css/style.css">
     <script type="module" src="./asset/js/app.js" defer></script>
+    <link rel="stylesheet" href="./asset/css/customElementStyle/style.css">
 </head>
 <body>
     <header class="header">
         <img src="./asset/img/orinoco_banner.jpg" alt="bannière orinoco">
         <nav class="nav">
-            <a href="./pages/panier.html">
+            <a title="Panier" href="./pages/panier.html">
                 <img class="svgBasket" src="./asset/img/basket.svg">
                 <span class="basketProd" id="basketProduct">0</span>
             </a>
         </nav>
     </header>
     <main>
-        <button type="button" id="fetch">Fetch data</button>
-        <button type="button" id="inc">incrémenter panier</button>
+        <h1 class="titleMaster">Voici les produits actuellement disponibles</h1>
+        <div class="bar"></div>
+        <div id="containerCard">
+            <custom-card data-switch='noDesc'></custom-card>
+        </div>
+                   
     </main>
     <footer class="footer">
         <div>

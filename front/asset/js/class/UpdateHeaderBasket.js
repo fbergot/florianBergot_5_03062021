@@ -20,18 +20,34 @@ export default class UpdateHeaderBasket {
         return this.instance;
     }
 
+    /**
+     *
+     *
+     * @param {Number} n
+     * @param {String} upOrDown
+     * @returns {none}
+     * @throw 
+     * @memberof UpdateHeaderBasket
+     */
     update(n, upOrDown) {
-        // verifs type
+        // verif type of locals identifiants
         if (typeof n !== "number" || typeof upOrDown !== "string") {
             throw Error("Invalid type of parameter(s)");
         }
+        // get state of basket 
         let stateBasket = Number.parseInt(this.targetHTML.textContent);
+        if (stateBasket < 0 || isNaN(stateBasket)) {
+            throw Error('Bad state of basket ');
+        }
         switch (upOrDown) {
             case 'up':
-                this.targetHTML.innerText = stateBasket += n;
+                this.targetHTML.innerText = (stateBasket += n);
                 break;
             case 'down':
-                this.targetHTML.innerText = stateBasket -= n;
+                if (stateBasket > 0) {
+                    this.targetHTML.innerText = (stateBasket -= n);
+                    return;
+                }
                 break;
             default:
                 throw Error("Incorrect upOrDown parameter");

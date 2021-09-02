@@ -15,6 +15,7 @@ export default class Utils {
      * @memberof Utils
      */
     static workWithJSON(data, vSwitch) {
+        // verif type of locals identifiants
         if ((typeof data === "object" || typeof data === "string") && typeof vSwitch === 'string') {
             switch (vSwitch) {
                 case "toJSON":

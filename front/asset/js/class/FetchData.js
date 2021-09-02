@@ -48,13 +48,13 @@ export default class FetchData {
      * @memberof FetchData
      */
     getData(uri, objOptions) {
-        // verifs type (objOption tested after ..)
-        if (typeof uri !== 'string') {
-            throw Error('Invalid type of uri parameter');
+        // verif type of locals identifiants
+        if (typeof uri !== 'string' || typeof objOptions !== 'object') {
+            throw Error('Invalid type(s) of parameter(s)');
         }
 
         const URL = `${this.baseUri}${uri}`;
-        const options = objOptions ? { ...objOptions, headers: this.headers } : { headers: this.headers };
+        const options = { ...objOptions, headers: this.headers };
         // call API
         const PromiseData = window.fetch(URL, options)
             .then(response => {
@@ -64,7 +64,7 @@ export default class FetchData {
                 }
             })
             .then(data => data)
-            .catch(err => console.error(err));
+            .catch(err => console.error(err.message));
         return PromiseData;
     }
 }
