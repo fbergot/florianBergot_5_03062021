@@ -1,0 +1,9 @@
+@mixin body100($page) {
+    font-size: 16px;
+    font-family: $rob;
+
+    @if $page == 'desc' {
+        position: relative;
+        min-height: 100vh;
+    }
+}

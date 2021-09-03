@@ -1,10 +1,15 @@
+@import './variable/colors.scss';
+@import './variable/font.scss';
+
 custom-card::part(container) {
     width: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // padding: 0 1.5rem;
+    margin-top: 0rem;
+    // position: relative;
 }
 
 /* customCard in noDesc (data-attr, index) */
@@ -21,6 +26,7 @@ custom-card::part(_link) {
 
 custom-card::part(productImg) {
     width: 100%;
+    max-width: 100%;
     border-radius: .7rem .7rem 0 0;
     object-fit: cover;
 }
@@ -37,17 +43,40 @@ custom-card::part(productTitle) {
 custom-card::part(cardFull) {
     // width: 100%;
     width: 85%;
+    // max-height: 370px;
     margin-top: 1.5rem;
     border-radius: .7rem .7rem 0 0;
     box-shadow: 2px 2px 3px 3px rgb(192, 191, 191);
+    position: relative;
 }
 
-custom-card::part(_linkFull) {
+custom-card::part(contBut) {
+   position: absolute;
+   right: 10px;
+   top: 10px;
+   background-color: $colorBackgOrinoco;
+   border: 1px solid transparent;
+   transition: .3s all;
+   &:hover {
+       border: 1px solid rgb(170, 162, 162);
+       background-color: darken($colorBackgOrinoco, 5);
+   }
+}
+custom-card::part(addBasket) {
+    text-align: center;
     text-decoration: none;
+    font-size: .8rem;
+    margin: auto;
+    font-weight: 500;
+    border: none;
+    background-color: transparent;
+    padding: .1rem .3rem .2rem .3rem;
+    color: rgb(27, 23, 23);
 }
 
 custom-card::part(productImgFull) {
     width: 100%;
+    height: 50%;
     border-radius: .7rem .7rem 0 0;
     object-fit: cover;
 }
@@ -56,15 +85,29 @@ custom-card::part(productDescrFull) {
     line-height: 1.2;
     text-align: center;
     padding: .5rem;
+    margin-bottom: 0;
+    margin-top: 1rem;
 }
 
 custom-card::part(productTitleFull) {
     text-align: center;
     color: #000;
-    margin: .8rem 0 .5rem 0;
+    margin: .5rem 0 .5rem 0;
     font-size: 25px;
     font-weight: 400;
 }
 custom-card::part(productContPriceFull) {
-    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-basis: none;
+    margin-bottom: 0rem;
 }
+custom-card::part(productSelectFull) {
+   margin-left: .5rem;
+}
+custom-card::part(productPriceFull) {
+   padding-right: .5rem;
+   font-weight: 500;
+}
+

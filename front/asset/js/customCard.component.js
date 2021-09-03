@@ -22,12 +22,10 @@ export default class CustomCard extends HTMLElement {
         this.data = null;
         this.instance = null;
         this.totalCards = "";
-        // shadow DOM
+        // attach shadow DOM
         this.attachShadow({ mode: "open" });
-        this.shadowRoot.innerHTML = `              
-            <div part='container' id='internalCardContainer'>              
-            </div>           
-        `;
+        this.shadowRoot.innerHTML =
+            `<div part='container' id='internalCardContainer'></div> `;
     }
 
     /**
@@ -78,6 +76,7 @@ export default class CustomCard extends HTMLElement {
                         `;
             case 'fullDesc':
                 return `<article part='cardFull'>
+                            <div part='contBut'><button part='addBasket'>Ajouter au panier</button></div>
                             <img part='productImgFull' src='${imageURL}'/>
                             <div part='contDescrFull'>
                                 <h2 part='productTitleFull'>${name}</h2>
@@ -119,6 +118,7 @@ export default class CustomCard extends HTMLElement {
     * Fetch data for the customElement
     * @async
     * @use FetchData class
+    * @use dataset (data-attr)
     * @throw
     * @memberof CustomCard
     */
@@ -128,10 +128,7 @@ export default class CustomCard extends HTMLElement {
             case 'noDesc':
                         try {
                             this.data = await this.reFactorize('/');
-                            this.data.forEach(elem => {
-                                this.totalCards += this.createCard(elem._id, elem.description, elem.imageUrl, elem.lenses, elem.name, elem.price);
-                            })
-                            this.render();
+                            this.mapResult();
                         } catch (err) {
                             console.error(err);
                         }
@@ -139,19 +136,18 @@ export default class CustomCard extends HTMLElement {
             case 'fullDesc':
                         try {
                             const id = this.getIdURLParam('id');
-                            this.dataObj = await this.reFactorize(`/${id}`);
-                            this.data = [this.dataObj];
-                            this.data.forEach(elem => {
-                                this.totalCards += this.createCard(elem._id, elem.description, elem.imageUrl, elem.lenses, elem.name, elem.price);
-                            })
-                            this.render();
+                            const objData = await this.reFactorize(`/${id}`);
+                            this.data = [objData];
+                            this.mapResult();
                         } catch (err) {
                             console.error(err);
                         }
                         break;
             default:
                 throw Error(`${objError.type.customElement}`);
-        }        
+        }
+        // add in shadow dom
+        this.render();
     }
 
     /**
@@ -168,6 +164,16 @@ export default class CustomCard extends HTMLElement {
         }       
         this.instance = FetchData._getInstance();
         return this.instance.getData(uri, { method: "GET" })
+    }
+
+    /**
+     * Map on the result for create the card(s)
+     * @memberof CustomCard
+     */
+    mapResult() {
+        this.data.forEach(elem => {
+            this.totalCards += this.createCard(elem._id, elem.description, elem.imageUrl, elem.lenses, elem.name, elem.price);
+        })
     }
 
     /**
