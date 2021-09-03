@@ -14,7 +14,7 @@ import Utils from "./class/Utils.js";
  */
 export default class CustomCard extends HTMLElement {
     /**
-     *Creates an instance of CustomCard.
+    *Creates an instance of CustomCard.
     * @memberof CustomCard
     */
     constructor() {
@@ -31,6 +31,7 @@ export default class CustomCard extends HTMLElement {
     /**
      * Create the card with good data
      * @use dataset for switch (fullDescr or card noDescr)
+     * @use objError
      * @param {String} id
      * @param {String} description
      * @param {String} imageURL
@@ -87,10 +88,9 @@ export default class CustomCard extends HTMLElement {
                                     <option value="">Lentilles disponibles</option>
                                     ${strOptionLens}
                                 </select>
-                                <p part='productPriceFull'>${price}€</p>
+                                <p part='productPriceFull'>${Utils.divide(price, 100)}€</p>
                             </div>                                
-                        </article>
-                        `;
+                        </article>`;
             default:
                 throw Error(`${objError.type.customElement}`);
         }

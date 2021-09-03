@@ -52,5 +52,19 @@ export default class Utils {
         return searchParams.get(key);       
     }
 
-   
+    /**
+     * to divide price per 100
+     * @static
+     * @use objError
+     * @param {Number} price
+     * @param {Number} n
+     * @returns {Number} 
+     * @memberof Utils
+     */
+    static divide(price, n) {
+        if (typeof price !== 'number' || typeof n !== 'number') {
+            throw Error(`${objError.type.generic}`);
+        }
+        return price / n;
+    }
 }
