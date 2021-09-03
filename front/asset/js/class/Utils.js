@@ -23,11 +23,27 @@ export default class Utils {
                 case "toOBJ":
                     return JSON.parse(data);
                 default:
-                    throw Error("Invalid parameter 'vSwitch'");
+                    throw Error("Invalid parameter 'vSwitch' (accepted: 'toJSON' or 'toOBJ)");
             }          
         }
         // if bad type of locals identifiants
         throw Error('Invalid type(s) of parameter(s)');
+    }
+
+    /**
+     * Get value of URL param with her key
+     * @static
+     * @param {String} paramsStr (ex: q=test&name=flo)
+     * @param {String} key
+     * @returns {String}
+     * @memberof Utils
+     */
+    static getInParamURL(paramsStr, key) {
+        if (typeof paramsStr !== 'string' || typeof key !== 'string') {
+            throw Error('Invalid type(s) of parameter(s)')
+        }
+        const searchParams = new URLSearchParams(paramsStr);
+        return searchParams.get(key);       
     }
 
    

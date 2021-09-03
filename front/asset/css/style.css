@@ -136,7 +136,7 @@ main .bar {
 }
 .footer a img {
   padding: 0 0.2rem;
-  width: 17px;
+  width: 20px;
 }
 .footer a p {
   font-size: 0.8rem;
@@ -160,7 +160,7 @@ main .bar {
   font-size: 0.8rem;
 }
 .footer .orinocoTextFooter p:nth-child(1) {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /*# sourceMappingURL=style.css.map */
