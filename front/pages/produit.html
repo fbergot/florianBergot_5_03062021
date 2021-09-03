@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produit</title>
+    <title>Description produit</title>
     <link rel="stylesheet" href="../asset/css/style.css">
     <link rel="stylesheet" href="../asset/css/customElementStyle/style.css">
     <script type="module" src="../asset/js/app.js" defer></script>
@@ -13,15 +13,19 @@
     <header class="header">
         <img src="../asset/img/orinoco_banner.jpg" alt="bannière orinoco">
         <nav class="nav">
-            <a title="Panier" href="./pages/panier.html">
+            <a title="Panier" href="../pages/panier.html">
                 <img class="svgBasket" src="../asset/img/basket.svg">
                 <span class="basketProd" id="basketProduct">0</span>
             </a>
         </nav>
     </header>
     <main>
-        <!-- <h1 class="titleMaster">Voici les produits actuellement disponibles</h1>
-        <div class="bar"></div> -->
+        <h1 class="titleMaster">Description du produit</h1>        
+            <a class="return" href="../index.html">
+                <img src='../asset/img/left_2.svg' alt="flèche gauche">
+                
+            </a>
+        <div class="bar"></div>
         <div id="containerCard">
             <custom-card data-switch='fullDesc'></custom-card>
         </div>

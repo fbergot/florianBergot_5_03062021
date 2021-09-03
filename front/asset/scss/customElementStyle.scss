@@ -4,6 +4,7 @@ custom-card::part(container) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    // padding: 0 1.5rem;
 }
 
 /* customCard in noDesc (data-attr, index) */
@@ -34,8 +35,11 @@ custom-card::part(productTitle) {
 /* customCard in fullDesc (data-attr, produit) */
 
 custom-card::part(cardFull) {
-    border: 1px solid blue;
-    width: 250px;
+    // width: 100%;
+    width: 85%;
+    margin-top: 1.5rem;
+    border-radius: .7rem .7rem 0 0;
+    box-shadow: 2px 2px 3px 3px rgb(192, 191, 191);
 }
 
 custom-card::part(_linkFull) {
@@ -44,17 +48,22 @@ custom-card::part(_linkFull) {
 
 custom-card::part(productImgFull) {
     width: 100%;
+    border-radius: .7rem .7rem 0 0;
     object-fit: cover;
 }
 
-custom-card::part(contDescrFull) {
+custom-card::part(productDescrFull) {
+    line-height: 1.2;
+    text-align: center;
+    padding: .5rem;
 }
 
-custom-card::part(productTitle) {
+custom-card::part(productTitleFull) {
     text-align: center;
     color: #000;
     margin: .8rem 0 .5rem 0;
     font-size: 25px;
+    font-weight: 400;
 }
 custom-card::part(productContPriceFull) {
     

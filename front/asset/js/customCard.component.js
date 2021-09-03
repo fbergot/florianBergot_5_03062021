@@ -1,26 +1,26 @@
+import { objError } from "./errors/err.js";
 import FetchData from "./class/FetchData.js";
 import Utils from "./class/Utils.js";
-
 /**
  *
  * Custom element for create all cards with description or not 
  * @export
  * @use dataset
  * @use FetchData class
+ * @use objError obj
  * @use Utils class
  * @class CustomCard
  * @extends {HTMLElement}
  */
 export default class CustomCard extends HTMLElement {
-    // getters & setter here..
-
     /**
      *Creates an instance of CustomCard.
     * @memberof CustomCard
     */
     constructor() {
         super();
-        this.data;
+        this.data = null;
+        this.instance = null;
         this.totalCards = "";
         // shadow DOM
         this.attachShadow({ mode: "open" });
@@ -39,8 +39,8 @@ export default class CustomCard extends HTMLElement {
      * @param {Array<String>} lenses
      * @param {String} name
      * @param {Number} price
-     * @returns {String} card
      * @throw  
+     * @returns {String} card
      * @memberof CustomCard
      */
     createCard(id, description, imageURL, lenses, name, price) {
@@ -48,10 +48,10 @@ export default class CustomCard extends HTMLElement {
         if (typeof id !== "string" || typeof description !== "string" ||
             typeof imageURL !== 'string' || !Array.isArray(lenses) ||
             typeof name !== 'string' || typeof price !== 'number') {
-            throw Error('Invalid type(s) of parameter(s)');
+            throw Error(`${objError.type.generic}`);
         }       
         if (lenses.length === 0) {
-            throw Error('the length of parameter lenses(Array) is 0');
+            throw Error(`${objError.length}`);
         }
         // create options for lens select
         let strOptionLens = "";
@@ -78,25 +78,22 @@ export default class CustomCard extends HTMLElement {
                         `;
             case 'fullDesc':
                 return `<article part='cardFull'>
-                            <a part='_linkFull' href='/front/pages/produit.html?id=${id}'>
-                                <img part='productImgFull' src='${imageURL}'/>
-                                      <div part='contDescrFull'>
-                                    <h2 part='productTitleFull'>${name}</h2>
-                                    <p part='productDescrFull'>${description}</p>
-                                </div>
-                            </a>
+                            <img part='productImgFull' src='${imageURL}'/>
+                            <div part='contDescrFull'>
+                                <h2 part='productTitleFull'>${name}</h2>
+                                <p part='productDescrFull'>${description}</p>
+                            </div>                            
                             <div part='productContPriceFull'>
                                 <select part='productSelectFull' name='lens' id='lens'>
-                                    <option value="">Lentilles</option>
+                                    <option value="">Lentilles disponibles</option>
                                     ${strOptionLens}
                                 </select>
                                 <p part='productPriceFull'>${price}€</p>
-                            </div>
-                                
+                            </div>                                
                         </article>
                         `;
             default:
-                throw Error('Invalid data-attr for custom-card (accepted: noDesc or fullDesc)');
+                throw Error(`${objError.type.customElement}`);
         }
     }
 
@@ -109,9 +106,10 @@ export default class CustomCard extends HTMLElement {
      * @memberof CustomCard
      */
     getIdURLParam(key) {
-        if (typeof key !== 'string') {
-            throw Error("Key parameter is invalid");
+        if (typeof key !== 'string' || key === "") {
+            throw Error(`${objError.type.key}`);
         }
+        // get URL string
         const urlString = window.location.search;
         const paramsAlso = urlString.replace('?', '');
         return Utils.getInParamURL(paramsAlso, key);       
@@ -121,39 +119,63 @@ export default class CustomCard extends HTMLElement {
     * Fetch data for the customElement
     * @async
     * @use FetchData class
+    * @throw
     * @memberof CustomCard
     */
     async connectedCallback() {
+        // switch with data-attr (dataset)
         switch (this.dataset.switch) {
             case 'noDesc':
                         try {
-                            this.instance = FetchData._getInstance();
-                            this.data = await this.instance.getData("/", { method: "GET" });
+                            this.data = await this.reFactorize('/');
                             this.data.forEach(elem => {
                                 this.totalCards += this.createCard(elem._id, elem.description, elem.imageUrl, elem.lenses, elem.name, elem.price);
                             })
-                            this.shadowRoot.querySelector('#internalCardContainer').innerHTML = this.totalCards;
+                            this.render();
                         } catch (err) {
                             console.error(err);
                         }
                         break;
             case 'fullDesc':
-                    try {
-                        const id = this.getIdURLParam('id');
-                        this.instance = FetchData._getInstance();
-                        this.dataObj = await this.instance.getData(`/${id}`, { method: "GET" });
-                        this.data = [this.dataObj];
-                        this.data.forEach(elem => {
-                            this.totalCards += this.createCard(elem._id, elem.description, elem.imageUrl, elem.lenses, elem.name, elem.price);
-                        })
-                        this.shadowRoot.querySelector('#internalCardContainer').innerHTML = this.totalCards;
-                    } catch (err) {
-                        console.error(err);
-                    }
-                    break;
+                        try {
+                            const id = this.getIdURLParam('id');
+                            this.dataObj = await this.reFactorize(`/${id}`);
+                            this.data = [this.dataObj];
+                            this.data.forEach(elem => {
+                                this.totalCards += this.createCard(elem._id, elem.description, elem.imageUrl, elem.lenses, elem.name, elem.price);
+                            })
+                            this.render();
+                        } catch (err) {
+                            console.error(err);
+                        }
+                        break;
             default:
-                throw Error('Invalid data-attr for custom-card (accepted: noDesc or fullDesc)');
+                throw Error(`${objError.type.customElement}`);
         }        
+    }
+
+    /**
+     *
+     * @use FetchData class
+     * @param {String} uri
+     * @throw
+     * @returns {none}
+     * @memberof CustomCard
+     */
+    reFactorize(uri) {
+        if (typeof uri !== 'string' || uri === "") {
+            throw Error(`${objError.type.generic}`);
+        }       
+        this.instance = FetchData._getInstance();
+        return this.instance.getData(uri, { method: "GET" })
+    }
+
+    /**
+     * insert data in #internalCardContainer (root)
+     * @memberof CustomCard
+     */
+    render() {
+        this.shadowRoot.querySelector('#internalCardContainer').innerHTML = this.totalCards;
     }
 }
 

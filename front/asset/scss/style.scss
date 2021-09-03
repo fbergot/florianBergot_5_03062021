@@ -117,3 +117,25 @@ main {
    }
 }
 
+.return {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    position: absolute;
+    top: 115px;
+    left: 7.5%;
+    border: 1px solid black;
+    &:hover {
+        border: 2px solid grey;
+    }
+    img {
+        width: 20px;
+        padding: .2rem;
+        
+    }
+    span {
+        color: #000;
+    }
+}
+

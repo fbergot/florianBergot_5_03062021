@@ -163,4 +163,25 @@ main .bar {
   font-weight: 600;
 }
 
+.return {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  position: absolute;
+  top: 115px;
+  left: 7.5%;
+  border: 1px solid black;
+}
+.return:hover {
+  border: 2px solid grey;
+}
+.return img {
+  width: 20px;
+  padding: 0.2rem;
+}
+.return span {
+  color: #000;
+}
+
 /*# sourceMappingURL=style.css.map */

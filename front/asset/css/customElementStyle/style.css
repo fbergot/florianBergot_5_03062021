@@ -33,8 +33,10 @@ custom-card::part(productTitle) {
 
 /* customCard in fullDesc (data-attr, produit) */
 custom-card::part(cardFull) {
-  border: 1px solid blue;
-  width: 250px;
+  width: 85%;
+  margin-top: 1.5rem;
+  border-radius: 0.7rem 0.7rem 0 0;
+  box-shadow: 2px 2px 3px 3px #c0bfbf;
 }
 
 custom-card::part(_linkFull) {
@@ -43,14 +45,22 @@ custom-card::part(_linkFull) {
 
 custom-card::part(productImgFull) {
   width: 100%;
+  border-radius: 0.7rem 0.7rem 0 0;
   object-fit: cover;
 }
 
-custom-card::part(productTitle) {
+custom-card::part(productDescrFull) {
+  line-height: 1.2;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+custom-card::part(productTitleFull) {
   text-align: center;
   color: #000;
   margin: 0.8rem 0 0.5rem 0;
   font-size: 25px;
+  font-weight: 400;
 }
 
 /*# sourceMappingURL=style.css.map */

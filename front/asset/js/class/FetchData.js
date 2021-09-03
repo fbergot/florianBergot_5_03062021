@@ -1,7 +1,8 @@
-
+import { objError } from "../errors/err.js";
 /**
  * Allow fetch data in API
  * @singleton
+ * @use objError 
  * @export
  * @class FetchData
  */
@@ -42,15 +43,17 @@ export default class FetchData {
 
     /**
      * Fetch data
+     * @use objError
      * @param {String} uri
      * @param {Object} objOptions
+     * @throw
      * @returns {Promise}
      * @memberof FetchData
      */
     getData(uri, objOptions) {
         // verif type of locals identifiants
         if (typeof uri !== 'string' || typeof objOptions !== 'object') {
-            throw Error('Invalid type(s) of parameter(s)');
+            throw Error(`${objError.type.generic}`);
         }
 
         const URL = `${this.baseUri}${uri}`;
@@ -58,9 +61,9 @@ export default class FetchData {
         // call API
         const PromiseData = window.fetch(URL, options)
             .then(response => {
-                if (response.ok) return response.json();
-                else if (response.status >= 400) {
-                    throw Error('Problem with server, connection or request');
+                if (response.ok && response.status < 400) return response.json();
+                else {
+                    throw Error(`${objError.fetchData.invalid}`);
                 }
             })
             .then(data => data)
