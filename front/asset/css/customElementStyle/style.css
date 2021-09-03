@@ -58,6 +58,7 @@ custom-card::part(contBut):hover {
 }
 
 custom-card::part(addBasket) {
+  cursor: pointer;
   text-align: center;
   text-decoration: none;
   font-size: 0.8rem;

@@ -60,9 +60,10 @@ custom-card::part(contBut) {
    &:hover {
        border: 1px solid rgb(170, 162, 162);
        background-color: darken($colorBackgOrinoco, 5);
-   }
+    }
 }
 custom-card::part(addBasket) {
+    cursor: pointer;
     text-align: center;
     text-decoration: none;
     font-size: .8rem;

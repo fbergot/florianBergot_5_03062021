@@ -1,13 +1,15 @@
 import { objError } from "./errors/err.js";
 import FetchData from "./class/FetchData.js";
 import Utils from "./class/Utils.js";
+import Basket from "./class/basket.js";
 /**
  *
  * Custom element for create all cards with description or not 
  * @export
  * @use dataset
- * @use FetchData class
  * @use objError obj
+ * @use FetchData class
+ * @use Basket class
  * @use Utils class
  * @class CustomCard
  * @extends {HTMLElement}
@@ -77,7 +79,7 @@ export default class CustomCard extends HTMLElement {
                         `;
             case 'fullDesc':
                 return `<article part='cardFull'>
-                            <div part='contBut'><button part='addBasket'>Ajouter au panier</button></div>
+                            <div part='contBut'><button class='basketBut' part='addBasket'>Ajouter au panier</button></div>
                             <img part='productImgFull' src='${imageURL}'/>
                             <div part='contDescrFull'>
                                 <h2 part='productTitleFull'>${name}</h2>
@@ -119,6 +121,7 @@ export default class CustomCard extends HTMLElement {
     * @async
     * @use FetchData class
     * @use dataset (data-attr)
+    * @use Basket class
     * @throw
     * @memberof CustomCard
     */
@@ -126,28 +129,35 @@ export default class CustomCard extends HTMLElement {
         // switch with data-attr (dataset)
         switch (this.dataset.switch) {
             case 'noDesc':
-                        try {
-                            this.data = await this.reFactorize('/');
-                            this.mapResult();
-                        } catch (err) {
-                            console.error(err);
-                        }
-                        break;
-            case 'fullDesc':
-                        try {
-                            const id = this.getIdURLParam('id');
-                            const objData = await this.reFactorize(`/${id}`);
-                            this.data = [objData];
-                            this.mapResult();
-                        } catch (err) {
-                            console.error(err);
-                        }
-                        break;
-            default:
-                throw Error(`${objError.type.customElement}`);
-        }
-        // add in shadow dom
-        this.render();
+                try {
+                    this.data = await this.reFactorize('/');
+                    this.mapResult();
+                    // add in shadow dom
+                    this.render();
+                } catch (err) {
+                    console.error(err);
+                }
+                break;
+                case 'fullDesc':
+                    let objData;
+                    try {
+                        const id = this.getIdURLParam('id');
+                        objData = await this.reFactorize(`/${id}`);
+                        this.data = [objData];
+                        this.mapResult();
+                        // add in shadow dom
+                        this.render();
+                        this.shadowRoot.querySelector('button').addEventListener('click', (e) => {
+                                Basket.addInBasket(objData);
+                            }, false);
+                    } catch (err) {
+                        console.error(err);
+                    }
+                    break;
+                    default:
+                        throw Error(`${objError.type.customElement}`);
+                    }
+                    
     }
 
     /**
