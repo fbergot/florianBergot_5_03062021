@@ -78,6 +78,12 @@ export default class CustomCard extends HTMLElement {
                             </a>                                           
                         </article>`;
             case 'fullDesc':
+                try {
+                    /**@var {Number} */
+                    var valuePrice = Utils._divide(price, 100);
+                } catch (err) {
+                    console.error(err);
+                }
                 return `<article part='cardFull'>
                             <div part='contBut'><button class='basketBut' part='addBasket'>Ajouter au panier</button></div>
                             <img part='productImgFull' src='${imageURL}'/>
@@ -90,7 +96,7 @@ export default class CustomCard extends HTMLElement {
                                     <option value="">Lentilles disponibles</option>
                                     ${strOptionLens}
                                 </select>
-                                <p part='productPriceFull'>${Utils._divide(price, 100)}€</p>
+                                <p part='productPriceFull'>${valuePrice}€</p>
                             </div>                                
                         </article>`;
             default:
@@ -113,7 +119,13 @@ export default class CustomCard extends HTMLElement {
         // get URL string
         const urlString = window.location.search;
         const paramsAlso = urlString.replace('?', '');
-        return Utils._getInParamURL(paramsAlso, key);       
+        try {
+            /** @var {String} */
+            var paramURL = Utils._getInParamURL(paramsAlso, key);
+        } catch (err) {
+            console.error(err);
+        }
+        return paramURL;       
     }
 
    /**
@@ -171,9 +183,15 @@ export default class CustomCard extends HTMLElement {
     reFactorize(uri) {
         if (typeof uri !== 'string' || uri === "") {
             throw Error(`${objError.type.generic}`);
-        }       
-        this.instance = FetchData._getInstance();
-        return this.instance.getData(uri, { method: "GET" })
+        }
+        try {
+            this.instance = FetchData._getInstance();
+            /** @var {Promise} */
+            var data = this.instance.getData(uri, { method: "GET" });
+        } catch (err) {
+            console.error(err);
+        }
+        return data;
     }
 
     /**

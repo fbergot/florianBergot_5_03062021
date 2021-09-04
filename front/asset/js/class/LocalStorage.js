@@ -6,9 +6,8 @@ import { objError } from "../errors/err.js";
  * @class LocalStorage
  */
 export default class LocalStorage {
-
     /**
-     * Verif if a item exist in localStorage
+     * Verif if one key exist in localStorage
      * @static
      * @use objError obj
      * @param {String} key
@@ -34,7 +33,7 @@ export default class LocalStorage {
      * @memberof LocalStorage
      */
     static _setItem(key, value) {
-        if (typeof key !== 'string' || key === '' || typeof value !== 'string' || value === '') {
+        if ((typeof key !== 'string' || key === '') || (typeof value !== 'string' || value === '')) {
             throw Error(`${objError.type.generic}`);
         }
         window.localStorage.setItem(key, value);

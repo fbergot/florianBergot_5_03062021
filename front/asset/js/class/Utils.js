@@ -61,10 +61,10 @@ export default class Utils {
      * @returns {Number} 
      * @memberof Utils
      */
-    static _divide(price, n) {
-        if (typeof price !== 'number' || typeof n !== 'number') {
+    static _divide(price, nDiv) {
+        if (typeof price !== 'number' || typeof nDiv !== 'number') {
             throw Error(`${objError.type.generic}`);
         }
-        return price / n;
+        return price / nDiv;
     }
 }

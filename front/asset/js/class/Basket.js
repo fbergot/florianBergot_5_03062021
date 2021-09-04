@@ -17,24 +17,45 @@ export default class Basket {
      * add product in basket
      * @static
      * @use LocalStorage class
+     * @use Utils class
+     * @use objError obj
      * @param {Object} product
      * @memberof Basket
      */
     static _addInBasket(product) {
-        if (typeof product !== 'object') {
+        if (typeof product !== "object") {
             throw Error(`${objError.type.generic}`);
         }
-        // if basket exist, to convert and add product 
-        if (LocalStorage._verifIfItemExist(this.keyBasket)) {
+        try {
+            /** @var {Boolean} */
+            var stateBasket = (LocalStorage._verifIfItemExist(this.keyBasket));
+        } catch (err) {
+            console.error(err);
+        }
+
+        if (stateBasket) {
+            // if basket exist, to convert and add product in a list of products
             console.log("exist");
-        // else, init the basket in localStorage with first product (after be converted)
         } else {
+            // init the basket in localStorage with first product (after be converted)
             this.defBasket.productsBasket.push(product);
-            const strJsonFromObj = Utils._workWithJSON(this.defBasket, 'toJSON');
-            LocalStorage._setItem(this.keyBasket, strJsonFromObj);
-            console.log('éxiste pas');
+            try {
+                const strJsonFromObj = Utils._workWithJSON(this.defBasket, "toJSON");
+                LocalStorage._setItem(this.keyBasket, strJsonFromObj);
+            } catch (err) {
+                console.error(err);
+            }
         }
     }
+
+    /**
+     *
+     * Remove one product in localStorage basket
+     * @static
+     * @param {String} nameProduct
+     * @memberof Basket
+     */
+    static _removeInBasket(nameProduct) {}
 
     
 }
