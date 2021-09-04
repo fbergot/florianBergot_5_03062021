@@ -57,14 +57,15 @@ export default class Utils {
      * @static
      * @use objError
      * @param {Number} price
-     * @param {Number} n
-     * @returns {Number} 
+     * @param {Number} nDiv
+     * @returns {null|Number} 
      * @memberof Utils
      */
     static _divide(price, nDiv) {
         if (typeof price !== 'number' || typeof nDiv !== 'number') {
             throw Error(`${objError.type.generic}`);
         }
-        return price / nDiv;
+        return (price === 0 ? null : nDiv === 0 ? null : price / nDiv);
     }
 }
+

@@ -62,9 +62,8 @@ export default class FetchData {
         const PromiseData = window.fetch(URL, options)
             .then(response => {
                 if (response.ok && response.status < 400) return response.json();
-                else {
-                    throw Error(`${objError.fetchData.invalid}`);
-                }
+                else throw Error(`${objError.fetchData.invalid}`);
+
             })
             .then(data => data)
             .catch(err => console.error(err.message));

@@ -18,9 +18,7 @@ export default class LocalStorage {
         if (typeof key !== 'string' || key === '') {
             throw Error(`${objError.type.generic}`);
         }
-        if (window.localStorage.getItem(key)) {
-            return true;
-        }
+        if (window.localStorage.getItem(key)) return true;
         return false;        
     }
 
