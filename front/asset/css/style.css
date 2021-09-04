@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -49,6 +50,122 @@ table {
   border-spacing: 0;
 }
 
+custom-card::part(container) {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0rem;
+}
+
+/* customCard in noDesc (data-attr, index) */
+custom-card::part(card) {
+  width: 85%;
+  margin-top: 1.5rem;
+  border-radius: 0.7rem 0.7rem 0 0;
+  box-shadow: 2px 2px 3px 3px #c0bfbf;
+}
+
+custom-card::part(_link) {
+  text-decoration: none;
+}
+
+custom-card::part(productImg) {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 0.7rem 0.7rem 0 0;
+  object-fit: cover;
+}
+
+custom-card::part(productTitle) {
+  text-align: center;
+  color: #000;
+  margin: 0.8rem 0 0.5rem 0;
+  font-size: 1.3rem;
+}
+
+/* customCard in fullDesc (data-attr, produit) */
+custom-card::part(cardFull) {
+  width: 85%;
+  min-height: 404px;
+  max-height: 404px;
+  margin-top: 1.5rem;
+  border-radius: 0.7rem 0.7rem 0 0;
+  box-shadow: 2px 2px 3px 3px #c0bfbf;
+  position: relative;
+}
+
+custom-card::part(contBut) {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: #d6b7d0;
+  border: 1px solid transparent;
+  transition: 0.3s all;
+}
+custom-card::part(contBut):hover {
+  border: 1px solid #aaa2a2;
+  background-color: #e9d8e5;
+}
+
+custom-card::part(addBasket) {
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.8rem;
+  margin: auto;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  border: none;
+  background-color: transparent;
+  padding: 0.1rem 0.3rem 0.2rem 0.3rem;
+  color: #1b1717;
+}
+
+custom-card::part(productImgFull) {
+  width: 100%;
+  height: 55%;
+  max-height: 420px;
+  border-radius: 0.7rem 0.7rem 0 0;
+  object-fit: cover;
+}
+
+custom-card::part(productDescrFull) {
+  line-height: 1.2;
+  text-align: center;
+  padding: 0.5rem;
+  margin-bottom: 0;
+  margin-top: 0.9rem;
+}
+
+custom-card::part(productTitleFull) {
+  text-align: center;
+  color: #000;
+  margin: 0.5rem 0 0.5rem 0;
+  font-size: 25px;
+  font-weight: 400;
+}
+
+custom-card::part(productContPriceFull) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0rem;
+}
+
+custom-card::part(productSelectFull) {
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+custom-card::part(productPriceFull) {
+  padding-right: 0.5rem;
+  margin-bottom: 1.55rem;
+  font-weight: 500;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -72,7 +189,7 @@ html, body {
 }
 .header .nav {
   border: 1px solid transparent;
-  margin-right: 0.5rem;
+  margin-right: 0.2rem;
   align-self: center;
   transition: 0.3s all;
 }
@@ -96,7 +213,7 @@ html, body {
   padding: 0.5rem;
 }
 .header .nav a .basketProd {
-  padding: 0.3rem;
+  padding: 0.3rem 0.2rem;
   font-size: 16px;
   font-weight: 500;
 }
@@ -111,7 +228,7 @@ main .titleMaster {
   padding: 1rem 0 1rem 0;
   text-align: center;
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 400;
 }
 main .bar {
   background-color: #F2E8F0;

@@ -32,8 +32,9 @@ export default class CustomCard extends HTMLElement {
 
     /**
      * Create the card with good data
-     * @use dataset for switch (fullDescr or card noDescr)
+     * @use dataset for switch (fullDescr or noDescr)
      * @use objError
+     * @use Utils static class
      * @param {String} id
      * @param {String} description
      * @param {String} imageURL
@@ -75,8 +76,7 @@ export default class CustomCard extends HTMLElement {
                                     <p part='productTitle'>${name}</p>                                
                                 </div>
                             </a>                                           
-                        </article>
-                        `;
+                        </article>`;
             case 'fullDesc':
                 return `<article part='cardFull'>
                             <div part='contBut'><button class='basketBut' part='addBasket'>Ajouter au panier</button></div>
@@ -188,7 +188,7 @@ export default class CustomCard extends HTMLElement {
     }
 
     /**
-     * insert data in #internalCardContainer (root)
+     * insert data in #internalCardContainer (shadowRoot)
      * @return {none}
      * @memberof CustomCard
      */

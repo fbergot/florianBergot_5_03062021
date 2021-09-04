@@ -1,8 +1,7 @@
 @import './module/reset';
-@import './mixin/body100.scss';
 @import './variable/colors';
 @import './variable/font';
-
+@import './customElementStyle.scss';
 
 * {
     box-sizing: border-box;
@@ -11,7 +10,6 @@
 html, body {
     font-size: 16px;
     font-family: $rob;
-    // @include body100('desc');
 }
 
 
@@ -29,7 +27,7 @@ html, body {
     }
     .nav {
         border: 1px solid transparent;
-        margin-right: .5rem;
+        margin-right: .2rem;
         align-self: center;
         transition: .3s all;
         &:hover {
@@ -51,7 +49,7 @@ html, body {
                 padding: .5rem;
             }
             .basketProd {
-                padding: .3rem;
+                padding: .3rem .2rem;
                 font-size: 16px;
                 font-weight: 500;
             }
@@ -68,7 +66,7 @@ main {
         padding: 1rem 0 1rem 0;
         text-align: center;
         font-size: 1.5rem;
-        font-weight: 500;
+        font-weight: 400;
     }
     .bar {
         background-color: $colorBackgOrinoco;

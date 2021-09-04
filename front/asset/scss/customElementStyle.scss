@@ -54,7 +54,7 @@ custom-card::part(contBut) {
    position: absolute;
    right: 10px;
    top: 10px;
-   background-color: $colorBackgOrinoco;
+   background-color: darken($colorBackgOrinoco,15);
    border: 1px solid transparent;
    transition: .3s all;
    &:hover {
@@ -68,7 +68,8 @@ custom-card::part(addBasket) {
     text-decoration: none;
     font-size: .8rem;
     margin: auto;
-    font-weight: 500;
+    font-family: $rob;
+    font-weight: 600;
     border: none;
     background-color: transparent;
     padding: .1rem .3rem .2rem .3rem;
