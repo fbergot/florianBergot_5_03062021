@@ -160,8 +160,9 @@ main .bar {
   padding: 0.1rem;
   font-size: 0.8rem;
 }
-.footer .orinocoTextFooter p:nth-child(1) {
-  font-weight: 600;
+.footer .orinocoTextFooter p img {
+  width: 4.5rem;
+  height: 2.5rem;
 }
 
 .return {
@@ -179,7 +180,7 @@ main .bar {
 }
 .return:hover {
   border: 1px solid #aaa2a2;
-  background-color: derken(#fff, 5);
+  background-color: #f2f2f2;
 }
 .return img {
   width: 22px;

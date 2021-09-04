@@ -65,7 +65,7 @@ export default class CustomCard extends HTMLElement {
             strOptionLens += element;
         })
           
-        // switch with data-attr (dataset)
+        // switch with data-attr
         switch (this.dataset.switch) {
             case 'noDesc':
                 return `<article part='card'>
@@ -106,7 +106,7 @@ export default class CustomCard extends HTMLElement {
      * @returns {String}
      * @memberof CustomCard
      */
-    getIdURLParam(key) {
+    getURLParam(key) {
         if (typeof key !== 'string' || key === "") {
             throw Error(`${objError.type.key}`);
         }
@@ -123,10 +123,11 @@ export default class CustomCard extends HTMLElement {
     * @use dataset (data-attr)
     * @use Basket class
     * @throw
+    * @returns {none}
     * @memberof CustomCard
     */
     async connectedCallback() {
-        // switch with data-attr (dataset)
+        // switch with data-attr
         switch (this.dataset.switch) {
             case 'noDesc':
                 try {
@@ -138,26 +139,25 @@ export default class CustomCard extends HTMLElement {
                     console.error(err);
                 }
                 break;
-                case 'fullDesc':
-                    let objData;
-                    try {
-                        const id = this.getIdURLParam('id');
-                        objData = await this.reFactorize(`/${id}`);
-                        this.data = [objData];
-                        this.mapResult();
-                        // add in shadow dom
-                        this.render();
-                        this.shadowRoot.querySelector('button').addEventListener('click', (e) => {
-                                Basket.addInBasket(objData);
-                            }, false);
-                    } catch (err) {
-                        console.error(err);
-                    }
-                    break;
-                    default:
-                        throw Error(`${objError.type.customElement}`);
-                    }
-                    
+            case 'fullDesc':
+                try {
+                    // get id parameter in URL
+                    const id = this.getURLParam('id');
+                    const objData = await this.reFactorize(`/${id}`);
+                    this.data = [objData];
+                    this.mapResult();
+                    // add in shadow dom
+                    this.render();
+                    this.shadowRoot.querySelector('button').addEventListener('click', (e) => {
+                            Basket.addInBasket(objData);
+                        },{useCapture: false});
+                } catch (err) {
+                    console.error(err);
+                }
+                break;
+            default:
+                throw Error(`${objError.type.customElement}`);
+            }                   
     }
 
     /**
@@ -165,7 +165,7 @@ export default class CustomCard extends HTMLElement {
      * @use FetchData class
      * @param {String} uri
      * @throw
-     * @returns {none}
+     * @returns {Promise}
      * @memberof CustomCard
      */
     reFactorize(uri) {
@@ -178,6 +178,7 @@ export default class CustomCard extends HTMLElement {
 
     /**
      * Map on the result for create the card(s)
+     * @return {none}
      * @memberof CustomCard
      */
     mapResult() {
@@ -188,6 +189,7 @@ export default class CustomCard extends HTMLElement {
 
     /**
      * insert data in #internalCardContainer (root)
+     * @return {none}
      * @memberof CustomCard
      */
     render() {
