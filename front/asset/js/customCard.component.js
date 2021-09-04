@@ -90,7 +90,7 @@ export default class CustomCard extends HTMLElement {
                                     <option value="">Lentilles disponibles</option>
                                     ${strOptionLens}
                                 </select>
-                                <p part='productPriceFull'>${Utils.divide(price, 100)}€</p>
+                                <p part='productPriceFull'>${Utils._divide(price, 100)}€</p>
                             </div>                                
                         </article>`;
             default:
@@ -113,7 +113,7 @@ export default class CustomCard extends HTMLElement {
         // get URL string
         const urlString = window.location.search;
         const paramsAlso = urlString.replace('?', '');
-        return Utils.getInParamURL(paramsAlso, key);       
+        return Utils._getInParamURL(paramsAlso, key);       
     }
 
    /**
@@ -149,7 +149,7 @@ export default class CustomCard extends HTMLElement {
                     // add in shadow dom
                     this.render();
                     this.shadowRoot.querySelector('button').addEventListener('click', (e) => {
-                            Basket.addInBasket(objData);
+                            Basket._addInBasket(objData);
                         },{useCapture: false});
                 } catch (err) {
                     console.error(err);

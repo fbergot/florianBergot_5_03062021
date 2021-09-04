@@ -18,7 +18,7 @@ export default class Utils {
      * @returns {Object|String}
      * @memberof Utils
      */
-    static workWithJSON(data, vSwitch) {
+    static _workWithJSON(data, vSwitch) {
         // verif type of locals identifiants
         if ((typeof data === "object" || typeof data === "string") && typeof vSwitch === 'string') {
             switch (vSwitch) {
@@ -44,7 +44,7 @@ export default class Utils {
      * @returns {String}
      * @memberof Utils
      */
-    static getInParamURL(paramsStr, key) {
+    static _getInParamURL(paramsStr, key) {
         if (typeof paramsStr !== 'string' || typeof key !== 'string') {
             throw Error(`${objError.type.generic}`);
         }
@@ -61,7 +61,7 @@ export default class Utils {
      * @returns {Number} 
      * @memberof Utils
      */
-    static divide(price, n) {
+    static _divide(price, n) {
         if (typeof price !== 'number' || typeof n !== 'number') {
             throw Error(`${objError.type.generic}`);
         }
