@@ -4,14 +4,25 @@
  * @class UpdateHeaderBasket
  */
 export default class UpdateHeaderBasket {
-
+    /** @var {Instance of UpdateHeaderBasket | null} */
     static instance = null;
     static tagOfTarget = "#basketProduct"
 
+    /**
+     *Creates an instance of UpdateHeaderBasket.
+     * @param {String} tagTargetHTML
+     * @memberof UpdateHeaderBasket
+     */
     constructor(tagTargetHTML) {
         this.targetHTML = document.querySelector(tagTargetHTML);
     }
 
+    /**
+     * Make unique instance of UpdateHeaderBasket (singleton)
+     * @static
+     * @returns
+     * @memberof UpdateHeaderBasket
+     */
     static _getInstance() {
         if (this.instance === null) {
             this.instance = new UpdateHeaderBasket(this.tagOfTarget);
@@ -25,7 +36,7 @@ export default class UpdateHeaderBasket {
      *
      * @param {Number} n
      * @param {String} upOrDown
-     * @returns {none}
+     * @returns {void}
      * @throw 
      * @memberof UpdateHeaderBasket
      */
@@ -34,9 +45,9 @@ export default class UpdateHeaderBasket {
         if (typeof n !== "number" || typeof upOrDown !== "string") {
             throw Error("Invalid type of parameter(s)");
         }
-        // get state of basket 
+        // get state of basket & change state 
         let stateBasket = Number.parseInt(this.targetHTML.textContent);
-        if (stateBasket < 0 || isNaN(stateBasket)) {
+        if (stateBasket < 0 || Number.isNaN(stateBasket)) {
             throw Error('Bad state of basket ');
         }
         switch (upOrDown) {
@@ -46,7 +57,6 @@ export default class UpdateHeaderBasket {
             case 'down':
                 if (stateBasket > 0) {
                     this.targetHTML.innerText = (stateBasket -= n);
-                    return;
                 }
                 break;
             default:

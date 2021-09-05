@@ -135,7 +135,7 @@ export default class CustomCard extends HTMLElement {
     * @use dataset (data-attr)
     * @use Basket class
     * @throw
-    * @returns {none}
+    * @returns {void}
     * @memberof CustomCard
     */
     async connectedCallback() {
@@ -196,7 +196,7 @@ export default class CustomCard extends HTMLElement {
 
     /**
      * Map on the result for create the card(s)
-     * @return {none}
+     * @return {void}
      * @memberof CustomCard
      */
     mapResult() {
@@ -207,7 +207,7 @@ export default class CustomCard extends HTMLElement {
 
     /**
      * insert data in #internalCardContainer (shadowRoot)
-     * @return {none}
+     * @return {void}
      * @memberof CustomCard
      */
     render() {

@@ -19,6 +19,7 @@ export default class Basket {
      * @use LocalStorage class
      * @use Utils class
      * @use objError obj
+     * @returns {void}
      * @param {Object} product
      * @memberof Basket
      */

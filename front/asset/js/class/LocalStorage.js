@@ -28,6 +28,7 @@ export default class LocalStorage {
      * @static
      * @param {String} key
      * @param {String} value (ever string in locStorage)
+     * @returns {void}
      * @memberof LocalStorage
      */
     static _setItem(key, value) {
