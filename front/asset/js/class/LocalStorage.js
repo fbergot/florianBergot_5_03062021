@@ -11,6 +11,7 @@ export default class LocalStorage {
      * @static
      * @use objError obj
      * @param {String} key
+     * @throw
      * @returns {Boolean}
      * @memberof LocalStorage
      */
@@ -22,12 +23,13 @@ export default class LocalStorage {
         return false;        
     }
 
-    /**
+    /** 
      *
      *
      * @static
-     * @param {String} key
-     * @param {String} value (ever string in locStorage)
+     * @param {String} key (ever string in localStorage)
+     * @param {String} value (ever string in localStorage)
+     * @throw
      * @returns {void}
      * @memberof LocalStorage
      */
@@ -36,5 +38,21 @@ export default class LocalStorage {
             throw Error(`${objError.type.generic}`);
         }
         window.localStorage.setItem(key, value);
+    }
+
+    /**
+     * Get one item in localStorage
+     * @static
+     * @use objError obj
+     * @param {String} key
+     * @throw
+     * @returns {String}
+     * @memberof LocalStorage
+     */
+    static _getItem(key) {
+        if (typeof key !== 'string') {
+            throw Error(`${objError.type.generic}`);
+        }
+        return window.localStorage.getItem(key);
     }
 }

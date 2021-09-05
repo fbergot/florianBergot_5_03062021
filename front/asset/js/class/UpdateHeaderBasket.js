@@ -1,3 +1,6 @@
+import { objError } from "../errors/err.js";
+import LocalStorage from "./LocalStorage.js";
+import Utils from "./Utils.js";
 /**
  * Update basket in header
  * @export
@@ -6,10 +9,11 @@
 export default class UpdateHeaderBasket {
     /** @var {Instance of UpdateHeaderBasket | null} */
     static instance = null;
-    static tagOfTarget = "#basketProduct"
+    static tagOfTarget = "#basketProduct";
 
     /**
      *Creates an instance of UpdateHeaderBasket.
+     * @use objError
      * @param {String} tagTargetHTML
      * @memberof UpdateHeaderBasket
      */
@@ -32,35 +36,18 @@ export default class UpdateHeaderBasket {
     }
 
     /**
-     *
-     *
-     * @param {Number} n
-     * @param {String} upOrDown
-     * @returns {void}
+     * Update header basket
+     * @use LocalStorage class
+     * @use Utils class
      * @throw 
+     * @returns {void}
      * @memberof UpdateHeaderBasket
      */
-    update(n, upOrDown) {
-        // verif type of locals identifiants
-        if (typeof n !== "number" || typeof upOrDown !== "string") {
-            throw Error("Invalid type of parameter(s)");
-        }
-        // get state of basket & change state 
-        let stateBasket = Number.parseInt(this.targetHTML.textContent);
-        if (stateBasket < 0 || Number.isNaN(stateBasket)) {
-            throw Error('Bad state of basket ');
-        }
-        switch (upOrDown) {
-            case 'up':
-                this.targetHTML.innerText = (stateBasket += n);
-                break;
-            case 'down':
-                if (stateBasket > 0) {
-                    this.targetHTML.innerText = (stateBasket -= n);
-                }
-                break;
-            default:
-                throw Error("Incorrect upOrDown parameter");
-        }
+    update() {
+        // get number of item in localStorage
+        const basket = LocalStorage._getItem('basket');
+        const objFromStrJSON = Utils._workWithJSON(basket, 'toOBJ');
+        const numberProductInBasket = objFromStrJSON.productsBasket.length;
+        this.targetHTML.innerText = numberProductInBasket;        
     }
 }
