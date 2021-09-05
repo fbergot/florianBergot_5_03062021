@@ -2,6 +2,7 @@ import { objError } from "./errors/err.js";
 import FetchData from "./class/FetchData.js";
 import Utils from "./class/Utils.js";
 import Basket from "./class/basket.js";
+import UpdateHeaderBasket from "./class/UpdateHeaderBasket.js";
 /**
  *
  * Custom element for create all cards with description or not 
@@ -22,7 +23,7 @@ export default class CustomCard extends HTMLElement {
     constructor() {
         super();
         this.data = null;
-        this.instance = null;
+        this.instanceFetchData = null;
         this.totalCards = "";
         // attach shadow DOM
         this.attachShadow({ mode: "open" });
@@ -139,11 +140,13 @@ export default class CustomCard extends HTMLElement {
     * @memberof CustomCard
     */
     async connectedCallback() {
+        // update headerBasket
+        UpdateHeaderBasket._getInstance().update();
         // switch with data-attr
         switch (this.dataset.switch) {
             case 'noDesc':
                 try {
-                    this.data = await this.reFactorize('/');
+                    this.data = await this.reFactorize("/", { method: "GET" });
                     this.mapResult();
                     // add in shadow dom
                     this.render();
@@ -155,13 +158,13 @@ export default class CustomCard extends HTMLElement {
                 try {
                     // get id parameter in URL
                     const id = this.getURLParam('id');
-                    const objData = await this.reFactorize(`/${id}`);
+                    const objData = await this.reFactorize(`/${id}`, { method: "GET" });
                     this.data = [objData];
                     this.mapResult();
                     // add in shadow dom
                     this.render();
-                    this.shadowRoot.querySelector('button').addEventListener('click', (e) => {
-                            Basket._addInBasket(objData);
+                    this.shadowRoot.querySelector('.basketBut').addEventListener('click', (e) => {
+                            Basket._getInstance().addInBasket(objData);
                         },{useCapture: false});
                 } catch (err) {
                     console.error(err);
@@ -180,14 +183,14 @@ export default class CustomCard extends HTMLElement {
      * @returns {Promise}
      * @memberof CustomCard
      */
-    reFactorize(uri) {
+    reFactorize(uri, options) {
         if (typeof uri !== 'string' || uri === "") {
             throw Error(`${objError.type.generic}`);
         }
         try {
-            this.instance = FetchData._getInstance();
+            this.instanceFetchData = FetchData._getInstance();
             /** @var {Promise} */
-            var data = this.instance.getData(uri, { method: "GET" });
+            var data = this.instanceFetchData.getData(uri, options);
         } catch (err) {
             console.error(err);
         }

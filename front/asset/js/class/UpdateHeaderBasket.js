@@ -3,11 +3,12 @@ import LocalStorage from "./LocalStorage.js";
 import Utils from "./Utils.js";
 /**
  * Update basket in header
+ * @singletoh
  * @export
  * @class UpdateHeaderBasket
  */
 export default class UpdateHeaderBasket {
-    /** @var {Instance of UpdateHeaderBasket | null} */
+    /** @var {Instance of UpdateHeaderBasket|null} */
     static instance = null;
     static tagOfTarget = "#basketProduct";
 
@@ -47,7 +48,11 @@ export default class UpdateHeaderBasket {
         // get number of item in localStorage
         const basket = LocalStorage._getItem('basket');
         const objFromStrJSON = Utils._workWithJSON(basket, 'toOBJ');
-        const numberProductInBasket = objFromStrJSON.productsBasket.length;
-        this.targetHTML.innerText = numberProductInBasket;        
+        if (objFromStrJSON !== null) {
+            const numberProductInBasket = objFromStrJSON.productsBasket.length;
+            this.targetHTML.innerText = numberProductInBasket;
+            return;
+        }
+        this.targetHTML.innerText = 0;
     }
 }
