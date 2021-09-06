@@ -43,7 +43,7 @@ export default class CustomCard extends HTMLElement {
      * @param {String} name
      * @param {Number} price
      * @throw  
-     * @returns {String} card
+     * @returns {String} (card)
      * @memberof CustomCard
      */
     createCard(id, description, imageURL, lenses, name, price) {
@@ -117,7 +117,7 @@ export default class CustomCard extends HTMLElement {
         if (typeof key !== 'string' || key === "") {
             throw Error(`${objError.type.key}`);
         }
-        // get URL string
+        // get URLParam string
         const urlString = window.location.search;
         const paramsAlso = urlString.replace('?', '');
         try {
@@ -140,8 +140,7 @@ export default class CustomCard extends HTMLElement {
     * @memberof CustomCard
     */
     async connectedCallback() {
-        // update headerBasket
-        UpdateHeaderBasket._getInstance().update();
+       
         // switch with data-attr
         switch (this.dataset.switch) {
             case 'noDesc':
@@ -164,8 +163,8 @@ export default class CustomCard extends HTMLElement {
                     // add in shadow dom
                     this.render();
                     this.shadowRoot.querySelector('.basketBut').addEventListener('click', (e) => {
-                            Basket._getInstance().addInBasket(objData);
-                        },{useCapture: false});
+                        Basket._getInstance().addInBasket(objData);
+                    }, { useCapture: false });
                 } catch (err) {
                     console.error(err);
                 }

@@ -54,7 +54,7 @@ export default class Utils {
     }
 
     /**
-     * to divide price per 100
+     * to divide 
      * @static
      * @use objError
      * @param {Number} price

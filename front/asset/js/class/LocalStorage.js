@@ -2,6 +2,7 @@ import { objError } from "../errors/err.js";
 /**
  * Create data or get data from localstorage
  * @export
+ * @static
  * @use objError obj
  * @class LocalStorage
  */
@@ -35,7 +36,7 @@ export default class LocalStorage {
      */
     static _setItem(key, value) {
         if ((typeof key !== 'string' || key === '') || (typeof value !== 'string' || value === '')) {
-            throw Error(`${objError.type.generic}`);
+            throw Error(`${objError.type.generic} or empty`);
         }
         window.localStorage.setItem(key, value);
     }
@@ -46,7 +47,7 @@ export default class LocalStorage {
      * @use objError obj
      * @param {String} key
      * @throw
-     * @returns {String}
+     * @returns {null|String}
      * @memberof LocalStorage
      */
     static _getItem(key) {

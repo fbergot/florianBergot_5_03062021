@@ -45,9 +45,14 @@ export default class UpdateHeaderBasket {
      * @memberof UpdateHeaderBasket
      */
     update() {
-        // get number of item in localStorage
-        const basket = LocalStorage._getItem('basket');
-        const objFromStrJSON = Utils._workWithJSON(basket, 'toOBJ');
+        try {
+            // get number of item in localStorage
+            /** @var {null|String} */
+            const basket = LocalStorage._getItem('basket');
+            var objFromStrJSON = Utils._workWithJSON(basket, 'toOBJ');
+        } catch (err) {
+            console.error(err);
+        }
         if (objFromStrJSON !== null) {
             const numberProductInBasket = objFromStrJSON.productsBasket.length;
             this.targetHTML.innerText = numberProductInBasket;
