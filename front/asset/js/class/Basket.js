@@ -141,18 +141,22 @@ export default class Basket {
         if (typeof productName !== "string" || typeof quantity !== 'number') {
             throw Error(`${objError.type.generic}`);
         }
-        // get basket in locStor
-        const jsonBasket = LocalStorage._getItem(this.keyBasket);
-        const objFromJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
-        // update quantity
-        const product = this.findProduct(objFromJSON.productsBasket, productName);
-        if (product) {
-            product.quantity = quantity;
+        try {
+            // get basket in locStor
+            const jsonBasket = LocalStorage._getItem(this.keyBasket);
+            const objFromJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
+            // update quantity
+            const product = this.findProduct(objFromJSON.productsBasket, productName);
+            if (product) {
+                product.quantity = quantity;
+            }
+            // re add the new basket in locStor
+            const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
+            LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
+            UpdateHeaderBasket._getInstance().update();
+        } catch (err) {
+            console.error(err);
         }
-        // re add the new basket in locStor
-        const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
-        LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
-        UpdateHeaderBasket._getInstance().update();
     }
 
     /**

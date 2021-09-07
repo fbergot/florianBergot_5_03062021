@@ -62,14 +62,20 @@ export default class CustomBasket extends HTMLElement {
         if (typeof item !== 'object' && !Array.isArray(item)) {
             throw Error(`${objError.type.generic}`);
         }
+        try {
+            var price = Utils._divide(item.price, 100);
+            var subTotal = this.computeSubtotal(item.quantity, price);
+        } catch (err) {
+            console.error(err);
+        }
         return `
             <tr>
                 <td>${item.name}</td>
                 <td>
                     <input class='inpNumProd' data-product='${item.name}' part='numberOfProd' min='1' value="${item.quantity}" type="number">
                 </td>
-                <td>${Utils._divide(item.price, 100)}€</td>
-                <td>${this.computeSubtotal(Number.parseInt(item.quantity), Number.parseInt(Utils._divide(Number.parseInt(item.price), 100)))}€</td>               
+                <td>${price}€</td>
+                <td>${subTotal}€</td>               
                 <td>
                     <button part='removeItem' class='remove' data-productName="${item.name}">Supprimer</button>
                 </td>
@@ -77,7 +83,7 @@ export default class CustomBasket extends HTMLElement {
     }
 
     /**
-     * Loop in array of product for create the lines in basket
+     * Loop in product array for create the lines in <table> basket
      * @param {Array} arrayProducts
      * @returns {void}
      * @memberof CustomBasket
@@ -88,7 +94,11 @@ export default class CustomBasket extends HTMLElement {
         }
         this.linesBasket = "";
         arrayProducts.forEach((element) => {
-            this.linesBasket += this.createLineOfData(element);
+            try {
+                this.linesBasket += this.createLineOfData(element);
+            } catch (err) {
+                console.error(err);
+            }
         });
     }
     
@@ -111,8 +121,11 @@ export default class CustomBasket extends HTMLElement {
         const inputs = [...this.shadowRoot.querySelectorAll(".inpNumProd")];
         inputs.forEach((elem) => {
             elem.addEventListener('input', (e) => {
-                console.log('test');
-                Basket._getInstance().updateQuantity(e.target.dataset.product, Number.parseInt(e.target.value));
+                try {
+                    Basket._getInstance().updateQuantity(e.target.dataset.product, Number.parseInt(e.target.value));
+                } catch (err) {
+                    console.error(err);
+                }
                 this.construct();
             }); 
         });
@@ -122,14 +135,18 @@ export default class CustomBasket extends HTMLElement {
         const buttons = [...this.shadowRoot.querySelectorAll('.remove')];
         buttons.forEach((elem) => {
             elem.addEventListener('click', (e) => {
-                Basket._getInstance().removeProduct(e.target.dataset.productname);
+                try {
+                    Basket._getInstance().removeProduct(e.target.dataset.productname);
+                } catch (err) {
+                    console.error(err);
+                }
                 this.construct();
             })
         })
     }
 
     /**
-     * Build from product in localStorage
+     * Build line of table from product in localStorage
      * @use Utils class
      * @use LocalStorage class
      * @returns {void}
