@@ -130,7 +130,7 @@ export default class CustomCard extends HTMLElement {
     }
 
    /**
-    * Fetch data for the customElement
+    * Called when customElem is add in DOM
     * @async
     * @use FetchData class
     * @use dataset (data-attr)
@@ -139,12 +139,13 @@ export default class CustomCard extends HTMLElement {
     * @returns {void}
     * @memberof CustomCard
     */
-    async connectedCallback() {
+   async connectedCallback() {
        
-        // switch with data-attr
-        switch (this.dataset.switch) {
-            case 'noDesc':
-                try {
+       // switch with data-attr
+       switch (this.dataset.switch) {
+           case 'noDesc':
+               try {
+                    // Fetch data for the customElement
                     this.data = await this.reFactorize("/", { method: "GET" });
                     this.mapResult();
                     // add in shadow dom
@@ -157,6 +158,7 @@ export default class CustomCard extends HTMLElement {
                 try {
                     // get id parameter in URL
                     const id = this.getURLParam('id');
+                    // Fetch data for the customElement
                     const objData = await this.reFactorize(`/${id}`, { method: "GET" });
                     objData.quantity = 1;
                     this.data = [objData];
@@ -166,9 +168,9 @@ export default class CustomCard extends HTMLElement {
                     this.shadowRoot.querySelector('.basketBut').addEventListener('click', (e) => {
                         Basket._getInstance().addInBasket(objData);
                     }, { useCapture: false });
-                } catch (err) {
-                    console.error(err);
-                }
+            } catch (err) {
+                console.error(err);
+            }
                 break;
             default:
                 throw Error(`${objError.type.customElement}`);
