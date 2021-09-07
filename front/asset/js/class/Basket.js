@@ -61,9 +61,31 @@ export default class Basket {
           console.error(err);
         }
     }
+
+    /**
+     * Verif is product is present in basket (add product or add quantity)
+     * @use objError
+     * @param {Object} objFromStrJSON
+     * @param {Object} product
+     * @memberof Basket
+     */
+    verifIsPresent(objFromStrJSON, product) {
+        if (typeof objFromStrJSON !== "object" || typeof product !== "object") {
+            throw Error(`${objError.type.generic}`);
+        }
+        const verifIsPresent = objFromStrJSON.productsBasket.find((elem) => {
+            return elem.name === product.name;
+        })
+        // if present add his quantity
+        if (verifIsPresent) {
+            verifIsPresent.quantity = Number.parseInt(verifIsPresent.quantity) + 1;
+        // else, add product
+        } else {
+            objFromStrJSON.productsBasket.push(product);
+        }
+    }
     /**
      * add product in basket
-     * @static
      * @use LocalStorage class
      * @use Utils class
      * @use objError obj
@@ -88,8 +110,9 @@ export default class Basket {
                 // get basket in locStor
                 const jsonBasket = LocalStorage._getItem(this.keyBasket);
                 const objFromStrJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
+                // if product present in basket, add his quantity else add product
+                this.verifIsPresent(objFromStrJSON, product);
                 // add product
-                objFromStrJSON.productsBasket.push(product);
                 const reconvertObjInJSON = Utils._workWithJSON(objFromStrJSON, 'toJSON');
                 // re add the new basket in locStor
                 LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);

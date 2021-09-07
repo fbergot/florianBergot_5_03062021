@@ -46,18 +46,31 @@ export default class UpdateHeaderBasket {
      */
     update() {
         try {
-            // get number of item in localStorage
+            // get number of item in "basket" (localStorage)
             /** @var {null|String} */
             const basket = LocalStorage._getItem('basket');
             var objFromStrJSON = Utils._workWithJSON(basket, 'toOBJ');
         } catch (err) {
             console.error(err);
         }
-        if (objFromStrJSON !== null) {
-            const numberProductInBasket = objFromStrJSON.productsBasket.length;
-            this.targetHTML.innerText = numberProductInBasket;
+        if (objFromStrJSON !== null) {          
+            this.targetHTML.innerText = this.computeTotalInBasket(objFromStrJSON);
             return;
         }
         this.targetHTML.innerText = 0;
+    }
+
+    /**
+     * Compute total product in basket
+     * @param {Object} objBasket
+     * @returns {Number}
+     * @memberof UpdateHeaderBasket
+     */
+    computeTotalInBasket(objBasket) {
+        let total = 0;
+        objBasket.productsBasket.forEach((element) => {
+          total += Number.parseInt(element.quantity);
+        });
+        return total;
     }
 }

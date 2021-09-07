@@ -158,6 +158,7 @@ export default class CustomCard extends HTMLElement {
                     // get id parameter in URL
                     const id = this.getURLParam('id');
                     const objData = await this.reFactorize(`/${id}`, { method: "GET" });
+                    objData.quantity = 1;
                     this.data = [objData];
                     this.mapResult();
                     // add in shadow dom
