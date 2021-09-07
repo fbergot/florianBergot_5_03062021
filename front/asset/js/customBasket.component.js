@@ -1,3 +1,4 @@
+import Basket from "./class/basket.js";
 import LocalStorage from "./class/LocalStorage.js";
 import Utils from "./class/Utils.js";
 import { objError } from "./errors/err.js";
@@ -82,10 +83,10 @@ export default class CustomBasket extends HTMLElement {
      * @memberof CustomBasket
      */
     loopOnBasket(arrayProducts) {
-        this.linesBasket = ""
         if (!Array.isArray(arrayProducts)) {
             throw Error(`${objError.type.generic}`);
         }
+        this.linesBasket = "";
         arrayProducts.forEach((element) => {
             this.linesBasket += this.createLineOfData(element);
         });
@@ -93,7 +94,6 @@ export default class CustomBasket extends HTMLElement {
     
     /**
      * Called when customEl is add in DOM
-     * @use LocalStorage class
      * @returns {void}
      * @memberof CustomBasket
      */
@@ -103,6 +103,7 @@ export default class CustomBasket extends HTMLElement {
 
     /**
      * Add event on inputs (number product)
+     * @use Basket class
      * @returns {void}
      * @memberof CustomBasket
      */
@@ -110,15 +111,28 @@ export default class CustomBasket extends HTMLElement {
         const inputs = [...this.shadowRoot.querySelectorAll(".inpNumProd")];
         inputs.forEach((elem) => {
             elem.addEventListener('input', (e) => {
-                    console.log(e.target.dataset.product, e.target.value, this);
-                    this.construct();
+                console.log('test');
+                Basket._getInstance().updateQuantity(e.target.dataset.product, Number.parseInt(e.target.value));
+                this.construct();
             }); 
         });
     }
 
+    addDeleteEvent() {
+        const buttons = [...this.shadowRoot.querySelectorAll('.remove')];
+        buttons.forEach((elem) => {
+            elem.addEventListener('click', (e) => {
+                Basket._getInstance().removeProduct(e.target.dataset.productname);
+                this.construct();
+            })
+        })
+    }
+
     /**
      * Build from product in localStorage
-     * @returns
+     * @use Utils class
+     * @use LocalStorage class
+     * @returns {void}
      * @memberof CustomBasket
      */
     construct() {
@@ -135,6 +149,7 @@ export default class CustomBasket extends HTMLElement {
             this.loopOnBasket(objFromStrJSON.productsBasket);
             this.render("#bodyTable", this.linesBasket);
             this.addInputEvent();
+            this.addDeleteEvent();
         } catch (err) {
             console.error(err);
         }        

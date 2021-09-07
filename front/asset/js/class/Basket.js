@@ -101,6 +101,7 @@ export default class Basket {
         try {
             /** @var {Boolean} */
             var stateBasket = (LocalStorage._verifIfItemExist(this.keyBasket));
+
         } catch (err) {
             console.error(err);
         }
@@ -109,12 +110,11 @@ export default class Basket {
             try {
                 // get basket in locStor
                 const jsonBasket = LocalStorage._getItem(this.keyBasket);
-                const objFromStrJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
+                const objFromJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
                 // if product present in basket, add his quantity else add product
-                this.verifIsPresent(objFromStrJSON, product);
-                // add product
-                const reconvertObjInJSON = Utils._workWithJSON(objFromStrJSON, 'toJSON');
-                // re add the new basket in locStor
+                this.verifIsPresent(objFromJSON, product);
+                // re add the new basket in localStorage
+                const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
                 LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
                 UpdateHeaderBasket._getInstance().update();
             } catch (err) {
@@ -124,8 +124,7 @@ export default class Basket {
             try {               
                 // init the basket in localStorage with first product (after be converted)
                 this.createBasket(product);
-                UpdateHeaderBasket._getInstance().update();
-               
+                UpdateHeaderBasket._getInstance().update();                
             } catch (err) {
                 console.error(err);
             }
@@ -133,12 +132,92 @@ export default class Basket {
     }
 
     /**
-     *
-     * Remove one product in localStorage basket
-     * @param {String} nameProduct
+     * Update the quantity per product
+     * @param {String} productName
+     * @param {Number} quantity
      * @memberof Basket
      */
-    removeInBasket(nameProduct) {}
+    updateQuantity(productName, quantity) {
+        if (typeof productName !== "string" || typeof quantity !== 'number') {
+            throw Error(`${objError.type.generic}`);
+        }
+        // get basket in locStor
+        const jsonBasket = LocalStorage._getItem(this.keyBasket);
+        const objFromJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
+        // update quantity
+        const product = this.findProduct(objFromJSON.productsBasket, productName);
+        if (product) {
+            product.quantity = quantity;
+        }
+        // re add the new basket in locStor
+        const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
+        LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
+        UpdateHeaderBasket._getInstance().update();
+    }
+
+    /**
+     * Find product with his name
+     * @param {Array} arrayProduct
+     * @param {String} prodName
+     * @returns {Object|undefined}
+     * @memberof Basket
+     */
+    findProduct(arrayProduct, productName) {
+        if (!Array.isArray(arrayProduct) || typeof productName !== "string") {
+            throw Error(`${objError.type.generic}`);
+        }
+        return arrayProduct.find((elem) => elem.name === productName);
+    }
+
+    /**
+     *
+     *
+     * @param {Array} arrayProduct
+     * @param {String} productName
+     * @returns {Number} (-1 if false for all element)
+     * @memberof Basket
+     */
+    findIndexProduct(arrayProduct, productName) {
+        if (typeof productName !== "string" || !Array.isArray(arrayProduct)) {
+            throw Error(`${objError.type.generic}`);
+        }
+        return arrayProduct.findIndex((elem) => elem.name === productName);
+    }
+
+    /**
+     * Remove one product in localStorage basket
+     * @param {String} nameProduct
+     * @returns {void}
+     * @memberof Basket
+     */
+    removeProduct(productName) {
+        if (typeof productName !== 'string') {
+            throw Error(`${objError.type.generic}`);
+        }
+        // get basket in locStor
+        const jsonBasket = LocalStorage._getItem(this.keyBasket);
+        const objFromJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
+        const index = this.findIndexProduct(objFromJSON.productsBasket, productName);
+        objFromJSON.productsBasket.splice(index, 1);
+        // verif state
+        if (objFromJSON.productsBasket.length === 0) {
+            this.clearBasket();
+            return;
+        } 
+        // re add the new basket in locStor
+        const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
+        LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
+        UpdateHeaderBasket._getInstance().update();
+    }
+
+    /**
+     * Clear localStorage
+     * @use LocalStorage class
+     * @memberof Basket
+     */
+    clearBasket() {
+        LocalStorage._reset();
+    }
 
     
 }

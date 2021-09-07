@@ -56,4 +56,8 @@ export default class LocalStorage {
         }
         return window.localStorage.getItem(key);
     }
+
+    static _reset() {
+        window.localStorage.clear();
+    }
 }

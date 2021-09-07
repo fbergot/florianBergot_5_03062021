@@ -158,19 +158,20 @@ export default class CustomCard extends HTMLElement {
                 try {
                     // get id parameter in URL
                     const id = this.getURLParam('id');
-                    // Fetch data for the customElement
+                    // Fetch data & add quantity property
                     const objData = await this.reFactorize(`/${id}`, { method: "GET" });
                     objData.quantity = 1;
                     this.data = [objData];
+                    // create all cards
                     this.mapResult();
                     // add in shadow dom
                     this.render();
                     this.shadowRoot.querySelector('.basketBut').addEventListener('click', (e) => {
                         Basket._getInstance().addInBasket(objData);
-                    }, { useCapture: false });
-            } catch (err) {
-                console.error(err);
-            }
+                    }, false);
+                } catch (err) {
+                    console.error(err);
+                }
                 break;
             default:
                 throw Error(`${objError.type.customElement}`);
