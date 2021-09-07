@@ -211,7 +211,6 @@ export default class Basket {
         // re add the new basket in locStor
         const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
         LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
-        UpdateHeaderBasket._getInstance().update();
     }
 
     /**

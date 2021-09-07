@@ -1,12 +1,22 @@
 import Basket from "./class/basket.js";
 import LocalStorage from "./class/LocalStorage.js";
+import UpdateHeaderBasket from "./class/UpdateHeaderBasket.js";
 import Utils from "./class/Utils.js";
 import { objError } from "./errors/err.js";
 
+/**
+ * Custom basket element
+ * @use Basket class
+ * @use LocalStorage class
+ * @use Utils class
+ * @use objError obj
+ * @export
+ * @class CustomBasket
+ * @extends {HTMLElement}
+ */
 export default class CustomBasket extends HTMLElement {
     constructor() {
         super();
-        // this.linesBasket = "";
         this.keyBasket = 'basket';
         this.allSubTotal = [];
         this.messageNoItem = 'Votre panier est vide';
@@ -141,6 +151,7 @@ export default class CustomBasket extends HTMLElement {
                     console.error(err);
                 }
                 this.construct();
+                UpdateHeaderBasket._getInstance().update();
             })
         })
     }
