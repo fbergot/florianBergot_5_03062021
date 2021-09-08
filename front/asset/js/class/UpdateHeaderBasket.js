@@ -67,10 +67,12 @@ export default class UpdateHeaderBasket {
      * @memberof UpdateHeaderBasket
      */
     computeTotalInBasket(objBasket) {
-        let total = 0;
-        objBasket.productsBasket.forEach((element) => {
-          total += Number.parseInt(element.quantity);
-        });
-        return total;
+        if (typeof objBasket !== 'object') {
+            throw Error(`${objError.type.generic}`);
+        }
+        const { quantity } = objBasket.productsBasket.reduce(({ quantity }, curr) => {
+            return { quantity: quantity + curr.quantity };           
+        })
+        return quantity;
     }
 }

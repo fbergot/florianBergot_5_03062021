@@ -162,7 +162,11 @@ export default class CustomBasket extends HTMLElement {
         inputs.forEach((elem) => {
             elem.addEventListener('change', (e) => {
                 try {
-                    Basket._getInstance().updateQuantity(e.target.dataset.product, Number.parseInt(e.target.value));
+                    Basket._getInstance().updateQuantity(
+                        e.target.dataset.product,
+                        // fix value on 1 per default if <= 0
+                        Number.parseInt(e.target.value) <= 0 ? (
+                            1) : Number.parseInt(e.target.value));
                 } catch (err) {
                     console.error(err);
                 }
@@ -215,6 +219,11 @@ export default class CustomBasket extends HTMLElement {
         }        
     }
 
+    /**
+     * Computed the total price (all subTtotals)
+     * @returns {Number}
+     * @memberof CustomBasket
+     */
     computeTotal() {
         return this.allSubTotal.reduce((acc, curr) => acc + curr);
     }
