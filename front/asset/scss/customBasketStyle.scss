@@ -1,0 +1,43 @@
+@import './variable/colors.scss';
+@import './variable/font.scss';
+
+
+// custom-basket::part(head_thBut) {
+//     border: none;
+// }
+custom-basket::part(cellProduct) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+custom-basket::part(prodImg) {
+    padding-top: .2rem;
+    width: 40px;
+    height: 40px;
+}
+
+custom-basket::part(prodName) {
+    font-size: 13px;
+    margin: 0;
+    padding: .2rem 0;
+}
+
+custom-basket::part(removeItem) {
+    padding: 2px 6px;
+    background-color: rgb(241, 125, 117);
+    cursor: pointer;
+    color: rgb(12, 12, 12);
+    font-size: 1rem;
+    transition: .3s all;
+    border: none;
+}
+
+custom-basket::part(removeItem):hover {
+    background-color: darken(rgb(241, 125, 117),5);
+}
+
+custom-basket::part(totalPrice) {
+    margin-top: 1rem;
+}

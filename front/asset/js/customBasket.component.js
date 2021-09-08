@@ -15,11 +15,16 @@ import { objError } from "./errors/err.js";
  * @extends {HTMLElement}
  */
 export default class CustomBasket extends HTMLElement {
+    /**
+     * Creates an instance of CustomBasket.
+     * @memberof CustomBasket
+     */
     constructor() {
         super();
+        this.linesBasket;
+        this.allSubTotal;
         this.keyBasket = 'basket';
-        this.allSubTotal = [];
-        this.messageNoItem = 'Votre panier est vide';
+        this.messageNoItem = 'aucun article dans votre panier';
         // attach root of shadow DOM
         this.attachShadow({ mode: "open" });
         this.shadowRoot.innerHTML =
@@ -46,20 +51,22 @@ export default class CustomBasket extends HTMLElement {
      * @returns {String}
      * @memberof CustomBasket
      */
-    createStructureTable() {
+    createStructureTable() {        
         return `
             <table part='basketTable'>
                 <thead part='basketThead'>
-                    <tr part='head_tr'>
+                    <tr>
                         <th>Produit</th>
                         <th>Quantité</th>
-                        <th>Prix unitaire</th>
+                        <th>Prix</th>
                         <th>Sous total</th>
-                        <th></th>
+                        <th class='cellBut'></th>
                     </tr>
                 </thead>
                 <tbody id='bodyTable'></tbody>
-            </table>`;
+            </table>
+            <div part='totalPrice' id='totalPrice'></div>
+            `;
     }
 
     /**
@@ -75,21 +82,44 @@ export default class CustomBasket extends HTMLElement {
         try {
             var price = Utils._divide(item.price, 100);
             var subTotal = this.computeSubtotal(item.quantity, price);
+            this.allSubTotal.push(subTotal);
         } catch (err) {
             console.error(err);
         }
         return `
             <tr>
-                <td>${item.name}</td>
+                <td>
+                    <div part='cellProduct'>
+                        <img part='prodImg' src='${item.imageUrl}'/>
+                        <p part='prodName'>${item.name}</p>
+                    </div>
+                </td>
                 <td>
                     <input class='inpNumProd' data-product='${item.name}' part='numberOfProd' min='1' value="${item.quantity}" type="number">
                 </td>
                 <td>${price}€</td>
                 <td>${subTotal}€</td>               
-                <td>
-                    <button part='removeItem' class='remove' data-productName="${item.name}">Supprimer</button>
+                <td class='cellBut'>
+                    <button part='removeItem' class='remove' data-productName="${item.name}">X</button>
                 </td>
-            </tr>`;
+            </tr>
+            <style>         
+                table,th,td{
+                    padding: .25rem;
+                    text-align: center;
+                    border: 1px solid grey;
+                    border-collapse: collapse;
+                }
+                .inpNumProd {
+                    width: 40px;
+                    height: 20px
+                }
+                .cellBut {
+                    border: none;
+                    border-color: transparent;
+                }
+            </style>
+            `;
     }
 
     /**
@@ -130,7 +160,7 @@ export default class CustomBasket extends HTMLElement {
     addInputEvent() {
         const inputs = [...this.shadowRoot.querySelectorAll(".inpNumProd")];
         inputs.forEach((elem) => {
-            elem.addEventListener('input', (e) => {
+            elem.addEventListener('change', (e) => {
                 try {
                     Basket._getInstance().updateQuantity(e.target.dataset.product, Number.parseInt(e.target.value));
                 } catch (err) {
@@ -151,7 +181,7 @@ export default class CustomBasket extends HTMLElement {
                     console.error(err);
                 }
                 this.construct();
-                UpdateHeaderBasket._getInstance().update();
+                UpdateHeaderBasket._getInstance().update();                
             })
         })
     }
@@ -170,12 +200,14 @@ export default class CustomBasket extends HTMLElement {
                 return;
             }
             // create structure <table>
-            this.render("#internalBasketContainer", this.createStructureTable());  
+            this.render("#internalBasketContainer", this.createStructureTable());
+            this.allSubTotal = [];
             // get in localstorage
             const jsonBasket = LocalStorage._getItem(this.keyBasket);
             const objFromStrJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
             this.loopOnBasket(objFromStrJSON.productsBasket);
             this.render("#bodyTable", this.linesBasket);
+            this.render('#totalPrice', `Total : ${this.computeTotal()}€`);
             this.addInputEvent();
             this.addDeleteEvent();
         } catch (err) {
@@ -183,6 +215,9 @@ export default class CustomBasket extends HTMLElement {
         }        
     }
 
+    computeTotal() {
+        return this.allSubTotal.reduce((acc, curr) => acc + curr);
+    }
     /**
      * Add data in shadow DOM element
      * @use objError obj

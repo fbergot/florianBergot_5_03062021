@@ -2,7 +2,6 @@ import { objError } from "./errors/err.js";
 import FetchData from "./class/FetchData.js";
 import Utils from "./class/Utils.js";
 import Basket from "./class/basket.js";
-import UpdateHeaderBasket from "./class/UpdateHeaderBasket.js";
 /**
  *
  * Custom element for create all cards with description or not 
@@ -66,7 +65,7 @@ export default class CustomCard extends HTMLElement {
         lensCreateOptions.forEach(element => {
             strOptionLens += element;
         })
-          
+        
         // switch with data-attr
         switch (this.dataset.switch) {
             case 'noDesc':
