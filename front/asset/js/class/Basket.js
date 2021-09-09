@@ -198,19 +198,23 @@ export default class Basket {
         if (typeof productName !== 'string') {
             throw Error(`${objError.type.generic}`);
         }
-        // get basket in locStor
-        const jsonBasket = LocalStorage._getItem(this.keyBasket);
-        const objFromJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
-        const index = this.findIndexProduct(objFromJSON.productsBasket, productName);
-        objFromJSON.productsBasket.splice(index, 1);
-        // verif state
-        if (objFromJSON.productsBasket.length === 0) {
-            this.clearBasket();
-            return;
-        } 
-        // re add the new basket in locStor
-        const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
-        LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
+        try {
+            // get basket in locStor
+            const jsonBasket = LocalStorage._getItem(this.keyBasket);
+            const objFromJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
+            const index = this.findIndexProduct(objFromJSON.productsBasket, productName);
+            objFromJSON.productsBasket.splice(index, 1);
+            // verif state
+            if (objFromJSON.productsBasket.length === 0) {
+                this.clearBasket();
+                return;
+            } 
+            // re add the new basket in locStor
+            const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
+            LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     /**
@@ -220,7 +224,5 @@ export default class Basket {
      */
     clearBasket() {
         LocalStorage._reset();
-    }
-
-    
+    }   
 }

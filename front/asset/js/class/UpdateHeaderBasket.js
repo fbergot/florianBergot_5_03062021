@@ -30,8 +30,8 @@ export default class UpdateHeaderBasket {
    */
   static _getInstance() {
     if (this.instance === null) {
-      this.instance = new UpdateHeaderBasket(this.tagOfTarget);
-      return this.instance;
+        this.instance = new UpdateHeaderBasket(this.tagOfTarget);
+        return this.instance;
     }
     return this.instance;
   }
@@ -54,8 +54,12 @@ export default class UpdateHeaderBasket {
       console.error(err);
     }
     if (objFromStrJSON !== null) {
-      this.targetHTML.innerText = this.computeTotalInBasket(objFromStrJSON);
-      return;
+        try {
+            this.targetHTML.innerText = this.computeTotalInBasket(objFromStrJSON);
+            return;            
+        } catch(err) {
+            console.error(err);
+        }
     }
     this.targetHTML.innerText = 0;
   }
