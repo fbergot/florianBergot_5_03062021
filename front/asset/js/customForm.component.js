@@ -4,8 +4,8 @@ export default class CustomForm extends HTMLElement {
         this.innerHTML =
             `<div class='container' id='internalFormContainer'>
             ${this.createForm()}
-            </div>
-            `;
+            </div>`;
+            this.allInputs = [...document.querySelectorAll('input')];
         
     }
     /**
@@ -13,14 +13,22 @@ export default class CustomForm extends HTMLElement {
      * @returns {void}
      * @memberof CustomBasket
      */
-    connectedCallback() { }
+    connectedCallback() {
+        console.log(this.allInputs);
+        
+    }
     
+    /**
+     * Build bootstrap form
+     * @returns {String}
+     * @memberof CustomForm
+     */
     createForm() {
         return `
             <form>
                 <div class="form-group">
                     <label for="name">Nom</label>
-                    <input required type="email" class="form-control" id="name">
+                    <input required type="email" class="form-control is-invalid" id="name">
                     <div class="invalid-feedback">Veuillez entrer un nom</div>
                 </div>
 

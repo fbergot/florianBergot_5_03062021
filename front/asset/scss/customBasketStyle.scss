@@ -2,9 +2,13 @@
 @import './variable/font.scss';
 
 
-// custom-basket::part(head_thBut) {
-//     border: none;
-// }
+custom-basket::part(basketTitle) {
+    margin-top: 1.2rem;
+    font-family: $rob;
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-align: center;
+}
 custom-basket::part(cellProduct) {
     display: flex;
     flex-direction: column;
@@ -26,18 +30,24 @@ custom-basket::part(prodName) {
 
 custom-basket::part(removeItem) {
     padding: 2px 6px;
-    background-color: rgb(241, 125, 117);
+    background-color: rgb(187, 175, 174);
     cursor: pointer;
-    color: rgb(12, 12, 12);
-    font-size: 1rem;
+    font-size: .9rem;
+    color: rgb(248, 55, 55);
     transition: .3s all;
-    border: none;
+    border: 1px solid transparent;
 }
 
 custom-basket::part(removeItem):hover {
-    background-color: darken(rgb(241, 125, 117),5);
+    border: 1px solid rgb(12, 11, 11) ;
+    font-weight: 500;
 }
 
 custom-basket::part(totalPrice) {
     margin-top: 1rem;
+    font-size: 1.2rem;
+    font-family: $rob;
+    font-weight: 500;
+    padding: 1rem;
+    border: 1px solid rgb(189, 184, 184);
 }

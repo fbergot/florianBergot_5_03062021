@@ -28,8 +28,12 @@ export default class CustomBasket extends HTMLElement {
         // attach root of shadow DOM
         this.attachShadow({ mode: "open" });
         this.shadowRoot.innerHTML =
-            `<div part='containerBasket' id='internalBasketContainer'>
-            </div>`;
+            `<div>
+                <h1 part='basketTitle'>Voici votre panier</h1>
+                <div part='containerBasket' id='internalBasketContainer'>
+                </div>
+            </div>
+                `;
     }
 
     /**
@@ -65,7 +69,7 @@ export default class CustomBasket extends HTMLElement {
                 </thead>
                 <tbody id='bodyTable'></tbody>
             </table>
-            <div part='totalPrice' id='totalPrice'></div>
+            <div id='totalPrice'></div>
             `;
     }
 
@@ -99,30 +103,37 @@ export default class CustomBasket extends HTMLElement {
                 </td>
                 <td>${price}€</td>
                 <td>${subTotal}€</td>               
-                <td class='cellBut'>
+                <td>
                     <button part='removeItem' class='remove' data-productName="${item.name}">X</button>
                 </td>
             </tr>
             <style>         
-                table, th, td {
+                table, th {
                     padding: .25rem;
                     text-align: center;
+                    font-weight: 500;
                     border: 1px solid grey;
                     border-collapse: collapse;
                 }
                 .inpNumProd {
                     width: 40px;
                     height: 20px
+                    font-size: 1.1rem;
+                    padding: .1rem;
+                    font-weight: 600;
                 }
                 .cellBut {
-                    border: none;
-                    border-color: transparent;
+                    background-color: grey;
                 }
                 #internalBasketContainer {
                     display: flex;
                     flex-direction: column;
                     margin-left: 2rem;
                     margin-right: 2rem;
+                }
+                #totalPrice {
+                    display: flex;
+                    justify-content: center;
                 }
             </style>`;
     }
@@ -217,7 +228,7 @@ export default class CustomBasket extends HTMLElement {
             // build
             this.loopOnBasket(objFromStrJSON.productsBasket);
             this.render("#bodyTable", this.linesBasket);
-            this.render('#totalPrice', `Total : ${this.computeTotal()}€`);
+            this.render('#totalPrice', `<p part='totalPrice'>Total : ${this.computeTotal()}€</p>`);
             this.addInputEvent();
             this.addDeleteEvent();
         } catch (err) {

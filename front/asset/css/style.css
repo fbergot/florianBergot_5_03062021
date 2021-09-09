@@ -167,6 +167,14 @@ custom-card::part(productPriceFull) {
   font-weight: 500;
 }
 
+custom-basket::part(basketTitle) {
+  margin-top: 1.2rem;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-align: center;
+}
+
 custom-basket::part(cellProduct) {
   display: flex;
   flex-direction: column;
@@ -188,20 +196,26 @@ custom-basket::part(prodName) {
 
 custom-basket::part(removeItem) {
   padding: 2px 6px;
-  background-color: #f17d75;
+  background-color: #bbafae;
   cursor: pointer;
-  color: #0c0c0c;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  color: #f83737;
   transition: 0.3s all;
-  border: none;
+  border: 1px solid transparent;
 }
 
 custom-basket::part(removeItem):hover {
-  background-color: #ef675e;
+  border: 1px solid #0c0b0b;
+  font-weight: 500;
 }
 
 custom-basket::part(totalPrice) {
   margin-top: 1rem;
+  font-size: 1.2rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  padding: 1rem;
+  border: 1px solid #bdb8b8;
 }
 
 * {
@@ -257,7 +271,6 @@ html, body {
 }
 
 main {
-  min-height: 70vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -343,6 +356,13 @@ main .bar {
 }
 .return span {
   color: #000;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  margin-top: 1.2rem;
 }
 
 /*# sourceMappingURL=style.css.map */
