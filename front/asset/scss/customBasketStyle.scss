@@ -35,16 +35,18 @@ custom-basket::part(removeItem) {
     font-size: .9rem;
     color: rgb(248, 55, 55);
     transition: .3s all;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
+    border-radius: 50%;
 }
 
 custom-basket::part(removeItem):hover {
-    border: 1px solid rgb(12, 11, 11) ;
+    border: 2px solid rgb(12, 11, 11) ;
     font-weight: 500;
 }
 
 custom-basket::part(totalPrice) {
     margin-top: 1rem;
+    margin-bottom: 0;
     font-size: 1.2rem;
     font-family: $rob;
     font-weight: 500;

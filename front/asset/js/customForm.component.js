@@ -2,11 +2,10 @@ export default class CustomForm extends HTMLElement {
     constructor() {
         super();
         this.innerHTML =
-            `<div class='container' id='internalFormContainer'>
+            `<div id='internalFormContainer'>
             ${this.createForm()}
             </div>`;
-            this.allInputs = [...document.querySelectorAll('input')];
-        
+            this.allInputs = [...document.querySelectorAll('input')];        
     }
     /**
      * Called when customEl is add in DOM
@@ -28,7 +27,7 @@ export default class CustomForm extends HTMLElement {
             <form>
                 <div class="form-group">
                     <label for="name">Nom</label>
-                    <input required type="email" class="form-control is-invalid" id="name">
+                    <input required type="text" class="form-control is-invalid" id="name">
                     <div class="invalid-feedback">Veuillez entrer un nom</div>
                 </div>
 

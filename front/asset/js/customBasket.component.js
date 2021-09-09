@@ -112,7 +112,7 @@ export default class CustomBasket extends HTMLElement {
                     padding: .25rem;
                     text-align: center;
                     font-weight: 500;
-                    border: 1px solid grey;
+                    border: 1px solid rgb(189, 184, 184);
                     border-collapse: collapse;
                 }
                 .inpNumProd {
@@ -128,8 +128,6 @@ export default class CustomBasket extends HTMLElement {
                 #internalBasketContainer {
                     display: flex;
                     flex-direction: column;
-                    margin-left: 2rem;
-                    margin-right: 2rem;
                 }
                 #totalPrice {
                     display: flex;
@@ -148,14 +146,14 @@ export default class CustomBasket extends HTMLElement {
         if (!Array.isArray(arrayProducts)) {
             throw Error(`${objError.type.generic}`);
         }
-        this.linesBasket = "";
-        arrayProducts.forEach((element) => {
-            try {
-                this.linesBasket += this.createLineOfData(element);
-            } catch (err) {
-                console.error(err);
-            }
-        });
+        try {
+            this.linesBasket = "";
+            arrayProducts.forEach((element) => {
+                    this.linesBasket += this.createLineOfData(element);
+                });
+        } catch (err) {
+            console.error(err);
+        }
     }
     
     /**

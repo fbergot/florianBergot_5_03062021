@@ -201,16 +201,18 @@ custom-basket::part(removeItem) {
   font-size: 0.9rem;
   color: #f83737;
   transition: 0.3s all;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
+  border-radius: 50%;
 }
 
 custom-basket::part(removeItem):hover {
-  border: 1px solid #0c0b0b;
+  border: 2px solid #0c0b0b;
   font-weight: 500;
 }
 
 custom-basket::part(totalPrice) {
   margin-top: 1rem;
+  margin-bottom: 0;
   font-size: 1.2rem;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
@@ -270,11 +272,6 @@ html, body {
   font-weight: 500;
 }
 
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 main .titleMaster {
   padding: 1rem 0 1rem 0;
   text-align: center;
