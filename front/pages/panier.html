@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panier</title>
     <link rel="stylesheet" href="../asset/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script type="module" src="../asset/js/app.js" defer></script>
 </head>
 <body>
@@ -19,9 +20,13 @@
         </nav>
     </header>
     <main>
-        <h1 class="titleMaster">Votre panier</h1>
-        <div class="containerBasket">
-            <custom-basket></custom-basket>            
+        <h1 class="titleMaster">Voici votre panier</h1>
+        <div class="">
+            <custom-basket></custom-basket>
+        </div>
+        <div class="container-fluid">
+                <h2 class="text-center">Passer votre commande</h2>
+                <custom-form></custom-form>            
         </div>
     </main>
     <footer class="footer">

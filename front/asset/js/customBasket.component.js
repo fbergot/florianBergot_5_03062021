@@ -104,7 +104,7 @@ export default class CustomBasket extends HTMLElement {
                 </td>
             </tr>
             <style>         
-                table,th,td{
+                table, th, td {
                     padding: .25rem;
                     text-align: center;
                     border: 1px solid grey;
@@ -118,8 +118,13 @@ export default class CustomBasket extends HTMLElement {
                     border: none;
                     border-color: transparent;
                 }
-            </style>
-            `;
+                #internalBasketContainer {
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 2rem;
+                    margin-right: 2rem;
+                }
+            </style>`;
     }
 
     /**
@@ -206,9 +211,10 @@ export default class CustomBasket extends HTMLElement {
             // create structure <table>
             this.render("#internalBasketContainer", this.createStructureTable());
             this.allSubTotal = [];
-            // get in localstorage
+            // get obj in localstorage
             const jsonBasket = LocalStorage._getItem(this.keyBasket);
             const objFromStrJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
+            // build
             this.loopOnBasket(objFromStrJSON.productsBasket);
             this.render("#bodyTable", this.linesBasket);
             this.render('#totalPrice', `Total : ${this.computeTotal()}€`);
