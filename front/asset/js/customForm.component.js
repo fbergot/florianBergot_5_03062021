@@ -114,7 +114,7 @@ export default class CustomForm extends HTMLElement {
     }
     
     /**
-     * Build bootstrap form
+     * Build string of form
      * @returns {String}
      * @memberof CustomForm
      */

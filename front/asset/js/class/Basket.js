@@ -202,11 +202,12 @@ export default class Basket {
             // get basket in locStor
             const jsonBasket = LocalStorage._getItem(this.keyBasket);
             const objFromJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
-            const index = this.findIndexProduct(objFromJSON.productsBasket, productName);
-            objFromJSON.productsBasket.splice(index, 1);
-            // verif state
+            // find & remove product
+            const indexProd = this.findIndexProduct(objFromJSON.productsBasket, productName);
+            objFromJSON.productsBasket.splice(indexProd, 1);
+            // verif state (remove basket item if empty)
             if (objFromJSON.productsBasket.length === 0) {
-                this.clearBasket();
+                this.clearBasket(this.keyBasket);
                 return;
             } 
             // re add the new basket in locStor
@@ -222,7 +223,7 @@ export default class Basket {
      * @use LocalStorage class
      * @memberof Basket
      */
-    clearBasket() {
-        LocalStorage._reset();
+    clearBasket(key) {
+        LocalStorage._removeItem(key);
     }   
 }

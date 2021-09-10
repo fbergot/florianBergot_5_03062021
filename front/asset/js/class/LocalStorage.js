@@ -57,7 +57,12 @@ export default class LocalStorage {
         return window.localStorage.getItem(key);
     }
 
-    static _reset() {
-        window.localStorage.clear();
+    /**
+     * Remove one item with his key
+     * @static
+     * @memberof LocalStorage
+     */
+    static _removeItem(key) {
+        window.localStorage.removeItem(key);
     }
 }
