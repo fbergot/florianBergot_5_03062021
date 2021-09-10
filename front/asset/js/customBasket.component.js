@@ -64,7 +64,7 @@ export default class CustomBasket extends HTMLElement {
                         <th>Quantité</th>
                         <th>Prix</th>
                         <th>Sous total</th>
-                        <th class='cellBut'></th>
+                        <th part='cellBut'></th>
                     </tr>
                 </thead>
                 <tbody id='bodyTable'></tbody>
@@ -115,16 +115,8 @@ export default class CustomBasket extends HTMLElement {
                     border: 1px solid rgb(189, 184, 184);
                     border-collapse: collapse;
                 }
-                .inpNumProd {
-                    width: 40px;
-                    height: 20px
-                    font-size: 1.1rem;
-                    padding: .1rem;
-                    font-weight: 600;
-                }
-                .cellBut {
-                    background-color: grey;
-                }
+                
+                
                 #internalBasketContainer {
                     display: flex;
                     flex-direction: column;

@@ -1,4 +1,10 @@
+import Validation from "./class/Validation.js";
+
 export default class CustomForm extends HTMLElement {
+    /**
+     *Creates an instance of CustomForm.
+     * @memberof CustomForm
+     */
     constructor() {
         super();
         this.innerHTML =
@@ -13,8 +19,26 @@ export default class CustomForm extends HTMLElement {
      * @memberof CustomBasket
      */
     connectedCallback() {
-        console.log(this.allInputs);
+        this.addEvent();
         
+    }
+
+    /**
+     *
+     * Add eventListener on all inputs
+     * @use Validation class
+     * @returns {void} 
+     * @memberof CustomForm
+     */
+    addEvent() {
+        this.allInputs.forEach((input, index, array) => {
+            input.addEventListener('blur', (e) => {
+                Validation._getInstance().verifInput(e.target.value, index, array);
+            })
+            input.addEventListener('click', function(e) {
+                this.classList.remove('is-invalid');
+            })
+        })
     }
     
     /**
@@ -27,14 +51,14 @@ export default class CustomForm extends HTMLElement {
             <form>
                 <div class="form-group">
                     <label for="name">Nom</label>
-                    <input required type="text" class="form-control is-invalid" id="name">
-                    <div class="invalid-feedback">Veuillez entrer un nom</div>
+                    <input required type="text" class="form-control" id="name">
+                    <div class="invalid-feedback">Veuillez entrer un nom valide (2-20car)</div>
                 </div>
 
                 <div class="form-group">
                     <label for="lastname">Prénom</label>
                     <input required type="text" class="form-control" id="lastname">
-                    <div class="invalid-feedback">Veuillez entrer un prénom</div>
+                    <div class="invalid-feedback">Veuillez entrer un prénom valide (2-20car)</div>
                 </div>
 
                 <div class="form-group">
@@ -51,13 +75,13 @@ export default class CustomForm extends HTMLElement {
                 <div class="form-group">
                     <label for="adress">Adresse</label>
                     <input required type="text" class="form-control" id="adress">
-                    <div class="invalid-feedback">Veuillez entrer une adresse</div>
+                    <div class="invalid-feedback">Veuillez entrer une adresse valide (5-50car)</div>
                 </div>
 
                 <div class="form-group">
                     <label for="city">Ville</label>
                     <input required type="text" class="form-control" id="city">
-                    <div class="invalid-feedback">Veuillez entrer une ville</div>
+                    <div class="invalid-feedback">Veuillez entrer une ville (2-30car)</div>
                 </div>
                 <button type="submit" class="btn">Envoyer</button>
             </form>

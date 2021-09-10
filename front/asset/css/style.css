@@ -175,7 +175,12 @@ custom-basket::part(basketTitle) {
   text-align: center;
 }
 
+custom-basket::part(cellBut) {
+  background-color: #bbafae;
+}
+
 custom-basket::part(cellProduct) {
+  margin-top: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -189,9 +194,18 @@ custom-basket::part(prodImg) {
 }
 
 custom-basket::part(prodName) {
-  font-size: 13px;
+  font-size: 0.9rem;
   margin: 0;
   padding: 0.2rem 0;
+}
+
+custom-basket::part(numberOfProd) {
+  width: 40px;
+  height: 20px;
+  font-size: 0.9rem;
+  padding: 0.1rem;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
 }
 
 custom-basket::part(removeItem) {
