@@ -1,7 +1,19 @@
 import Form from "./class/Form.js";
 import Validation from "./class/Validation.js";
 import Utils from "./class/Utils.js";
+import LocalStorage from "./class/LocalStorage.js";
+import FetchData from "./class/FetchData.js";
 
+/**
+ *
+ * Custom element <custom-form>
+ * @use Utils class
+ * @use Validation class
+ * @use Form class
+ * @export
+ * @class CustomForm
+ * @extends {HTMLElement}
+ */
 export default class CustomForm extends HTMLElement {
     /**
      *Creates an instance of CustomForm.
@@ -39,11 +51,10 @@ export default class CustomForm extends HTMLElement {
         try {
             this.form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const stateForm = Form.beforeSubmit(this.allInputs);
-                if (stateForm) {
-                    const body = Utils._buildQueryBody(this.allInputs);
-                    console.log(body);
-                    // after, call api with his body..
+                // last verif user data before treatment
+                if (Form.beforeSubmit(this.allInputs)) {
+                    this.treatmentToApi();
+                    // else pb :
                 }
             })
         } catch (err) {
@@ -59,6 +70,44 @@ export default class CustomForm extends HTMLElement {
                     e.target.classList.remove('is-invalid');
                 })
             })
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    /**
+     * Build json body (contact, products)
+     * @use Utils class
+     * @param {Object} objContact
+     * @returns {String} json body
+     * @memberof CustomForm
+     */
+    buildBody() {
+        try {
+            // get from localStorage
+            /** @var {null|String} */
+            const basket = LocalStorage._getItem("basket");
+            const productsBasketfromJSON = Utils._workWithJSON(basket, "toOBJ");
+            // build body POST request
+            const contactOfBody = Utils._buildContactBody(this.allInputs);
+            /** @var {Array<String>} productsOfBody all ids products */
+            const productsOfBody = Utils._recomposeProductsId(productsBasketfromJSON);
+            return Utils._workWithJSON({ contact: contactOfBody, products: productsOfBody }, "toJSON");
+        } catch (err) {
+            console.error(err);
+        }
+    }
+    
+    async treatmentToApi() {
+        const JSONbody = this.buildBody();
+        const options = {
+            method: "POST",
+            body: JSONbody
+        }
+        try {
+            /** @var {Promise} ApiResponse */
+            const APIResponse = await FetchData._getInstance().getData("/order", options);
+            console.log(APIResponse);
         } catch (err) {
             console.error(err);
         }

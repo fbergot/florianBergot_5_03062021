@@ -1,7 +1,7 @@
 import { objError } from "../errors/err.js";
 /**
- *
  * class utils
+ * @static 
  * @export
  * @use objError
  * @class Utils
@@ -75,19 +75,19 @@ export default class Utils {
      * @use objError obj
      * @static
      * @param {Array<HTMLInputElement>} arrayInputs
+     * @returns {Object<String>}
      * @memberof Utils
      */
-    static _buildQueryBody(arrayInputs) {
+    static _buildContactBody(arrayInputs) {
         if (!Array.isArray(arrayInputs)) {
             throw Error(`${objError.type.generic}`);
         }
-        const postBody = {};
-        let i = 0;
         /**
          * Build postBody object from arrayInput
          * @param {Number} n
-         * @returns {Object<String>}
          */
+        const postBody = {};
+        let i = 0;
         function recursLoop(n) {
             if (i <= arrayInputs.length) {
                 postBody[arrayInputs[n].id] = arrayInputs[n].value;
@@ -96,6 +96,27 @@ export default class Utils {
         }
         recursLoop(i);
         return postBody; 
+    }
+
+    /**
+     * Recompose id of product
+     * @static
+     * @param {Array} { productsBasket }
+     * @returns {Array<String>} ids products
+     * @memberof Utils
+     */
+    static _recomposeProductsId({ productsBasket }) {
+        if (!Array.isArray(productsBasket)) {
+            throw Error(`${objError.type.generic}`);
+        }
+        /** @var {Array<String>} */
+        const productsId = [];       
+        for (let i = 0; i < productsBasket.length; i++) {
+            for (let j = 0; j < productsBasket[i].quantity; j++) {
+                productsId.push(productsBasket[i]._id);
+            }
+        }
+        return productsId;
     }
 }
 
