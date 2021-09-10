@@ -69,5 +69,7 @@ export default class Utils {
         }
         return (price === 0 ? null : nDiv === 0 ? null : price / nDiv);
     }
+
+    static createQueryBody() {}
 }
 
