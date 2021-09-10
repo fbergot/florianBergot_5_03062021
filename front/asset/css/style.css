@@ -292,7 +292,11 @@ main .titleMaster {
   font-size: 1.5rem;
   font-weight: 400;
 }
-main .bar {
+main .contBar {
+  display: flex;
+  justify-content: center;
+}
+main .contBar div {
   background-color: #F2E8F0;
   width: 50%;
   height: 3px;

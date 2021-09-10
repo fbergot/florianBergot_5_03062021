@@ -65,11 +65,16 @@ main {
         font-size: 1.5rem;
         font-weight: 400;
     }
-    .bar {
-        background-color: $colorBackgOrinoco;
-        width: 50%;
-        height: 3px;
+    .contBar {
+        display: flex;
+        justify-content: center;
+        div {
+            background-color: $colorBackgOrinoco;
+            width: 50%;
+            height: 3px;
+        }
     }
+   
 }
 
 .footer {

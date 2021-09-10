@@ -70,6 +70,32 @@ export default class Utils {
         return (price === 0 ? null : nDiv === 0 ? null : price / nDiv);
     }
 
-    static createQueryBody() {}
+    /**
+     * Build an object from an array of HTMLInputElement
+     * @use objError obj
+     * @static
+     * @param {Array<HTMLInputElement>} arrayInputs
+     * @memberof Utils
+     */
+    static _buildQueryBody(arrayInputs) {
+        if (!Array.isArray(arrayInputs)) {
+            throw Error(`${objError.type.generic}`);
+        }
+        const postBody = {};
+        let i = 0;
+        /**
+         * Build postBody object from arrayInput
+         * @param {Number} n
+         * @returns {Object<String>}
+         */
+        function recursLoop(n) {
+            if (i <= arrayInputs.length) {
+                postBody[arrayInputs[n].id] = arrayInputs[n].value;
+                recursLoop(i++);
+            }           
+        }
+        recursLoop(i);
+        return postBody; 
+    }
 }
 

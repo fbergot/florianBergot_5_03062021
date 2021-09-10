@@ -31,11 +31,11 @@ export default class Validation {
     constructor() {
         /** @var {Object<RegExp> for => 0:firstName, 1:LastName, 2: email, 3: address, 4: city} */
         this.regexForVerifInput = {
-            0: new RegExp("^[a-z ,.'-]{2,20}$", 'i'),
-            1: new RegExp("^[a-z ,.'-]{2,20}$", 'i'),
+            0: new RegExp("^[a-z ,.'-,éàè]{2,20}$", 'i'),
+            1: new RegExp("^[a-z ,.'-,éàè]{2,20}$", 'i'),
             2: new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'i'),
-            3: new RegExp("^[a-z|0-9 ,.'-]{5,50}$", 'i'),
-            4: new RegExp("^[a-z ,.'-]{2,30}$", 'i'),
+            3: new RegExp("^[a-z,0-9 ,.'-,éàè]{5,50}$", 'i'),
+            4: new RegExp("^[a-z ,.'-,éàè]{2,30}$", 'i'),
         }
     }
         

@@ -1,5 +1,6 @@
 import Form from "./class/Form.js";
 import Validation from "./class/Validation.js";
+import Utils from "./class/Utils.js";
 
 export default class CustomForm extends HTMLElement {
     /**
@@ -37,14 +38,18 @@ export default class CustomForm extends HTMLElement {
         // onsubmit form
         try {
             this.form.addEventListener('submit', (e) => {
-                const stateForm = Form.beforeSubmit(this.allInputs);
-                console.log(stateForm);
                 e.preventDefault();
+                const stateForm = Form.beforeSubmit(this.allInputs);
+                if (stateForm) {
+                    const body = Utils._buildQueryBody(this.allInputs);
+                    console.log(body);
+                    // after, call api with his body..
+                }
             })
         } catch (err) {
             console.error(err);
         }
-        // on all
+        // on all input
         try {
             this.allInputs.forEach((input, index, array) => {
                 input.addEventListener('blur', (e) => {
