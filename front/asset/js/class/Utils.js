@@ -86,16 +86,16 @@ export default class Utils {
          * Build postBody object from arrayInput
          * @param {Number} n
          */
-        const postBody = {};
+        const contactBody = {};
         let i = 0;
         function recursLoop(n) {
             if (i <= arrayInputs.length) {
-                postBody[arrayInputs[n].id] = arrayInputs[n].value;
+                contactBody[arrayInputs[n].id] = arrayInputs[n].value;
                 recursLoop(i++);
             }           
         }
         recursLoop(i);
-        return postBody; 
+        return contactBody; 
     }
 
     /**

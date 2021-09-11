@@ -1,3 +1,4 @@
+import { objError } from "./errors/err.js";
 import Form from "./class/Form.js";
 import Validation from "./class/Validation.js";
 import Utils from "./class/Utils.js";
@@ -7,9 +8,12 @@ import FetchData from "./class/FetchData.js";
 /**
  *
  * Custom element <custom-form>
- * @use Utils class
- * @use Validation class
+ * @use objError obj
  * @use Form class
+ * @use Validation class
+ * @use Utils class
+ * @use LocalStorage class
+ * @use FetchData class
  * @export
  * @class CustomForm
  * @extends {HTMLElement}
@@ -29,6 +33,7 @@ export default class CustomForm extends HTMLElement {
         this.allInputs = [...document.querySelectorAll('input')];
         this.form = document.querySelector('form');
         this.submitButton = document.querySelector('#submit');
+        this.keyStorage = "responseApi";
     }
     /**
      * Called when customEl is add in DOM
@@ -53,14 +58,13 @@ export default class CustomForm extends HTMLElement {
                 e.preventDefault();
                 // last verif user data before treatment
                 if (Form.beforeSubmit(this.allInputs)) {
-                    this.treatmentToApi();
-                    // else pb :
-                }
+                    this.treatmentToApi(this.buildBody());
+                }// else pb :
             })
         } catch (err) {
             console.error(err);
         }
-        // on all input
+        // on all form input
         try {
             this.allInputs.forEach((input, index, array) => {
                 input.addEventListener('blur', (e) => {
@@ -88,7 +92,7 @@ export default class CustomForm extends HTMLElement {
             /** @var {null|String} */
             const basket = LocalStorage._getItem("basket");
             const productsBasketfromJSON = Utils._workWithJSON(basket, "toOBJ");
-            // build body POST request
+            // build body
             const contactOfBody = Utils._buildContactBody(this.allInputs);
             /** @var {Array<String>} productsOfBody all ids products */
             const productsOfBody = Utils._recomposeProductsId(productsBasketfromJSON);
@@ -98,16 +102,47 @@ export default class CustomForm extends HTMLElement {
         }
     }
     
-    async treatmentToApi() {
-        const JSONbody = this.buildBody();
+    async treatmentToApi(body) {
         const options = {
             method: "POST",
-            body: JSONbody
+            body: body
         }
         try {
             /** @var {Promise} ApiResponse */
             const APIResponse = await FetchData._getInstance().getData("/order", options);
-            console.log(APIResponse);
+            this.loadInStorage(this.keyStorage, APIResponse);            
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    /**
+     *
+     *
+     * @param {String} url
+     * @memberof CustomForm
+     */
+    redirect(url) {
+        window.location.assign(url);
+    }
+
+    /**
+     * Add one item in session storage
+     * @use objError obj
+     * @use LocalStorage class
+     * @use Utils class
+     * @param {String} key
+     * @param {Object} data
+     * @memberof CustomForm
+     */
+    loadInStorage(key, data) {
+        if (typeof key !== 'string' || typeof data !== 'object') {
+            throw Error(`${objError.type.generic}`);
+        }
+        try {
+            const stringData = Utils._workWithJSON(data, 'toJSON');
+            LocalStorage._setItem(key, stringData);
+            this.redirect("/front/pages/confirmation.html");
         } catch (err) {
             console.error(err);
         }

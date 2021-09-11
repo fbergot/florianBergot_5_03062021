@@ -25,9 +25,9 @@ export default class LocalStorage {
     }
 
     /** 
-     *
-     *
+     * Set item in local storage
      * @static
+     * @use objError obj
      * @param {String} key (ever string in localStorage)
      * @param {String} value (ever string in localStorage)
      * @throw
