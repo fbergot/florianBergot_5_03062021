@@ -13,7 +13,7 @@ export default class LocalStorage {
      * @use objError obj
      * @param {String} key
      * @throw
-     * @returns {Boolean}
+     * @return {Boolean}
      * @memberof LocalStorage
      */
     static _verifIfItemExist(key) {
@@ -60,6 +60,8 @@ export default class LocalStorage {
     /**
      * Remove one item with his key
      * @static
+     * @param {String}
+     * @return {void}
      * @memberof LocalStorage
      */
     static _removeItem(key) {

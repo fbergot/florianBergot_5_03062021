@@ -12,10 +12,10 @@ export default class Utils {
      * Allows create JSON from Obj or Obj from JSON
      * @static
      * @use objError
-     * @param {String|Object} data
-     * @param {String} vSwitch
+     * @param {String|{}} data
+     * @param {String='toOBJ, toJSON'} vSwitch
      * @throw
-     * @returns {Object|String|null}
+     * @returns {{}|String|null}
      * @memberof Utils
      */
     static _workWithJSON(data, vSwitch) {
@@ -41,7 +41,7 @@ export default class Utils {
      * @param {String} paramsStr (ex: q=test&name=flo)
      * @param {String} key
      * @throw
-     * @returns {String}
+     * @return {String}
      * @memberof Utils
      */
     static _getInParamURL(paramsStr, key) {
@@ -75,7 +75,7 @@ export default class Utils {
      * @use objError obj
      * @static
      * @param {Array<HTMLInputElement>} arrayInputs
-     * @returns {Object<String>}
+     * @returns {{}}
      * @memberof Utils
      */
     static _buildContactBody(arrayInputs) {

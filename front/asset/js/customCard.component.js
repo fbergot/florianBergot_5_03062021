@@ -120,7 +120,7 @@ export default class CustomCard extends HTMLElement {
         const urlString = window.location.search;
         const paramsAlso = urlString.replace('?', '');
         try {
-            /** @var {String} */
+            /** @var {String} paramURL */
             var paramURL = Utils._getInParamURL(paramsAlso, key);
         } catch (err) {
             console.error(err);
@@ -135,11 +135,10 @@ export default class CustomCard extends HTMLElement {
     * @use dataset (data-attr)
     * @use Basket class
     * @throw
-    * @returns {void}
+    * @return {void}
     * @memberof CustomCard
     */
-   async connectedCallback() {
-       
+   async connectedCallback() {      
        // switch with data-attr
        switch (this.dataset.switch) {
            case 'noDesc':
@@ -182,7 +181,7 @@ export default class CustomCard extends HTMLElement {
      * @use FetchData class
      * @param {String} uri
      * @throw
-     * @returns {Promise}
+     * @return {Promise}
      * @memberof CustomCard
      */
     reFactorize(uri, options) {

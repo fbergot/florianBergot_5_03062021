@@ -21,7 +21,7 @@ export default class Basket {
     /**
      * Creates an instance of Basket.
      * @param {String} keyBasket
-     * @param {Object<Array>} definitionBasket
+     * @param {{productsBasket:[]}} definitionBasket
      * @memberof Basket
      */
     constructor(keyBasket, definitionBasket) {
@@ -31,7 +31,7 @@ export default class Basket {
 
     /**
      * Allow get unique instance of Basket class (singleton)
-     * @returns {Instance of Basket}
+     * @returns {InstanceType<Basket>}
      * @memberof Basket
      */
     static _getInstance() {
@@ -44,8 +44,10 @@ export default class Basket {
     /**
      * Create the basket with first product
      * @static
-     * @param {Object} firstProduct
+     * @param {{quantity:Number, price:Number, lenses:Array<String>,
+     *  name:String, description:String, imageUrl:String, _id:String }} firstProduct
      * @throw
+     * @return {void}
      * @memberof Basket
      */
     createBasket(firstProduct) {
@@ -54,7 +56,6 @@ export default class Basket {
         }
         this.defBasket.productsBasket.push(firstProduct);
         try {
-          /** @var {String} */
           const strJsonFromObj = Utils._workWithJSON(this.defBasket, "toJSON");
           LocalStorage._setItem(this.keyBasket, strJsonFromObj);
         } catch (err) {
@@ -65,8 +66,10 @@ export default class Basket {
     /**
      * Verif is product is present in basket (add product or add quantity)
      * @use objError
-     * @param {Object} objFromStrJSON
-     * @param {Object} product
+     * @param {{productsBasket:Array}} objFromStrJSON
+     * @param {{quantity:Number, price:Number, lenses:Array<String>,
+     *  name:String, description:String, imageUrl:String, _id:String }} product
+     * @return {void}
      * @memberof Basket
      */
     verifIsPresent(objFromStrJSON, product) {
@@ -89,9 +92,10 @@ export default class Basket {
      * @use LocalStorage class
      * @use Utils class
      * @use objError obj
-     * @param {Object} product
+     * @param {{quantity:Number, price:Number, lenses:Array<String>,
+     *  name:String, description:String, imageUrl:String, _id:String }} product
      * @throw
-     * @returns {void}
+     * @return {void}
      * @memberof Basket
      */
     addInBasket(product) {
@@ -122,7 +126,7 @@ export default class Basket {
             }
         } else {
             try {               
-                // init the basket in localStorage with first product (after be converted)
+                // init the basket in localStorage with first product
                 this.createBasket(product);
                 UpdateHeaderBasket._getInstance().update();                
             } catch (err) {
@@ -135,6 +139,7 @@ export default class Basket {
      * Update the quantity per product
      * @param {String} productName
      * @param {Number} quantity
+     * @return {void}
      * @memberof Basket
      */
     updateQuantity(productName, quantity) {
@@ -178,7 +183,7 @@ export default class Basket {
      *
      * @param {Array} arrayProduct
      * @param {String} productName
-     * @returns {Number} (-1 if false for all element)
+     * @return {Number} (-1 if false for all element)
      * @memberof Basket
      */
     findIndexProduct(arrayProduct, productName) {
@@ -190,8 +195,8 @@ export default class Basket {
 
     /**
      * Remove one product in localStorage basket
-     * @param {String} nameProduct
-     * @returns {void}
+     * @param {String} productName
+     * @return {void}
      * @memberof Basket
      */
     removeProduct(productName) {
@@ -219,11 +224,15 @@ export default class Basket {
     }
 
     /**
-     * Clear localStorage
+     * Remove an item in local storage
      * @use LocalStorage class
+     * @return {void}
      * @memberof Basket
      */
     clearBasket(key) {
+        if (typeof key !== 'string') {
+            throw Error(`${objError.type.generic}`);
+        }
         LocalStorage._removeItem(key);
     }   
 }

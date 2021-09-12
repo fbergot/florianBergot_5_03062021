@@ -9,7 +9,7 @@ import { objError } from "../errors/err.js";
 export default class FetchData {
     
     /**
-     * @var {null|FetchData instance}
+     * @var {null|InstanceType<FetchData>}
      */
     static instance = null;
     static baseUri = "http://localhost:3000/api/cameras";
@@ -30,7 +30,7 @@ export default class FetchData {
     /**
      * Allow get unique instance of FetchData (singleton)
      * @static
-     * @returns {FetchData Instance}
+     * @returns {InstanceType<FetchData>}
      * @memberof FetchData
      */
     static _getInstance() {
@@ -47,7 +47,7 @@ export default class FetchData {
      * @param {String} uri
      * @param {Object} objOptions
      * @throw
-     * @returns {Promise}
+     * @return {Promise}
      * @memberof FetchData
      */
     getData(uri, objOptions) {

@@ -52,7 +52,7 @@ export default class CustomBasket extends HTMLElement {
 
     /**
      * Build basic structure of table
-     * @returns {String}
+     * @return. {String}
      * @memberof CustomBasket
      */
     createStructureTable() {        
@@ -75,12 +75,13 @@ export default class CustomBasket extends HTMLElement {
 
     /**
      * Build string of cell for table with item data (name, quantity....)
-     * @param {Object} item
-     * @returns {String}
+     * @param {{quantity:Number, price:Number, lenses:Array<String>,
+     *  name:String, description:String, imageUrl:String, _id:String }} item
+     * @return {String}
      * @memberof CustomBasket
      */
     createLineOfData(item) {
-        if (typeof item !== 'object' && !Array.isArray(item)) {
+        if (typeof item !== 'object') {
             throw Error(`${objError.type.generic}`);
         }
         try {
@@ -130,8 +131,8 @@ export default class CustomBasket extends HTMLElement {
 
     /**
      * Loop in product array for create the lines in <table> basket
-     * @param {Array} arrayProducts
-     * @returns {void}
+     * @param {Array<{}>} arrayProducts
+     * @return {void}
      * @memberof CustomBasket
      */
     loopOnBasket(arrayProducts) {
@@ -177,7 +178,7 @@ export default class CustomBasket extends HTMLElement {
                     console.error(err);
                 }
                 this.construct();
-            }); 
+            }, false); 
         });
     }
 
@@ -192,7 +193,7 @@ export default class CustomBasket extends HTMLElement {
                 }
                 this.construct();
                 UpdateHeaderBasket._getInstance().update();                
-            })
+            }, false)
         })
     }
 
@@ -200,7 +201,7 @@ export default class CustomBasket extends HTMLElement {
      * Build line of table from product in localStorage
      * @use Utils class
      * @use LocalStorage class
-     * @returns {void}
+     * @return {void}
      * @memberof CustomBasket
      */
     construct() {

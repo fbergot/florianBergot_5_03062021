@@ -29,7 +29,7 @@ export default class CustomForm extends HTMLElement {
             `<div id='internalFormContainer'>
             ${this.createForm()}
             </div>`;
-        /** @var {Array<HTMLInputElement>} */
+        /** @property {Array<HTMLInputElement>} allInputs */
         this.allInputs = [...document.querySelectorAll('input')];
         this.form = document.querySelector('form');
         this.submitButton = document.querySelector('#submit');
@@ -48,7 +48,7 @@ export default class CustomForm extends HTMLElement {
      * Add eventListener on all inputs & submit form
      * @use Validation class
      * @use Form class
-     * @returns {void} 
+     * @return {void} 
      * @memberof CustomForm
      */
     addEvent() {
@@ -82,14 +82,13 @@ export default class CustomForm extends HTMLElement {
     /**
      * Build json body (contact, products)
      * @use Utils class
-     * @param {Object} objContact
-     * @returns {String} json body
+     * @return {String} json body
      * @memberof CustomForm
      */
     buildBody() {
         try {
             // get from localStorage
-            /** @var {null|String} */
+            /** @var {?String} basket */
             const basket = LocalStorage._getItem("basket");
             const productsBasketfromJSON = Utils._workWithJSON(basket, "toOBJ");
             // build body
@@ -102,24 +101,31 @@ export default class CustomForm extends HTMLElement {
         }
     }
     
+    /**
+     * Request to API
+     * @async 
+     * @param {{contact: {firstName:String, lastName:String,
+     * email:String, address:String, city:String}, products: Array<String>}} body
+     * @return {void}
+     * @memberof CustomForm
+     */
     async treatmentToApi(body) {
         const options = {
             method: "POST",
             body: body
         }
         try {
-            /** @var {Promise} ApiResponse */
             const APIResponse = await FetchData._getInstance().getData("/order", options);
-            this.loadInStorage(this.keyStorage, APIResponse);            
+            this.loadInStorage(this.keyStorage, APIResponse, "/front/pages/confirmation.html");            
         } catch (err) {
             console.error(err);
         }
     }
 
     /**
-     *
-     *
+     * Redirect to URL
      * @param {String} url
+     * @return {void}
      * @memberof CustomForm
      */
     redirect(url) {
@@ -127,22 +133,28 @@ export default class CustomForm extends HTMLElement {
     }
 
     /**
-     * Add one item in session storage
+     * Add in local storage and redirect
      * @use objError obj
      * @use LocalStorage class
      * @use Utils class
      * @param {String} key
-     * @param {Object} data
+     * @param {{contact: {firstName:String, lastName:String,
+     * email:String, address:String, city:String},
+     * products: Array<String>, orderId:String}} data
+     * @param {String} url
+     * @return {void}
      * @memberof CustomForm
      */
-    loadInStorage(key, data) {
+    loadInStorage(key, data, url) {
         if (typeof key !== 'string' || typeof data !== 'object') {
             throw Error(`${objError.type.generic}`);
         }
         try {
             const stringData = Utils._workWithJSON(data, 'toJSON');
             LocalStorage._setItem(key, stringData);
-            this.redirect("/front/pages/confirmation.html");
+            // to delete basket item in localStorage
+            LocalStorage._removeItem('basket');
+            this.redirect(url);
         } catch (err) {
             console.error(err);
         }
@@ -150,7 +162,7 @@ export default class CustomForm extends HTMLElement {
     
     /**
      * Build string of form
-     * @returns {String}
+     * @return {String}
      * @memberof CustomForm
      */
     createForm() {

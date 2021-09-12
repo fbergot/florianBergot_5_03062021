@@ -14,14 +14,14 @@ export default class Form {
      * @use Validation class
      * @use objError obj
      * @param {Array<HTMLInputElement>} inputsArray
-     * @returns
+     * @throw
+     * @return {Boolean}
      * @memberof Form
      */
     static beforeSubmit(inputsArray) {
         if (!Array.isArray(inputsArray)) {
             throw Error(`${objError.type.generic}`);
         }
-        let state;
         for (let i = 0; i < inputsArray.length; i++) {
             if (!Validation._getInstance().verifInput(inputsArray[i].value, i, inputsArray)) {
                 return false;

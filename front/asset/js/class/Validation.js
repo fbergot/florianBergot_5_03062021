@@ -8,13 +8,15 @@ import { objError } from "../errors/err.js";
  * @class Validation
  */
 export default class Validation {
-    /**@var {null|Instance of Validation} */
+    /**
+     * @property {null|InstanceType<Validation>} instance
+     */
     static instance = null;
 
     /**
      * Allow get unique instance of Validation (singleton)
      * @static
-     * @returns {Instance of Validation}
+     * @return {InstanceType<Validation>}
      * @memberof Validation
      */
     static _getInstance() {
@@ -30,14 +32,17 @@ export default class Validation {
      * @memberof Validation
      */
     constructor() {
-        /** @var {Object<RegExp> for => 0:firstName, 1:LastName, 2: email, 3: address, 4: city} */
-        this.regexForVerifInput = {
-            0: new RegExp("^[a-z ,.'-,éàèôê]{2,20}$", 'i'),
-            1: new RegExp("^[a-z ,.'-,éàèôê]{2,20}$", 'i'),
-            2: new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'i'),
-            3: new RegExp("^[a-z,0-9 ,.'-,éàèôê]{5,50}$", 'i'),
-            4: new RegExp("^[a-z ,.'-,éàèôê]{2,30}$", 'i'),
-        }
+      /** @property {Object<RegExp> for => 0:firstName, 1:LastName, 2: email, 3: address, 4: city} regexForVerifInput */
+      this.regexForVerifInput = {
+        0: new RegExp("^[a-z ,.'-,éàèôê]{2,20}$", "i"),
+        1: new RegExp("^[a-z ,.'-,éàèôê]{2,20}$", "i"),
+        2: new RegExp(
+          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          "i"
+        ),
+        3: new RegExp("^[a-z,0-9 ,.'-,éàèôê]{5,50}$", "i"),
+        4: new RegExp("^[a-z ,.'-,éàèôê]{2,30}$", "i"),
+      };
     }
         
     /**
