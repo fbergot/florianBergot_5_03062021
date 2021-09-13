@@ -7,17 +7,23 @@
     <title>Confirmation</title>
     <link rel="stylesheet" href="../asset/css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../asset/css/adjust.css">
     <script type="module" src="../asset/js/app.js" defer></script>
 </head>
-<body>
-    <header class="header">
-        <img src="../asset/img/orinoco_banner.jpg" alt="bannière orinoco">
-        <nav class="nav">
-            <a title="Panier" href="#">
-                <img class="svgBasket" src="../asset/img/basket.svg">
-                <span class="basketProd" id="basketProduct"></span>
-            </a>
-        </nav>
+<body class="body">
+    <header>
+        <div class="header">
+            <img src="../asset/img/orinoco_banner.jpg" alt="bannière orinoco">
+            <div class="bask">
+                <a title="Panier" href="/panier.html">
+                    <img class="svgBasket" src="../asset/img/basket.svg">
+                    <span class="basketProd" id="basketProduct"></span>
+                </a>
+            </div>            
+        </div>
+        <div class="d-flex justify-content-center">
+            <a class='ml-2 mb-2 linkHead' title='tous nos produits' href="/front/index.html">Tous les produits</a>
+        </div>
     </header>
 
     <main>
@@ -26,7 +32,6 @@
                 <h1 class="title">Votre commande a bien été enregistrée.</h1>
                 <p>Merci d'avoir choisi Orinoco ! Vous pouvez trouvez ci-dessous un récapitulatif ainsi que votre identifiant de commande.</p>
                 <custom-confirm></custom-confirm>
-
             </div>
 
         </div>

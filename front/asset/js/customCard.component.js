@@ -24,10 +24,8 @@ export default class CustomCard extends HTMLElement {
         this.data = null;
         this.instanceFetchData = null;
         this.totalCards = "";
-        // attach shadow DOM
-        this.attachShadow({ mode: "open" });
-        this.shadowRoot.innerHTML =
-            `<div part='container' id='internalCardContainer'></div> `;
+        this.innerHTML =
+            `<div class='d-flex align-items-center justify-content-center flex-column' id='internalCardContainer'></div> `;
     }
 
     /**
@@ -69,35 +67,37 @@ export default class CustomCard extends HTMLElement {
         // switch with data-attr
         switch (this.dataset.switch) {
             case 'noDesc':
-                return `<article part='card'>
-                            <a part='_link' href='/front/pages/produit.html?id=${id}'>
-                                <img part='productImg' src='${imageURL}'/>
-                                <div part='contDescr'>
-                                    <p part='productTitle'>${name}</p>                                
+                return `<article class="card nodesc">
+                            <a href='/front/pages/produit.html?id=${id}'>
+                                <img class="card-img-top" src='${imageURL}'/>
+                                <div class="card-body">
+                                    <p class="card-title">${name}</p>                                
                                 </div>
                             </a>                                           
                         </article>`;
             case 'fullDesc':
                 try {
-                    /**@var {Number} */
+                    /**@var {Number} valuePrice */
                     var valuePrice = Utils._divide(price, 100);
                 } catch (err) {
                     console.error(err);
                 }
-                return `<article part='cardFull'>
-                            <div part='contBut'><button class='basketBut' part='addBasket'>Ajouter au panier</button></div>
-                            <img part='productImgFull' src='${imageURL}'/>
-                            <div part='contDescrFull'>
-                                <h2 part='productTitleFull'>${name}</h2>
-                                <p part='productDescrFull'>${description}</p>
+                return `<article class="card desc">
+                            <img class="card-img-top" src='${imageURL}'/>
+                            <div class="card-body"'>
+                                <h2 class="card-title">${name}</h2>
+                                <p class="card-text">${description}</p>
+                                <div class='d-flex justify-content-between align-items-center'>
+                                    <select name='lens' id='lens'>
+                                        <option value="">Options</option>
+                                        ${strOptionLens}
+                                    </select>
+                                    <p class='mt-3'><strong>${valuePrice}€</strong></p>
+                                </div>
+                                <div class='d-flex justify-content-center mt-4'>
+                                    <button class='basketBut btn btn-success text-center'>Ajouter au panier</button>
+                                </div>
                             </div>                            
-                            <div part='productContPriceFull'>
-                                <select part='productSelectFull' name='lens' id='lens'>
-                                    <option value="">Lentilles disponibles</option>
-                                    ${strOptionLens}
-                                </select>
-                                <p part='productPriceFull'>${valuePrice}€</p>
-                            </div>                                
                         </article>`;
             default:
                 throw Error(`${objError.type.customElement}`);
@@ -164,7 +164,7 @@ export default class CustomCard extends HTMLElement {
                     this.mapResult();
                     // add in shadow dom
                     this.render();
-                    this.shadowRoot.querySelector('.basketBut').addEventListener('click', (e) => {
+                    this.querySelector('.basketBut').addEventListener('click', (e) => {
                         Basket._getInstance().addInBasket(objData);
                     }, false);
                 } catch (err) {
@@ -215,7 +215,7 @@ export default class CustomCard extends HTMLElement {
      * @memberof CustomCard
      */
     render() {
-        this.shadowRoot.querySelector('#internalCardContainer').innerHTML = this.totalCards;
+        this.querySelector('#internalCardContainer').innerHTML = this.totalCards;
     }
 }
 
