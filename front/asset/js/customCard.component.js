@@ -55,13 +55,12 @@ export default class CustomCard extends HTMLElement {
         }
         // create options for lens select
         let strOptionLens = "";
-        let lensCreateOptions;    
-        lensCreateOptions = lenses.map((lens, index) => {
+        const lensCreateOptions = lenses.map((lens, index) => {
             return `<option value='${index}'>${lens}</option>`;
-        });
-        
-        lensCreateOptions.forEach(element => {
-            strOptionLens += element;
+        });   
+               
+        lensCreateOptions.forEach(option => {
+            strOptionLens += option;
         })
         
         // switch with data-attr

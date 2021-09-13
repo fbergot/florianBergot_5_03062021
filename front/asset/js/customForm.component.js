@@ -69,10 +69,10 @@ export default class CustomForm extends HTMLElement {
             this.allInputs.forEach((input, index, array) => {
                 input.addEventListener('blur', (e) => {
                     Validation._getInstance().verifInput(e.target.value, index, array);
-                })
+                }, false)
                 input.addEventListener('click', (e) => {
                     e.target.classList.remove('is-invalid');
-                })
+                }, false)
             })
         } catch (err) {
             console.error(err);
