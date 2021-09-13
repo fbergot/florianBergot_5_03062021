@@ -27,7 +27,7 @@ export default class CustomForm extends HTMLElement {
         super();
         this.innerHTML =
             `<div id='internalFormContainer'>
-            ${this.createForm()}
+                ${this.createForm()}
             </div>`;
         /** @property {Array<HTMLInputElement>} allInputs */
         this.allInputs = [...document.querySelectorAll('input')];

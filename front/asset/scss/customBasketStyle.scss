@@ -2,6 +2,9 @@
 @import './variable/font.scss';
 
 
+custom-basket::part(noItem) {
+    text-align: center;
+}
 custom-basket::part(basketTitle) {
     margin-top: 1.2rem;
     font-family: $rob;

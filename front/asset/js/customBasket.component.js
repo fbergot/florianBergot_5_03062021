@@ -207,7 +207,7 @@ export default class CustomBasket extends HTMLElement {
     construct() {
         try {
             if (!LocalStorage._verifIfItemExist(this.keyBasket)) {
-                this.render("#internalBasketContainer", this.messageNoItem);
+                this.render("#internalBasketContainer", `<p part='noItem'> ${this.messageNoItem}</p>`);
                 return;
             }
             // create structure <table>
@@ -233,7 +233,9 @@ export default class CustomBasket extends HTMLElement {
      * @memberof CustomBasket
      */
     computeTotal() {
-        return this.allSubTotal.reduce((acc, curr) => acc + curr);
+        const total = this.allSubTotal.reduce((acc, curr) => acc + curr);
+        LocalStorage._setItem('totalPrice', `${total}`)
+        return total;
     }
     /**
      * Add data in shadow DOM element
