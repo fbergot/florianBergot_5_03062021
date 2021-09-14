@@ -46,11 +46,64 @@ describe('test Basket class', function () {
     })
 
     describe('test Basket._getInstance().verifIfPresent(objFromStrJSON, product)', function () {
+        const obj = {
+                productsBasket: [
+                    {
+                        name: 'test',
+                        quantity: 2
+                    }
+                ]
+            }
         // bad arg
         it("should throw an error because bad arg", function () {
             expect(() => {
                 Basket._getInstance().verifIsPresent("", {});
             }).toThrowError(`${objError.type.generic}`);
         })
+
+        it("should throw an error because not args", function () {
+            expect(() => {
+                Basket._getInstance().verifIsPresent();
+            }).toThrowError(`${objError.type.generic}`);
+        })
+
+        it("should add new product", function () {
+            const product = {
+                name: 'test2',
+                quantity: 1
+            }
+            Basket._getInstance().verifIsPresent(obj, product);
+            expect(obj).toEqual({
+                productsBasket: [
+                    {
+                        name: 'test',
+                        quantity: 2
+                    },
+                    {
+                        name: 'test2',
+                        quantity: 1
+                    }
+                ]})
+        })
+
+        it("should add quantity in product", function () {
+            const product = {
+                name: 'test',
+                quantity: 1
+            }
+            Basket._getInstance().verifIsPresent(obj, product);
+            expect(obj).toEqual({
+                productsBasket: [
+                    {
+                        name: 'test',
+                        quantity: 3
+                    },
+                    {
+                        name: 'test2',
+                        quantity: 1
+                    }
+                ]})
+        })
+
     })
 })

@@ -45,6 +45,8 @@ describe("test LocalStorage class", function () {
         })
         // test item is added
         it("should add one item in localStorage", function () {
+            // if item exist -> remove
+            window.localStorage.removeItem('test');
             LocalStorage._setItem("test", "test");
             expect(window.localStorage.getItem('test')).toBe('test');
         })

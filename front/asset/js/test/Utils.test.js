@@ -20,7 +20,7 @@ describe('test Utils class', function () {
             expect(Utils._workWithJSON('{"test" : "testing"}', 'toOBJ')).toEqual({test: 'testing'});
         })
 
-        it('should return good json from object', function () {
+        it('should return json from object', function () {
             expect(Utils._workWithJSON({ test: 'test' }, 'toJSON')).toEqual('{"test":"test"}');
         })
         
