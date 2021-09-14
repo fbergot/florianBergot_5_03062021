@@ -19,15 +19,20 @@ export default class Utils {
      * @memberof Utils
      */
     static _workWithJSON(data, vSwitch) {
-        // verif type of locals identifiants
-        if ((typeof data === "object" || typeof data === "string") && typeof vSwitch === 'string') {
+        if (((typeof data === "object" && !Array.isArray(data)) || typeof data === "string") && typeof vSwitch === 'string') {
             switch (vSwitch) {
                 case "toJSON":
+                    if (Array.isArray(data) || typeof data !== 'object') {
+                        throw Error(`${objError.type.generic}`);
+                    }
                     return JSON.stringify(data);
                 case "toOBJ":
+                    if (typeof data !== 'string') {
+                        throw Error(`${objError.type.generic}`);
+                    }
                     return JSON.parse(data);
                 default:
-                    throw Error(`${objError.utils}`);
+                    throw Error(`${objError.utils.vSwitch}`);
             }          
         }
         // if bad type of locals identifiants
@@ -41,11 +46,10 @@ export default class Utils {
      * @param {String} paramsStr (ex: q=test&name=flo)
      * @param {String} key
      * @throw
-     * @return {String}
+     * @returns {String | null}
      * @memberof Utils
      */
     static _getInParamURL(paramsStr, key) {
-        // verif type of locals identifiants
         if (typeof paramsStr !== 'string' || typeof key !== 'string') {
             throw Error(`${objError.type.generic}`);
         }
@@ -63,7 +67,6 @@ export default class Utils {
      * @memberof Utils
      */
     static _divide(price, nDiv) {
-        // verif type of locals identifiants
         if (typeof price !== 'number' || typeof nDiv !== 'number') {
             throw Error(`${objError.type.generic}`);
         }
@@ -82,14 +85,17 @@ export default class Utils {
         if (!Array.isArray(arrayInputs)) {
             throw Error(`${objError.type.generic}`);
         }
-        /**
-         * Build postBody object from arrayInput
-         * @param {Number} n
-         */
         const contactBody = {};
         let i = 0;
+        /**
+         * Build contactBody object from arrayInput
+         * @param {Number} n
+         */
         function recursLoop(n) {
             if (i <= arrayInputs.length) {
+                if (!arrayInputs[n].id || !arrayInputs[n].value) {
+                    throw Error(`${objError.utils.missProp}`);
+                }
                 contactBody[arrayInputs[n].id] = arrayInputs[n].value;
                 recursLoop(i++);
             }           
@@ -109,11 +115,14 @@ export default class Utils {
         if (!Array.isArray(productsBasket)) {
             throw Error(`${objError.type.generic}`);
         }
-        /** @var {Array<String>} */
+        /** @var {Array<String>} productsId */
         const productsId = [];       
         for (let i = 0; i < productsBasket.length; i++) {
+            if (!productsBasket[i].quantity || !productsBasket[i]._id) {
+                throw Error(`${objError.utils.missProp}`);
+            }
             for (let j = 0; j < productsBasket[i].quantity; j++) {
-                productsId.push(productsBasket[i]._id);
+            productsId.push(productsBasket[i]._id);
             }
         }
         return productsId;

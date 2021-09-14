@@ -51,7 +51,7 @@ export default class Basket {
      * @memberof Basket
      */
     createBasket(firstProduct) {
-        if (typeof firstProduct !== 'object') {
+        if (typeof firstProduct !== 'object' || Array.isArray(firstProduct)) {
             throw Error(`${objError.type.generic}`);
         }
         this.defBasket.productsBasket.push(firstProduct);
@@ -73,14 +73,20 @@ export default class Basket {
      * @memberof Basket
      */
     verifIsPresent(objFromStrJSON, product) {
-        if (typeof objFromStrJSON !== "object" || typeof product !== "object") {
+        if ((typeof objFromStrJSON !== "object" || Array.isArray(objFromStrJSON)) || (typeof product !== "object" || Array.isArray(product))) {
             throw Error(`${objError.type.generic}`);
         }
         const verifIsPresent = objFromStrJSON.productsBasket.find((elem) => {
+            if (!elem.name || !product.name) {
+                throw Error(`${objError.utils.missProp}`);
+            }
             return elem.name === product.name;
         })
         // if present add his quantity
         if (verifIsPresent) {
+            if (!verifIsPresent.quantity) {
+                throw Error(`${objError.utils.missProp}`);
+            }
             verifIsPresent.quantity = Number.parseInt(verifIsPresent.quantity) + 1;
         // else, add product
         } else {

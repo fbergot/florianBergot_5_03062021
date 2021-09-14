@@ -35,7 +35,7 @@ export default class LocalStorage {
      * @memberof LocalStorage
      */
     static _setItem(key, value) {
-        if ((typeof key !== 'string' || key === '') || (typeof value !== 'string' || value === '')) {
+        if ((typeof key !== 'string' || key === '') || typeof value !== 'string') {
             throw Error(`${objError.type.generic} or empty`);
         }
         window.localStorage.setItem(key, value);
@@ -51,8 +51,8 @@ export default class LocalStorage {
      * @memberof LocalStorage
      */
     static _getItem(key) {
-        if (typeof key !== 'string') {
-            throw Error(`${objError.type.generic}`);
+        if (typeof key !== 'string' || key === "") {
+            throw Error(`${objError.type.generic} or null`);
         }
         return window.localStorage.getItem(key);
     }
@@ -65,6 +65,9 @@ export default class LocalStorage {
      * @memberof LocalStorage
      */
     static _removeItem(key) {
+        if (typeof key !== 'string' || key === "") {
+            throw Error(`${objError.type.generic} or empty`);
+        }
         window.localStorage.removeItem(key);
     }
 }

@@ -11,5 +11,9 @@ export const objError = {
     fetchData: {
         invalid: 'Problem with server, connection or request'
     },
-    utils: "Invalid parameter 'vSwitch' (accepted: 'toJSON' or 'toOBJ)"
+    utils: {
+        vSwitch: 'The parameter vSwitch must be "toJSON" | "toOBJ',
+        missProp: "Missing property"
+    },
+
 };
