@@ -6,7 +6,7 @@ import { objError } from '../errors/err';
 
 describe("test LocalStorage class", function () {
 
-    describe('test LocalStorage._verifIfItemExist(key)', function () {
+    describe('test _verifIfItemExist(key)', function () {
         it("should throw an error because arg is empty string", function () {
             expect(() => {
                 LocalStorage._verifIfItemExist("");
@@ -20,17 +20,17 @@ describe("test LocalStorage class", function () {
         })
 
         it("should return false", function () {
-            expect(LocalStorage._verifIfItemExist("lol")).toBeFalsy();
+            expect(LocalStorage._verifIfItemExist("lol")).toBe(false);
         })
 
         it("should return true", function () {
             // add item
             window.localStorage.setItem('exist', 'exist');
-            expect(LocalStorage._verifIfItemExist('exist')).toBeTruthy();
+            expect(LocalStorage._verifIfItemExist('exist')).toBe(true);
         })
     })
 
-    describe('test LocalStorage._setItem(key, value)', function () {
+    describe('test _setItem(key, value)', function () {
         // bad arg
         it("should throw an error", function () {
             expect(() => {
@@ -52,7 +52,7 @@ describe("test LocalStorage class", function () {
         })
     })
 
-    describe('test LocalStorage._getItem(key)', function () {
+    describe('test _getItem(key)', function () {
 
         it("should throw an error", function () {
             expect(() => {
@@ -73,7 +73,7 @@ describe("test LocalStorage class", function () {
         })
     })
 
-    describe('test LocalStorage._removeItem(key)', function () {
+    describe('test _removeItem(key)', function () {
         // bad type of arg
         it("should throw an error because arg empty", function () {
             expect(() => {
@@ -86,6 +86,7 @@ describe("test LocalStorage class", function () {
                 LocalStorage._removeItem([]);
             }).toThrowError(`${objError.type.generic} or empty`)
         })
+
         it('should erased an item', function () {
             // add item
             window.localStorage.setItem('erase', 'erase');

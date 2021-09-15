@@ -1,7 +1,7 @@
-import Utils from "./Utils.js";
-import LocalStorage from "./LocalStorage.js";
-import { objError } from "../errors/err.js";
-import UpdateHeaderBasket from "./UpdateHeaderBasket.js";
+import Utils from "./Utils";
+import LocalStorage from "./LocalStorage";
+import { objError } from "../errors/err";
+import UpdateHeaderBasket from "./UpdateHeaderBasket";
 /**
  * all for the basket
  * @singleton
@@ -105,7 +105,7 @@ export default class Basket {
      * @memberof Basket
      */
     addInBasket(product) {
-        if (typeof product !== "object") {
+        if (typeof product !== "object" || Array.isArray(product)) {
             throw Error(`${objError.type.generic}`);
         }
         try {
@@ -160,13 +160,14 @@ export default class Basket {
             const product = this.findProduct(objFromJSON.productsBasket, productName);
             if (product) {
                 product.quantity = quantity;
-            }
+            } else throw Error('Product absent');
             // re add the new basket in locStor
             const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
             LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
             UpdateHeaderBasket._getInstance().update();
         } catch (err) {
-            console.error(err);
+            if (err.message !== 'Product absent') console.error(err);
+            else throw Error(err.message);
         }
     }
 
@@ -187,13 +188,13 @@ export default class Basket {
     /**
      *
      *
-     * @param {Array} arrayProduct
+     * @param {Array<{}>} arrayProduct
      * @param {String} productName
      * @return {Number} (-1 if false for all element)
      * @memberof Basket
      */
     findIndexProduct(arrayProduct, productName) {
-        if (typeof productName !== "string" || !Array.isArray(arrayProduct)) {
+        if (!Array.isArray(arrayProduct) || typeof productName !== "string") {
             throw Error(`${objError.type.generic}`);
         }
         return arrayProduct.findIndex((elem) => elem.name === productName);

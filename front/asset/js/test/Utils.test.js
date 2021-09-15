@@ -6,7 +6,7 @@ import { objError } from "../errors/err";
 
 describe('test Utils class', function () {
     
-    describe('test Utils._workWithJSON(data, vSwitch)', function () {
+    describe('test _workWithJSON(data, vSwitch)', function () {
         // test type of return
         it('should return type string from object', function () {
             expect(typeof Utils._workWithJSON({ test: 'test' }, 'toJSON')).toBe('string');
@@ -62,7 +62,7 @@ describe('test Utils class', function () {
         })
     })
 
-    describe("test Utils._getInParamURL(paramsStr, key)", function () {
+    describe("test _getInParamURL(paramsStr, key)", function () {
         // bad type of arguments
         it('should return an error because bad type of argument paramStr', function () {
             expect(() => {
@@ -85,7 +85,7 @@ describe('test Utils class', function () {
         })
     })
 
-    describe("test Utils._divide(price, nDiv)", function () {
+    describe("test _divide(price, nDiv)", function () {
         // type of arguments
         it('should return an error', function () {
             expect(() => {
@@ -112,7 +112,7 @@ describe('test Utils class', function () {
         })
     })
 
-    describe("test Utils._buildContactBody(arrayInput)", function () {
+    describe("test _buildContactBody(arrayInput)", function () {
         // test argument
         it('should return an error because bad type of argument', function () {
             expect(() => {
@@ -145,7 +145,7 @@ describe('test Utils class', function () {
         })
     })
 
-    describe("test Utils._recomposeProctsId({ productsBasket})", function () {
+    describe("test _recomposeProctsId({ productsBasket})", function () {
         // test type of argument
         it("should throw an error because bad type of property", function () {
             expect(() => {
