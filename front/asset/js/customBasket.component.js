@@ -117,8 +117,7 @@ export default class CustomBasket extends HTMLElement {
                     border: 1px solid rgb(189, 184, 184);
                     border-collapse: collapse;
                 }
-                
-                
+                               
                 #internalBasketContainer {
                     display: flex;
                     flex-direction: column;
