@@ -68,6 +68,7 @@ header {
         text-align: center;
         font-size: 1.5rem;
         font-weight: 400;
+        text-align: center;
 }
 .contBar {
         display: flex;
@@ -98,10 +99,10 @@ main {
     padding-bottom: 1rem;
 }
 .desc {
-    width: 18rem;
+    width: 15rem;
 }
 .nodesc {
-    width: 18rem;
+    width: 15rem;
 
 }
 .linkHead {
@@ -162,31 +163,6 @@ main {
    }
 }
 
-.return {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    position: absolute;
-    top: 110px;
-    left: 5.5%;
-    border: 1px solid transparent;
-    padding: .3rem;
-    border-radius: 50%;
-    transition: .3s all;
-    &:hover {
-        border: 1px solid rgb(170, 162, 162);
-        background-color: darken(#fff, 5);
-    }
-    img {
-        width: 22px;
-        padding: .2rem;
-        
-    }
-    span {
-        color: #000;
-    }
-}
 
 .title {
     font-size: 1.5rem;

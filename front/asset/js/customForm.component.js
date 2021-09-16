@@ -56,7 +56,7 @@ export default class CustomForm extends HTMLElement {
         try {
             this.form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                
+
                 // last verif user data before treatment
                 if (Form.beforeSubmit(this.allInputs)) {
                     this.treatmentToApi(this.buildBody());
@@ -203,7 +203,7 @@ export default class CustomForm extends HTMLElement {
                     <input minlength='2' required type="text" class="form-control" id="city">
                     <div class="invalid-feedback">Veuillez entrer une ville (2-30car)</div>
                 </div>
-                <button id='submit' type="submit" class="btn">Envoyer</button>
+                <button id='submit' type="submit" class="btn btn-primary mb-2">Envoyer</button>
             </form>
         `;
     }

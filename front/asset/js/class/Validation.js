@@ -59,6 +59,7 @@ export default class Validation {
         if (typeof data !== "string" || typeof index !== 'number' || !Array.isArray(arrayInput)) {
             throw Error(`${objError.type.generic}`);
         }
+        if (index > 4 || index > arrayInput.length) throw Error('Index invalid');
         // test data with good RegExp
         if (this.regexForVerifInput[`${index}`].test(data)) {
             arrayInput[index].classList.remove('is-invalid');

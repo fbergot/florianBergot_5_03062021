@@ -156,6 +156,9 @@ export default class CustomBasket extends HTMLElement {
      */
     connectedCallback() {                    
         this.construct();
+        if (!LocalStorage._getItem('basket')) {
+            this.containerForm.setAttribute("hidden", "true");           
+        }
     }
 
     /**

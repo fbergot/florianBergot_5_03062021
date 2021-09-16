@@ -183,6 +183,7 @@ header {
   text-align: center;
   font-size: 1.5rem;
   font-weight: 400;
+  text-align: center;
 }
 
 .contBar {
@@ -214,11 +215,11 @@ main {
 }
 
 .desc {
-  width: 18rem;
+  width: 15rem;
 }
 
 .nodesc {
-  width: 18rem;
+  width: 15rem;
 }
 
 .linkHead {
@@ -279,31 +280,6 @@ main {
 .footer .orinocoTextFooter p img {
   width: 4.5rem;
   height: 2.5rem;
-}
-
-.return {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  position: absolute;
-  top: 110px;
-  left: 5.5%;
-  border: 1px solid transparent;
-  padding: 0.3rem;
-  border-radius: 50%;
-  transition: 0.3s all;
-}
-.return:hover {
-  border: 1px solid #aaa2a2;
-  background-color: #f2f2f2;
-}
-.return img {
-  width: 22px;
-  padding: 0.2rem;
-}
-.return span {
-  color: #000;
 }
 
 .title {

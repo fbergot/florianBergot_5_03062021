@@ -54,16 +54,12 @@ describe("test Validation class", function () {
         })
 
         it("should throw error because index invalid", function () {
-            // sim input
-            document.body.innerHTML = `
-                <input class='' value='4444'>`;
-            const arrayInputs = [...document.querySelectorAll('input')];
             const index = 4;
-            const data = arrayInputs[0].value;
+            const data = 'value';
                         
             expect(() => {
-                Validation._getInstance().verifInput(data, index, arrayInputs);
-            }).toThrow();
+                Validation._getInstance().verifInput(data, index, []);
+            }).toThrowError('Index invalid');
         })
     })
 })

@@ -15,7 +15,7 @@ describe('test Basket class', function () {
             expect(Basket._getInstance()).toBeInstanceOf(Basket);
         })
         
-        it('should returned true if ever same instance ', function () {
+        it('should returned true if ever same instance (singleton) ', function () {
             expect(Object.is(Basket._getInstance(), Basket._getInstance())).toBe(true);
         })
     })
