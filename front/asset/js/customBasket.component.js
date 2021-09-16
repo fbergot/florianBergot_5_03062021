@@ -24,6 +24,7 @@ export default class CustomBasket extends HTMLElement {
         this.linesBasket;
         this.allSubTotal;
         this.keyBasket = 'basket';
+        this.containerForm = document.querySelector("#contFormHidden");
         this.messageNoItem = 'aucun article dans votre panier';
         // attach root of shadow DOM
         this.attachShadow({ mode: "open" });
@@ -187,7 +188,10 @@ export default class CustomBasket extends HTMLElement {
         buttons.forEach((elem) => {
             elem.addEventListener('click', (e) => {
                 try {
-                    Basket._getInstance().removeProduct(e.target.dataset.productname);
+                    const state = Basket._getInstance().removeProduct(e.target.dataset.productname);
+                    if (state === "empty") {
+                        this.containerForm.setAttribute('hidden', "true");
+                    }
                 } catch (err) {
                     console.error(err);
                 }

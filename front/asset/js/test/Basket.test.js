@@ -277,9 +277,89 @@ describe('test Basket class', function () {
 
         it("should return -1 because prod not present", function () {
             expect(Basket._getInstance().findIndexProduct(array, 'badName')).toBe(-1);
-        })
+        })       
     })
 
+    describe("test removeProduct(productName)", function () {
+        it("should throw an error because bad type arg", function () {
+            // test arg
+            expect(() => {
+                Basket._getInstance().removeProduct(15);
+            }).toThrowError(`${objError.type.generic}`);
 
+            expect(() => {
+                Basket._getInstance().removeProduct();
+            }).toThrowError(`${objError.type.generic}`);
+        })
 
+        it("should throw an error because not basket", function () {
+            expect(() => {
+              Basket._getInstance().removeProduct("test");
+            }).toThrowError("Basket is not in localStorage");
+        })
+
+        it("should return empty & clear basket", function () {
+            const basketJson = JSON.stringify({
+                productsBasket: [
+                    {
+                        name: 'product1',
+
+                    }
+                ]
+            })
+            // add basket in locStor
+            window.localStorage.setItem('basket', basketJson);
+            expect(Basket._getInstance().removeProduct('product1')).toBe("empty");
+            expect(window.localStorage.getItem('basket')).toBeNull();
+        })
+
+        it("should removed one product & return true", function () {
+            const basketJson = JSON.stringify({
+                productsBasket: [
+                    {
+                        name: 'product1',
+
+                    },
+                    {
+                        name: 'product2',
+
+                    },
+                ]
+            })
+            // add basket in locStor
+            window.localStorage.setItem('basket', basketJson);
+            const test = Basket._getInstance().removeProduct("product1");
+            expect(JSON.parse(window.localStorage.getItem('basket'))).toEqual(
+                {
+                productsBasket: [
+                    {
+                        name: 'product2',
+
+                    },
+                ]
+            }
+            )
+            expect(test).toBe(true);
+        })        
+    })
+
+    describe("test clearBasket(key)", function () {
+        // test arg
+        it("should throw an error because bad arg", function () {
+            expect(() => {
+                Basket._getInstance().clearBasket('');
+            }).toThrowError(`${objError.type.generic} or empty`);
+
+            expect(() => {
+                Basket._getInstance().clearBasket(10);
+            }).toThrowError(`${objError.type.generic} or empty`);
+        });
+
+        it("should clear the item in localStor", function () {
+            // add
+            window.localStorage.setItem('key', 'value');
+            Basket._getInstance().clearBasket('key');
+            expect(window.localStorage.getItem('key')).toBeNull();
+        })
+    })
 })

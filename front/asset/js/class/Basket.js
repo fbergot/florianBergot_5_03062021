@@ -213,6 +213,9 @@ export default class Basket {
         try {
             // get basket in locStor
             const jsonBasket = LocalStorage._getItem(this.keyBasket);
+            if (!jsonBasket) {
+                throw Error("Basket is not in localStorage");
+            }
             const objFromJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
             // find & remove product
             const indexProd = this.findIndexProduct(objFromJSON.productsBasket, productName);
@@ -220,13 +223,15 @@ export default class Basket {
             // verif state (remove basket item if empty)
             if (objFromJSON.productsBasket.length === 0) {
                 this.clearBasket(this.keyBasket);
-                return;
+                return 'empty';
             } 
             // re add the new basket in locStor
             const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
             LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
+            return true;
         } catch (err) {
-            console.error(err);
+            if (err.message !== "Basket is not in localStorage") console.error(err);
+            else throw Error(err.message);       
         }
     }
 
@@ -237,8 +242,8 @@ export default class Basket {
      * @memberof Basket
      */
     clearBasket(key) {
-        if (typeof key !== 'string') {
-            throw Error(`${objError.type.generic}`);
+        if (typeof key !== 'string' || key == "") {
+            throw Error(`${objError.type.generic} or empty`);
         }
         LocalStorage._removeItem(key);
     }   

@@ -24,8 +24,7 @@ export default class CustomCard extends HTMLElement {
         this.data = null;
         this.instanceFetchData = null;
         this.totalCards = "";
-        this.innerHTML =
-            `<div class='d-flex align-items-center justify-content-center flex-column' id='internalCardContainer'></div> `;
+        this.innerHTML = `<div class='row' id='internalCardContainer'></div> `;
     }
 
     /**
@@ -66,7 +65,7 @@ export default class CustomCard extends HTMLElement {
         // switch with data-attr
         switch (this.dataset.switch) {
             case 'noDesc':
-                return `<article class="card nodesc">
+                return `<article class="card nodesc col-md-6">
                             <a href='/front/pages/produit.html?id=${id}'>
                                 <img class="card-img-top" src='${imageURL}'/>
                                 <div class="card-body">
@@ -81,7 +80,7 @@ export default class CustomCard extends HTMLElement {
                 } catch (err) {
                     console.error(err);
                 }
-                return `<article class="card desc">
+                return `<article class="card desc col-md-12">
                             <img class="card-img-top" src='${imageURL}'/>
                             <div class="card-body"'>
                                 <h2 class="card-title">${name}</h2>
