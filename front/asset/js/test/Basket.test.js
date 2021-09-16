@@ -1,8 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import Basket from "../class/basket";
-import { objError } from "../errors/err";
+import Basket from "../class/basket.js";
+import { objError } from "../errors/err.js";
 
 describe('test Basket class', function () {
     // erase before each test

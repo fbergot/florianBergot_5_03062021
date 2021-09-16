@@ -1,8 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import LocalStorage from "../class/LocalStorage";
-import { objError } from '../errors/err';
+import LocalStorage from "../class/LocalStorage.js";
+import { objError } from '../errors/err.js';
 
 describe("test LocalStorage class", function () {
 

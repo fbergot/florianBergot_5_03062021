@@ -49,11 +49,14 @@ export default class UpdateHeaderBasket {
       // get number of item in "basket" (localStorage)
       /** @var {null|String} */
       const basket = LocalStorage._getItem("basket");
-      var objFromStrJSON = Utils._workWithJSON(basket, "toOBJ");
+      var objFromStrJSON;
+      if (basket) {
+        objFromStrJSON = Utils._workWithJSON(basket, "toOBJ");
+      }
     } catch (err) {
       console.error(err);
     }
-    if (objFromStrJSON !== null) {
+    if (objFromStrJSON) {
         try {
             this.targetHTML.innerText = this.computeTotalInBasket(objFromStrJSON);
             return;            
@@ -70,11 +73,11 @@ export default class UpdateHeaderBasket {
    * @returns {Number}
    * @memberof UpdateHeaderBasket
    */
-  computeTotalInBasket({ productsBasket }) {
-    if (!Array.isArray(productsBasket)) {
+  computeTotalInBasket(objFromJSON) {
+    if (!Array.isArray(objFromJSON.productsBasket)) {
       throw Error(`${objError.type.generic}`);
     }
-    const { quantity } = productsBasket.reduce(({ quantity }, curr) => {
+    const { quantity } = objFromJSON.productsBasket.reduce(({ quantity }, curr) => {
         return { quantity: quantity + curr.quantity };
     });
     return quantity;

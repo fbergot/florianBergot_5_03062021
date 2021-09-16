@@ -1,7 +1,7 @@
-import Utils from "./Utils";
-import LocalStorage from "./LocalStorage";
-import { objError } from "../errors/err";
-import UpdateHeaderBasket from "./UpdateHeaderBasket";
+import Utils from "./Utils.js";
+import LocalStorage from "./LocalStorage.js";
+import { objError } from "../errors/err.js";
+import UpdateHeaderBasket from "./UpdateHeaderBasket.js";
 /**
  * all for the basket
  * @singleton
