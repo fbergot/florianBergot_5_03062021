@@ -52,7 +52,7 @@ export default class FetchData {
      */
     getData(uri, objOptions) {
         // verif type of locals identifiants
-        if (typeof uri !== 'string' || typeof objOptions !== 'object') {
+        if (typeof uri !== 'string' || (typeof objOptions !== 'object' || Array.isArray(objOptions))) {
             throw Error(`${objError.type.generic}`);
         }
 

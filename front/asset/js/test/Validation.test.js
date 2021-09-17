@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import Validation from "../class/Validation.js";
 import { objError } from "../errors/err.js";
 
