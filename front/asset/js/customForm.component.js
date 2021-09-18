@@ -58,7 +58,7 @@ export default class CustomForm extends HTMLElement {
                 e.preventDefault();
 
                 // last verif user data before treatment
-                if (Form.beforeSubmit(this.allInputs)) {
+                if (Form._beforeSubmit(this.allInputs)) {
                     this.treatmentToApi(this.buildBody());
                 }// else pb :
             })

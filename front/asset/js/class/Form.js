@@ -18,9 +18,9 @@ export default class Form {
      * @return {Boolean}
      * @memberof Form
      */
-    static beforeSubmit(inputsArray) {
-        if (!Array.isArray(inputsArray)) {
-            throw Error(`${objError.type.generic}`);
+    static _beforeSubmit(inputsArray) {
+        if (!Array.isArray(inputsArray) || inputsArray.length === 0) {
+            throw Error(`${objError.type.generic} or array is empty`);
         }
         for (let i = 0; i < inputsArray.length; i++) {
             if (!Validation._getInstance().verifInput(inputsArray[i].value, i, inputsArray)) {

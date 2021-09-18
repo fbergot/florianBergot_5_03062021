@@ -59,7 +59,7 @@ export default class UpdateHeaderBasket {
 		if (objFromStrJSON) {
 			try {
 				this.targetHTML.innerText = this.computeTotalInBasket(objFromStrJSON);
-				return;            
+				return;            					
 			} catch(err) {
 				console.error(err);
 			}
@@ -69,17 +69,18 @@ export default class UpdateHeaderBasket {
 
   /**
    * Compute total product in basket
-   * @param {Array} productsBasket
-   * @returns {Number}
+   * @param {{productsBasket: Array<{quantity:Number,}>}} objFromJSON
+   * @returns {Number|NaN}
    * @memberof UpdateHeaderBasket
    */
   	computeTotalInBasket(objFromJSON) {
-		if (!Array.isArray(objFromJSON.productsBasket)) {
+		if (Array.isArray(objFromJSON) || typeof objFromJSON !== 'object') {
 			throw Error(`${objError.type.generic}`);
 		}
 		const { quantity } = objFromJSON.productsBasket.reduce(({ quantity }, curr) => {
 			return { quantity: quantity + curr.quantity };
 		});
+		if (!quantity) throw Error('Missing property quantity');
 		return quantity;
   	}
 }

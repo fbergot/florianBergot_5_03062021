@@ -110,13 +110,11 @@ export default class CustomCard extends HTMLElement {
      * @returns {String}
      * @memberof CustomCard
      */
-    getURLParam(key) {
-        if (typeof key !== 'string' || key === "") {
+    getURLParam(key, urlStringParam) {
+        if ((typeof key !== 'string' || key === "") || (typeof urlStringParam !== 'string' || urlStringParam === "")) {
             throw Error(`${objError.type.key}`);
         }
-        // get URLParam string
-        const urlString = window.location.search;
-        const paramsAlso = urlString.replace('?', '');
+        const paramsAlso = urlStringParam.replace('?', '');
         try {
             /** @var {String} paramURL */
             var paramURL = Utils._getInParamURL(paramsAlso, key);
@@ -153,7 +151,7 @@ export default class CustomCard extends HTMLElement {
             case 'fullDesc':
                 try {
                     // get id parameter in URL
-                    const id = this.getURLParam('id');
+                    const id = this.getURLParam('id', window.location.search);
                     // Fetch data & add quantity property
                     const objData = await this.reFactorize(`/${id}`, { method: "GET" });
                     objData.quantity = 1;
