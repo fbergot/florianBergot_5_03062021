@@ -15,3 +15,7 @@ server runs on another port for any reason, this is printed to the
 console when the server starts, e.g. `Listening on port 3001`.
 
 Use a local server to run the front (ex live server).
+
+### run the test ###
+
+For run the test, npm run test

@@ -8,9 +8,9 @@ import Utils from "./Utils.js";
  * @class UpdateHeaderBasket
  */
 export default class UpdateHeaderBasket {
-  /** @var {Instance of UpdateHeaderBasket|null} */
-  static instance = null;
-  static tagOfTarget = "#basketProduct";
+    /** @var {Instance of UpdateHeaderBasket|null} */
+    static instance = null;
+    static tagOfTarget = "#basketProduct";
 
   /**
    *Creates an instance of UpdateHeaderBasket.
@@ -18,9 +18,9 @@ export default class UpdateHeaderBasket {
    * @param {String} tagTargetHTML
    * @memberof UpdateHeaderBasket
    */
-  constructor(tagTargetHTML) {
-    this.targetHTML = document.querySelector(tagTargetHTML);
-  }
+	constructor(tagTargetHTML) {
+		this.targetHTML = document.querySelector(tagTargetHTML);
+	}
 
   /**
    * Make unique instance of UpdateHeaderBasket (singleton)
@@ -28,13 +28,13 @@ export default class UpdateHeaderBasket {
    * @returns
    * @memberof UpdateHeaderBasket
    */
-  static _getInstance() {
-    if (this.instance === null) {
-        this.instance = new UpdateHeaderBasket(this.tagOfTarget);
-        return this.instance;
-    }
-    return this.instance;
-  }
+  	static _getInstance() {
+		if (this.instance === null) {
+			this.instance = new UpdateHeaderBasket(this.tagOfTarget);
+			return this.instance;
+		}
+		return this.instance;
+  	}
 
   /**
    * Update header basket
@@ -44,28 +44,28 @@ export default class UpdateHeaderBasket {
    * @returns {void}
    * @memberof UpdateHeaderBasket
    */
-  update() {
-    try {
-      // get number of item in "basket" (localStorage)
-      /** @var {null|String} */
-      const basket = LocalStorage._getItem("basket");
-      var objFromStrJSON;
-      if (basket) {
-        objFromStrJSON = Utils._workWithJSON(basket, "toOBJ");
-      }
-    } catch (err) {
-      console.error(err);
-    }
-    if (objFromStrJSON) {
-        try {
-            this.targetHTML.innerText = this.computeTotalInBasket(objFromStrJSON);
-            return;            
-        } catch(err) {
-            console.error(err);
-        }
-    }
-    this.targetHTML.innerText = 0;
-  }
+	update() {
+		try {
+			// get number of item in "basket" (localStorage)
+			/** @var {null|String} */
+			const basket = LocalStorage._getItem("basket");
+			var objFromStrJSON;
+			if (basket) {
+				objFromStrJSON = Utils._workWithJSON(basket, "toOBJ");
+			}
+		} catch (err) {
+				console.error(err);
+		}
+		if (objFromStrJSON) {
+			try {
+				this.targetHTML.innerText = this.computeTotalInBasket(objFromStrJSON);
+				return;            
+			} catch(err) {
+				console.error(err);
+			}
+		}
+		this.targetHTML.innerText = 0;
+  	}
 
   /**
    * Compute total product in basket
@@ -73,13 +73,13 @@ export default class UpdateHeaderBasket {
    * @returns {Number}
    * @memberof UpdateHeaderBasket
    */
-  computeTotalInBasket(objFromJSON) {
-    if (!Array.isArray(objFromJSON.productsBasket)) {
-      throw Error(`${objError.type.generic}`);
-    }
-    const { quantity } = objFromJSON.productsBasket.reduce(({ quantity }, curr) => {
-        return { quantity: quantity + curr.quantity };
-    });
-    return quantity;
-  }
+  	computeTotalInBasket(objFromJSON) {
+		if (!Array.isArray(objFromJSON.productsBasket)) {
+			throw Error(`${objError.type.generic}`);
+		}
+		const { quantity } = objFromJSON.productsBasket.reduce(({ quantity }, curr) => {
+			return { quantity: quantity + curr.quantity };
+		});
+		return quantity;
+  	}
 }

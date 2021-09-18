@@ -13,7 +13,7 @@ describe("test Validation class", function () {
         })
     })
 
-    describe('test verifInput', function () {
+    describe('test verifInput()', function () {
         it("should throw an error because arg is empty string", function () {
             expect(() => {
                 Validation._getInstance().verifInput("", '1', []);

@@ -37,20 +37,14 @@ describe('test FetchData class', function () {
             expect(await FetchData._getInstance().getData('', {})).toEqual(data);           
         })
 
-        beforeEach(() => { // if you have an existing `beforeEach` just add the following lines to it
+        beforeEach(() => {
             fetchMock.mockIf(/^https?:\/\/localhost:3000\/api\/cameras*$/, req => {
                 if (req.url.endsWith("/")) {
                     return {
                         body: "ok",
                         status: 200
                     }
-                } else if (req.url.endsWith("/_id15ab")) {
-                    return {
-                        body: "ok",
-                        status: 200
-                    }
-                }
-                else {
+                } else {
                     return {
                         status: 404,
                         body: "Not Found"
@@ -59,22 +53,20 @@ describe('test FetchData class', function () {
             })
         })
 
-        it("should return an console.error(err)",async function () {
+        it("should call console.error(err)", async function () {
             fetchMock.mockResponseOnce({});
             console.error = jest.fn();
-            // -> console.error()
             await FetchData._getInstance().getData("/fff", {});
-
             expect(console.error).toHaveBeenCalledWith(
               "Problem with server, connection or request, status: 404, Not Found"
             );
         })
 
-        it("should not throw an error (catch)", function () {
+        it("should not call console.error", async function () {
             fetchMock.mockResponseOnce({});
-            expect(async () => {
-                await FetchData._getInstance().getData('/tt', {});
-            }).not.toThrow();
+            console.error = jest.fn();
+            await FetchData._getInstance().getData("/", {});
+            expect(console.error).not.toBeCalled();
         })
     })
 })
