@@ -59,11 +59,11 @@ describe('test CustomCardElement class', function () {
         describe('test getURLParam(key)', function () {
             it("should throw an error (bad arg)", function () {
                 expect(() => {
-                  custom.getURLParam("", "?test=1");
+                    custom.getURLParam("", "?test=1");
                 }).toThrowError(`${objError.type.key}`);
 
                 expect(() => {
-                  custom.getURLParam("name", "");
+                    custom.getURLParam("name", "");
                 }).toThrowError(`${objError.type.key}`);
             })
 

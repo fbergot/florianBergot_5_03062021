@@ -13,9 +13,9 @@ import UpdateHeaderBasket from "./UpdateHeaderBasket.js";
  * @class Basket
  */
 export default class Basket {
-    static keyBasket = 'basket';
+    static keyBasket = "basket";
     static defBasket = { productsBasket: [] };
-    /** @var {null|Instance of Basket} */
+    /** @property {null|Instance of Basket} instance*/
     static instance = null;
 
     /**
@@ -51,44 +51,45 @@ export default class Basket {
      * @memberof Basket
      */
     createBasket(firstProduct) {
-        if (typeof firstProduct !== 'object' || Array.isArray(firstProduct)) {
+        if (typeof firstProduct !== "object" || Array.isArray(firstProduct)) {
             throw Error(`${objError.type.generic}`);
         }
         this.defBasket.productsBasket.push(firstProduct);
         try {
-          const strJsonFromObj = Utils._workWithJSON(this.defBasket, "toJSON");
-          LocalStorage._setItem(this.keyBasket, strJsonFromObj);
+            const strJsonFromObj = Utils._workWithJSON(this.defBasket, "toJSON");
+            LocalStorage._setItem(this.keyBasket, strJsonFromObj);
         } catch (err) {
-          console.error(err);
+            console.error(err);
         }
     }
 
-    /**
-     * Verif is product is present in basket (add product or add quantity)
-     * @use objError
-     * @param {{productsBasket:Array}} objFromStrJSON
-     * @param {{quantity:Number, price:Number, lenses:Array<String>,
-     *  name:String, description:String, imageUrl:String, _id:String }} product
-     * @return {void}
-     * @memberof Basket
-     */
+  /**
+   * Verif is product is present in basket (add product or add quantity)
+   * @use objError
+   * @param {{productsBasket:Array}} objFromStrJSON
+   * @param {{quantity:Number, price:Number, lenses:Array<String>,
+   *  name:String, description:String, imageUrl:String, _id:String }} product
+   * @return {void}
+   * @memberof Basket
+   */
     verifIsPresent(objFromStrJSON, product) {
-        if ((typeof objFromStrJSON !== "object" || Array.isArray(objFromStrJSON)) || (typeof product !== "object" || Array.isArray(product))) {
+        if (typeof objFromStrJSON !== "object" || Array.isArray(objFromStrJSON) ||
+            typeof product !== "object" || Array.isArray(product)) {
             throw Error(`${objError.type.generic}`);
         }
         const verifIsPresent = objFromStrJSON.productsBasket.find((elem) => {
-            if (!elem.name || !product.name) {
-                throw Error(`${objError.utils.missProp}`);
-            }
-            return elem.name === product.name;
-        })
+        if (!elem.name || !product.name) {
+            throw Error(`${objError.utils.missProp}`);
+        }
+        return elem.name === product.name;
+        });
         // if present add his quantity
         if (verifIsPresent) {
             if (!verifIsPresent.quantity) {
                 throw Error(`${objError.utils.missProp}`);
             }
             verifIsPresent.quantity = Number.parseInt(verifIsPresent.quantity) + 1;
-        // else, add product
+            // else, add product
         } else {
             objFromStrJSON.productsBasket.push(product);
         }
@@ -110,8 +111,7 @@ export default class Basket {
         }
         try {
             /** @var {Boolean} */
-            var stateBasket = (LocalStorage._verifIfItemExist(this.keyBasket));
-
+            var stateBasket = LocalStorage._verifIfItemExist(this.keyBasket);
         } catch (err) {
             console.error(err);
         }
@@ -124,17 +124,17 @@ export default class Basket {
                 // if product present in basket, add his quantity else add product
                 this.verifIsPresent(objFromJSON, product);
                 // re add the new basket in localStorage
-                const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
+                const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, "toJSON");
                 LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
                 UpdateHeaderBasket._getInstance().update();
             } catch (err) {
                 console.error(err);
             }
         } else {
-            try {               
+            try {
                 // init the basket in localStorage with first product
                 this.createBasket(product);
-                UpdateHeaderBasket._getInstance().update();                
+                UpdateHeaderBasket._getInstance().update();
             } catch (err) {
                 console.error(err);
             }
@@ -149,7 +149,7 @@ export default class Basket {
      * @memberof Basket
      */
     updateQuantity(productName, quantity) {
-        if (typeof productName !== "string" || typeof quantity !== 'number') {
+        if (typeof productName !== "string" || typeof quantity !== "number") {
             throw Error(`${objError.type.generic}`);
         }
         try {
@@ -160,13 +160,13 @@ export default class Basket {
             const product = this.findProduct(objFromJSON.productsBasket, productName);
             if (product) {
                 product.quantity = quantity;
-            } else throw Error('Product absent');
+            } else throw Error("Product absent");
             // re add the new basket in locStor
-            const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
+            const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, "toJSON");
             LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
             UpdateHeaderBasket._getInstance().update();
         } catch (err) {
-            if (err.message !== 'Product absent') console.error(err);
+            if (err.message !== "Product absent") console.error(err);
             else throw Error(err.message);
         }
     }
@@ -207,7 +207,7 @@ export default class Basket {
      * @memberof Basket
      */
     removeProduct(productName) {
-        if (typeof productName !== 'string') {
+        if (typeof productName !== "string") {
             throw Error(`${objError.type.generic}`);
         }
         try {
@@ -218,20 +218,23 @@ export default class Basket {
             }
             const objFromJSON = Utils._workWithJSON(jsonBasket, "toOBJ");
             // find & remove product
-            const indexProd = this.findIndexProduct(objFromJSON.productsBasket, productName);
+            const indexProd = this.findIndexProduct(
+                objFromJSON.productsBasket,
+                productName
+            );
             objFromJSON.productsBasket.splice(indexProd, 1);
             // verif state (remove basket item if empty)
             if (objFromJSON.productsBasket.length === 0) {
                 this.clearBasket(this.keyBasket);
-                return 'empty';
-            } 
+                return "empty";
+            }
             // re add the new basket in locStor
-            const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, 'toJSON');
+            const reconvertObjInJSON = Utils._workWithJSON(objFromJSON, "toJSON");
             LocalStorage._setItem(this.keyBasket, reconvertObjInJSON);
             return true;
         } catch (err) {
             if (err.message !== "Basket is not in localStorage") console.error(err);
-            else throw Error(err.message);       
+            else throw Error(err.message);
         }
     }
 
@@ -242,9 +245,9 @@ export default class Basket {
      * @memberof Basket
      */
     clearBasket(key) {
-        if (typeof key !== 'string' || key == "") {
+        if (typeof key !== "string" || key == "") {
             throw Error(`${objError.type.generic} or empty`);
         }
         LocalStorage._removeItem(key);
-    }   
+    }
 }

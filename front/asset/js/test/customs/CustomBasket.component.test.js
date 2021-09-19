@@ -59,9 +59,8 @@ describe('test CustomBasket class', function () {
             expect(console.error).toBeCalledWith('Missing property');
         })
 
-        it('should return good value and array allSubTotal must not be empty',
-            function () {
-                expect(typeof custom.createLineOfData(item)).toBe('string');
+        it('should return good value and array allSubTotal must not be empty', function () {
+            expect(typeof custom.createLineOfData(item)).toBe('string');
         })
     })
 
@@ -104,6 +103,16 @@ describe('test CustomBasket class', function () {
             }).toThrowError(`${objError.type.generic} or length 0`);
         })
 
+        // it("should called 2 times", function () {
+        //     document.body.innerHTML = `
+        //     <input data-product='test' value='2'>
+        //     <input value='1'>
+        //     `
+        //     jest.spyOn(Basket._getInstance(), 'updateQuantity');
+        //     custom.addInputEvent([...document.querySelectorAll('input')]);
+            
+        //     expect(Basket._getInstance().updateQuantity).toHaveBeenCalledTimes(2);
+        // });
     })
 
     
