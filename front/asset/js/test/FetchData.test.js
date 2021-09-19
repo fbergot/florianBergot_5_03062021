@@ -34,39 +34,18 @@ describe('test FetchData class', function () {
 
         it("should return data", async function () {
             fetch.mockResponseOnce(JSON.stringify(data));   
-            expect(await FetchData._getInstance().getData('', {})).toEqual(data);           
+            expect(await FetchData._getInstance().getData('/', {})).toEqual(data);           
         })
 
-        beforeEach(() => {
-            fetchMock.mockIf(/^https?:\/\/localhost:3000\/api\/cameras*$/, req => {
-                if (req.url.endsWith("/")) {
-                    return {
-                        body: "ok",
-                        status: 200
-                    }
-                } else {
-                    return {
-                        status: 404,
-                        body: "Not Found"
-                    }
-                }
-            })
-        })
 
         it("should call console.error(err)", async function () {
-            fetchMock.mockResponseOnce({});
-            console.error = jest.fn();
-            await FetchData._getInstance().getData("/fff", {});
-            expect(console.error).toHaveBeenCalledWith(
-              "Problem with server, connection or request, status: 404, Not Found"
-            );
-        })
-
-        it("should not call console.error", async function () {
-            fetchMock.mockResponseOnce({});
+            fetch.mockRejectedValue({
+                message: 'error message'
+            })
             console.error = jest.fn();
             await FetchData._getInstance().getData("/", {});
-            expect(console.error).not.toBeCalled();
+            expect(console.error).toHaveBeenCalledWith("error message");
         })
+
     })
 })

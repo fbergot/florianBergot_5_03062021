@@ -22,7 +22,7 @@ export default class CustomBasket extends HTMLElement {
     constructor() {
         super();
         this.linesBasket;
-        this.allSubTotal;
+        this.allSubTotal = [];
         this.keyBasket = 'basket';
         this.containerForm = document.querySelector("#contFormHidden");
         this.messageNoItem = 'aucun article dans votre panier';
@@ -71,6 +71,24 @@ export default class CustomBasket extends HTMLElement {
                 <tbody id='bodyTable'></tbody>
             </table>
             <div id='totalPrice'></div>
+            <style>         
+                table, th {
+                    padding: .25rem;
+                    text-align: center;
+                    font-weight: 500;
+                    border: 1px solid rgb(189, 184, 184);
+                    border-collapse: collapse;
+                }
+                               
+                #internalBasketContainer {
+                    display: flex;
+                    flex-direction: column;
+                }
+                #totalPrice {
+                    display: flex;
+                    justify-content: center;
+                }
+            </style>
             `;
     }
 
@@ -82,15 +100,18 @@ export default class CustomBasket extends HTMLElement {
      * @memberof CustomBasket
      */
     createLineOfData(item) {
-        if (typeof item !== 'object') {
+        if (typeof item !== 'object' || Array.isArray(item)) {
             throw Error(`${objError.type.generic}`);
         }
         try {
+            if (!item.imageUrl || !item.name || !item.price || !item.quantity) {
+                throw Error("Missing property");
+            } 
             var price = Utils._divide(item.price, 100);
             var subTotal = this.computeSubtotal(item.quantity, price);
             this.allSubTotal.push(subTotal);
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
         return `
             <tr>
@@ -109,24 +130,7 @@ export default class CustomBasket extends HTMLElement {
                     <button part='removeItem' class='remove' data-productName="${item.name}">X</button>
                 </td>
             </tr>
-            <style>         
-                table, th {
-                    padding: .25rem;
-                    text-align: center;
-                    font-weight: 500;
-                    border: 1px solid rgb(189, 184, 184);
-                    border-collapse: collapse;
-                }
-                               
-                #internalBasketContainer {
-                    display: flex;
-                    flex-direction: column;
-                }
-                #totalPrice {
-                    display: flex;
-                    justify-content: center;
-                }
-            </style>`;
+            `;
     }
 
     /**
@@ -167,8 +171,10 @@ export default class CustomBasket extends HTMLElement {
      * @returns {void}
      * @memberof CustomBasket
      */
-    addInputEvent() {
-        const inputs = [...this.shadowRoot.querySelectorAll(".inpNumProd")];
+    addInputEvent(inputs) {
+        if (!Array.isArray(inputs) || inputs.length === 0) {
+            throw Error(`${objError.type.generic} or length 0`);
+        }
         inputs.forEach((elem) => {
             elem.addEventListener('change', (e) => {
                 try {
@@ -185,8 +191,7 @@ export default class CustomBasket extends HTMLElement {
         });
     }
 
-    addDeleteEvent() {
-        const buttons = [...this.shadowRoot.querySelectorAll('.remove')];
+    addDeleteEvent(buttons) {
         buttons.forEach((elem) => {
             elem.addEventListener('click', (e) => {
                 try {
@@ -226,8 +231,12 @@ export default class CustomBasket extends HTMLElement {
             this.loopOnBasket(objFromStrJSON.productsBasket);
             this.render("#bodyTable", this.linesBasket);
             this.render('#totalPrice', `<p part='totalPrice'>Total : ${this.computeTotal()}€</p>`);
-            this.addInputEvent();
-            this.addDeleteEvent();
+            this.addInputEvent([
+              ...this.shadowRoot.querySelectorAll(".inpNumProd"),
+            ]);
+            this.addDeleteEvent([
+              ...this.shadowRoot.querySelectorAll(".remove"),
+            ]);
         } catch (err) {
             console.error(err);
         }        

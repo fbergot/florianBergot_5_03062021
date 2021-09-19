@@ -18,7 +18,7 @@ describe('test CustomCardElement class', function () {
 
         window.fetch.mockResponseOnce(JSON.stringify(data));
         customElements.define("custom-card", CustomCard);
-        document.body.innerHTML = `<custom-card data-switch='noDesc'></customCard>`;
+        document.body.innerHTML = `<custom-card data-switch='noDesc'></custom-card>`;
         const custom = document.querySelector("custom-card");
 
         it('should be an instance of CustomCard', function () {
