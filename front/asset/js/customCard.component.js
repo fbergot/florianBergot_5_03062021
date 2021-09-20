@@ -22,6 +22,7 @@ export default class CustomCard extends HTMLElement {
     constructor() {
         super();
         this.data = null;
+        /**@property {Instance of FetchdATE|null} instanceFetchData */
         this.instanceFetchData = null;
         this.totalCards = "";
         this.innerHTML = `<div class='row' id='internalCardContainer'></div> `;

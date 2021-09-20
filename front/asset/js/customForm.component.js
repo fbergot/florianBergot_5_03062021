@@ -61,6 +61,11 @@ export default class CustomForm extends HTMLElement {
                 // last verif user data before treatment
                 if (Form._beforeSubmit(this.allInputs)) {
                     this.treatmentToApi(this.buildBody());
+                } else {
+                    this.form.classList.add("formNotSubmit");
+                    window.setTimeout(() => {
+                        this.form.classList.remove("formNotSubmit");
+                    }, 1500);
                 }
             })
         } catch (err) {

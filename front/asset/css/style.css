@@ -289,4 +289,9 @@ main {
   margin-top: 1.2rem;
 }
 
+.formNotSubmit {
+  border: 1px solid #ec2727;
+  padding: 0.5rem;
+}
+
 /*# sourceMappingURL=style.css.map */

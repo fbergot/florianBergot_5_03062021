@@ -81,13 +81,13 @@ describe('test CustomBasket class', function () {
                 }
         ]
         
-        it("should throw an error becasue bad arg", function () {
+        it("should throw an error because bad arg", function () {
             expect(() => {
                 custom.loopOnBasket({});
             }).toThrowError(`${objError.type.generic}`);
         })
 
-        it('should call console.error', function () {
+        it('should called console.error', function () {
             console.error = jest.fn();
             custom.loopOnBasket(arrayProducts);
             expect(console.error).toBeCalled();
