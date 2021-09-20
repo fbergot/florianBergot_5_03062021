@@ -192,6 +192,9 @@ export default class CustomBasket extends HTMLElement {
     }
 
     addDeleteEvent(buttons) {
+        if (!Array.isArray(buttons) || buttons.length === 0) {
+          throw Error(`${objError.type.generic} or length 0`);
+        }
         buttons.forEach((elem) => {
             elem.addEventListener('click', (e) => {
                 try {
@@ -261,7 +264,7 @@ export default class CustomBasket extends HTMLElement {
      * @memberof CustomBasket
      */
     render(tag, data) {
-        if (typeof data !== 'string') {
+        if (typeof tag !== 'string' || typeof data !== 'string') {
             throw Error(`${objError.type.generic}`);
         }
         this.shadowRoot.querySelector(tag).innerHTML = `${data}`;

@@ -78,10 +78,10 @@ export default class Basket {
             throw Error(`${objError.type.generic}`);
         }
         const verifIsPresent = objFromStrJSON.productsBasket.find((elem) => {
-        if (!elem.name || !product.name) {
-            throw Error(`${objError.utils.missProp}`);
-        }
-        return elem.name === product.name;
+            if (!elem.name || !product.name) {
+                throw Error(`${objError.utils.missProp}`);
+            }
+            return elem.name === product.name;
         });
         // if present add his quantity
         if (verifIsPresent) {

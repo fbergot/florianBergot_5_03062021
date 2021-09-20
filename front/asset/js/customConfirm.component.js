@@ -17,11 +17,12 @@ export default class CustomConfirm extends HTMLElement {
         super();
         this.lines = "";
         this.key = "responseApi";
+        this.priceKey = "totalPrice";
         this.innerHTML =
             `<div>
                 ${this.createTable()}
-                <p>Le prix total de la commande est de <strong>${this.getPrice()} euros.</strong></p>
-                <p>Votre identifiant de commande est : " ${this.getCommandId()} "</p>
+                <p>Le prix total de la commande est de <strong>${this.getPrice(this.priceKey)} euros.</strong></p>
+                <p>Votre identifiant de commande est : " ${this.getCommandId(this.key) ? this.getCommandId(this.key): 'indisponible'} "</p>
             </div>`;
         
     }
@@ -32,13 +33,16 @@ export default class CustomConfirm extends HTMLElement {
      * @returns {String}
      * @memberof CustomConfirm
      */
-    getPrice() {
+    getPrice(key) {
+        if (typeof key !== 'string' || key === "") {
+            throw Error(`${objError.type.generic} or empty`);
+        }
         try {
-            var price = LocalStorage._getItem('totalPrice');
+            var price = LocalStorage._getItem(key);
         } catch (err) {
             console.error(err);
         }
-        return price || `${0}`;
+        return price ? price : `${0}`;
     }
 
     /**
@@ -48,14 +52,18 @@ export default class CustomConfirm extends HTMLElement {
      * @returns {String}
      * @memberof CustomConfirm
      */
-    getCommandId() {
+    getCommandId(key) {
+        if (typeof key !== 'string' || key === "") {
+            throw Error(`${objError.type.generic} or empty`);
+        }
         try {
-            const jsonResponse = LocalStorage._getItem(this.key);
+            const jsonResponse = LocalStorage._getItem(key);
+            if (!jsonResponse) return false;
             var objFromStrJSON = Utils._workWithJSON(jsonResponse, "toOBJ");
         } catch (err) {
             console.error(err);
         }
-        return objFromStrJSON.orderId || "";
+        return objFromStrJSON.orderId ? objFromStrJSON.orderId : "" ;
     }
 
     /**
@@ -110,7 +118,11 @@ export default class CustomConfirm extends HTMLElement {
      * @memberof CustomConfirm
      */
     connectedCallback() {
-        this.buildLinesOfProducts();
+        try {
+            this.buildLinesOfProducts();
+        } catch (err) {
+            console.error(err.message);
+        }
     }
 
     /**
@@ -124,6 +136,7 @@ export default class CustomConfirm extends HTMLElement {
         try {
             // get obj in localstorage
             const jsonResponse = LocalStorage._getItem(this.key);
+            if (!jsonResponse) throw Error("Missing item");
             const objFromStrJSON = Utils._workWithJSON(jsonResponse, "toOBJ");
             this.commandId = objFromStrJSON.orderId;
             // build table lines

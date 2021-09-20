@@ -34,6 +34,7 @@ export default class CustomForm extends HTMLElement {
         this.form = document.querySelector('form');
         this.submitButton = document.querySelector('#submit');
         this.keyStorage = "responseApi";
+        this.fetchDataInstance = FetchData._getInstance();
     }
     /**
      * Called when customEl is add in DOM
@@ -60,7 +61,7 @@ export default class CustomForm extends HTMLElement {
                 // last verif user data before treatment
                 if (Form._beforeSubmit(this.allInputs)) {
                     this.treatmentToApi(this.buildBody());
-                }// else pb :
+                }
             })
         } catch (err) {
             console.error(err);
@@ -116,8 +117,8 @@ export default class CustomForm extends HTMLElement {
             body: body
         }
         try {
-            const APIResponse = await FetchData._getInstance().getData("/order", options);
-            this.loadInStorage(this.keyStorage, APIResponse, "/front/pages/confirmation.html");            
+            const APIResponse = await this.fetchDataInstance.getData("/order", options);
+            this.loadInStorage(this.keyStorage, APIResponse, "/front/pages/confirmation.html");
         } catch (err) {
             console.error(err);
         }

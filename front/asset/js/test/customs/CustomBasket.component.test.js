@@ -36,6 +36,7 @@ describe('test CustomBasket class', function () {
         it("should return good value", function () {
             expect(custom.computeSubtotal(5, 2)).toBe(10);
             expect(custom.computeSubtotal(4, 2)).toBe(8);
+            expect(custom.computeSubtotal(4, 0)).toBe(0);
         })
     })
 
@@ -59,7 +60,7 @@ describe('test CustomBasket class', function () {
             expect(console.error).toBeCalledWith('Missing property');
         })
 
-        it('should return good value and array allSubTotal must not be empty', function () {
+        it('should return good type of value', function () {
             expect(typeof custom.createLineOfData(item)).toBe('string');
         })
     })
@@ -67,13 +68,16 @@ describe('test CustomBasket class', function () {
     describe('test loopOnBasket(arrayProducts)', function () {
         const arrayProducts = [
                 {
-                    name: 'item1'
+                    name: 'item1',
+                    price: 15
                 },
                 {
-                    name: 'item2'
+                    name: 'item2',
+                    price: 20
                 },
                 {
-                    name: 'item3'
+                    name: 'item3',
+                    price: 20
                 }
         ]
         
@@ -102,18 +106,13 @@ describe('test CustomBasket class', function () {
                 custom.addInputEvent([]);
             }).toThrowError(`${objError.type.generic} or length 0`);
         })
-
-        // it("should called 2 times", function () {
-        //     document.body.innerHTML = `
-        //     <input data-product='test' value='2'>
-        //     <input value='1'>
-        //     `
-        //     jest.spyOn(Basket._getInstance(), 'updateQuantity');
-        //     custom.addInputEvent([...document.querySelectorAll('input')]);
-            
-        //     expect(Basket._getInstance().updateQuantity).toHaveBeenCalledTimes(2);
-        // });
-    })
-
-    
+        
+        describe('test addDeleteEvent(buttons)', function () {
+            it('should throw an error', function () {
+                expect(() => {
+                    custom.addDeleteEvent([]);
+                }).toThrowError(`${objError.type.generic} or length 0`);
+            })
+        })        
+    })   
 })
