@@ -30,6 +30,7 @@ export default class CustomConfirm extends HTMLElement {
     /**
      * Get totalPrice item in local storage
      * @use LocalStorage class
+     * @param {String} key
      * @returns {String}
      * @memberof CustomConfirm
      */
@@ -42,13 +43,14 @@ export default class CustomConfirm extends HTMLElement {
         } catch (err) {
             console.error(err);
         }
-        return price ? price : false;
+        return price ?? false;
     }
 
     /**
      * Get id of commande
      * @use LocalStorage class
      * @use Utils class
+     * @param {String} key
      * @returns {String}
      * @memberof CustomConfirm
      */
@@ -63,7 +65,7 @@ export default class CustomConfirm extends HTMLElement {
         } catch (err) {
             console.error(err);
         }
-        return objFromStrJSON.orderId ? objFromStrJSON.orderId : "" ;
+        return objFromStrJSON.orderId ?? "" ;
     }
 
     /**
