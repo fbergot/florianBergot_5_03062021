@@ -18,4 +18,4 @@ Use a local server to run the front (ex live server).
 
 ### run the test ###
 
-For run the test, npm run test
+For run the test, npm run test (not start server before the test)
