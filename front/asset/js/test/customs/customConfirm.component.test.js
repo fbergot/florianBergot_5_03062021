@@ -36,7 +36,7 @@ describe('test CustomConfirm class', function () {
 
         it('should return "0" ', function () {
             window.localStorage.removeItem('totalPrice');
-            expect(custom.getPrice("test")).toBe('0');
+            expect(custom.getPrice("test")).toBe(false);
         })
     })
 

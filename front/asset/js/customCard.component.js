@@ -207,7 +207,7 @@ export default class CustomCard extends HTMLElement {
     }
 
     /**
-     * insert data in #internalCardContainer (shadowRoot)
+     * insert data in #internalCardContainer
      * @return {void}
      * @memberof CustomCard
      */

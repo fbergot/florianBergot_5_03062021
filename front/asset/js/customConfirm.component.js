@@ -21,7 +21,7 @@ export default class CustomConfirm extends HTMLElement {
         this.innerHTML =
             `<div>
                 ${this.createTable()}
-                <p>Le prix total de la commande est de <strong>${this.getPrice(this.priceKey)} euros.</strong></p>
+                <p>Le prix total de la commande est de <strong>${this.getPrice(this.priceKey) ? this.getPrice(this.priceKey) : 'indisponible'} euros.</strong></p>
                 <p>Votre identifiant de commande est : " ${this.getCommandId(this.key) ? this.getCommandId(this.key): 'indisponible'} "</p>
             </div>`;
         
@@ -42,7 +42,7 @@ export default class CustomConfirm extends HTMLElement {
         } catch (err) {
             console.error(err);
         }
-        return price ? price : `${0}`;
+        return price ? price : false;
     }
 
     /**
@@ -158,12 +158,16 @@ export default class CustomConfirm extends HTMLElement {
         if (!Array.isArray(arrayProducts)) {
             throw Error(`${objError.type.generic}`);
         }
-        try {
-            arrayProducts.forEach((product) => {
-                    this.lines += this.createLine(product);
-                });
-        } catch (err) {
-            console.error(err);
+        if (arrayProducts.length !== 0) {
+            try {
+                arrayProducts.forEach((product) => {
+                        this.lines += this.createLine(product);
+                    });
+            } catch (err) {
+                console.error(err);
+            }           
+        } else {
+            throw Error('Array is empty');
         }
     }
 

@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import Utils from "../class/Utils.js";
 import { objError } from "../errors/err.js";
 

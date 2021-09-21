@@ -62,6 +62,7 @@ export default class CustomForm extends HTMLElement {
                 if (Form._beforeSubmit(this.allInputs)) {
                     this.treatmentToApi(this.buildBody());
                 } else {
+                    // if data not correct
                     this.form.classList.add("formNotSubmit");
                     window.setTimeout(() => {
                         this.form.classList.remove("formNotSubmit");
@@ -136,6 +137,9 @@ export default class CustomForm extends HTMLElement {
      * @memberof CustomForm
      */
     redirect(url) {
+        if (typeof url !== 'string' || url === "") {
+            throw Error(`${objError.type.generic} or empty`);
+        }
         window.location.assign(url);
     }
 
