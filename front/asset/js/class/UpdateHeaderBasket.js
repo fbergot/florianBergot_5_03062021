@@ -8,7 +8,7 @@ import Utils from "./Utils.js";
  * @class UpdateHeaderBasket
  */
 export default class UpdateHeaderBasket {
-    /** @var {Instance of UpdateHeaderBasket|null} */
+    /** @property {InstanceType<UpdateHeaderBasket>|null} */
     static instance = null;
     static tagOfTarget = "#basketProduct";
 
@@ -25,7 +25,7 @@ export default class UpdateHeaderBasket {
   /**
    * Make unique instance of UpdateHeaderBasket (singleton)
    * @static
-   * @returns
+   * @returns {InstanceType<UpdateHeaderBasket>}
    * @memberof UpdateHeaderBasket
    */
   	static _getInstance() {
@@ -69,7 +69,7 @@ export default class UpdateHeaderBasket {
 
   /**
    * Compute total product in basket
-   * @param {{productsBasket: Array<{quantity:Number,}>}} objFromJSON
+   * @param {{productsBasket: Array<{quantity:Number}>}} objFromJSON
    * @returns {Number|NaN}
    * @memberof UpdateHeaderBasket
    */

@@ -107,6 +107,7 @@ export default class Utils {
     /**
      * Recompose id of product
      * @static
+     * @use objError obj
      * @param {Array} { productsBasket }
      * @returns {Array<String>} ids products
      * @memberof Utils

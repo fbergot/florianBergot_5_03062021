@@ -1,13 +1,12 @@
 {
   "name": "orinoco-backend",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Projet 5 OCR",
   "main": "server.js",
   "scripts": {
     "test": "jest",
     "startServer": "node server",
-    "sassWatch": "sass ./front/asset/scss/style.scss ./front/asset/css/style.css --watch",
-    "sassAdjust": "sass ./front/asset/scss/adjust.scss ./front/asset/css/adjust.css --watch"
+    "sassWatch": "sass ./front/asset/scss/style.scss ./front/asset/css/style.css --watch"
   },
   "setupTestFrameworkScriptFile": "./front/asset/js/test/localStorageMock.js",
   "author": "florian.bergot564@gmail.com",
