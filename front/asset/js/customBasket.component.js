@@ -39,6 +39,7 @@ export default class CustomBasket extends HTMLElement {
 
     /**
      * Compute subTotal
+     * @use objError obj
      * @param {Number} quantity
      * @param {Number} price
      * @returns {Number}
@@ -94,6 +95,8 @@ export default class CustomBasket extends HTMLElement {
 
     /**
      * Build string of cell for table with item data (name, quantity....)
+     * @use objError obj
+     * @use Utils class
      * @param {{quantity:Number, price:Number, lenses:Array<String>,
      *  name:String, description:String, imageUrl:String, _id:String }} item
      * @return {String}
@@ -135,6 +138,7 @@ export default class CustomBasket extends HTMLElement {
 
     /**
      * Loop in product array for create the lines in <table> basket
+     * @use objError obj
      * @param {Array<{}>} arrayProducts
      * @return {void}
      * @memberof CustomBasket
@@ -168,6 +172,8 @@ export default class CustomBasket extends HTMLElement {
     /**
      * Add event on inputs (number product)
      * @use Basket class
+     * @use objError obj
+     * @param {Array<HTMLElement>} inputs
      * @returns {void}
      * @memberof CustomBasket
      */
@@ -191,6 +197,15 @@ export default class CustomBasket extends HTMLElement {
         });
     }
 
+    /**
+     * Add events listeners
+     * @use objError obj
+     * @use Basket class
+     * @use UpdateHeaderBasket class
+     * @param {Array<HTMLElement>} buttons
+     * @return {void}
+     * @memberof CustomBasket
+     */
     addDeleteEvent(buttons) {
         if (!Array.isArray(buttons) || buttons.length === 0) {
           throw Error(`${objError.type.generic} or length 0`);
@@ -247,6 +262,7 @@ export default class CustomBasket extends HTMLElement {
 
     /**
      * Computed the total price (all subTtotals)
+     * @use LocalStorage class
      * @returns {Number}
      * @memberof CustomBasket
      */

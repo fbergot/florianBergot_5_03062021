@@ -106,6 +106,7 @@ export default class CustomCard extends HTMLElement {
     /**
      * Get also string of URL params
      * @use Utils class
+     * @use objError obj
      * @param {String} key
      * @throw 
      * @returns {String}
@@ -131,6 +132,7 @@ export default class CustomCard extends HTMLElement {
     * @use FetchData class
     * @use dataset (data-attr)
     * @use Basket class
+    * @use objError obj
     * @throw
     * @return {void}
     * @memberof CustomCard
@@ -176,6 +178,7 @@ export default class CustomCard extends HTMLElement {
     /**
      *
      * @use FetchData class
+     * @use objError obj
      * @param {String} uri
      * @throw
      * @return {Promise}

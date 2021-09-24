@@ -90,6 +90,7 @@ export default class CustomForm extends HTMLElement {
     /**
      * Build json body (contact, products)
      * @use Utils class
+     * @use LocalStorage class
      * @return {String} json body
      * @memberof CustomForm
      */

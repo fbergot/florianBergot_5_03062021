@@ -69,6 +69,7 @@ export default class UpdateHeaderBasket {
 
   /**
    * Compute total product in basket
+   * @use objError obj
    * @param {{productsBasket: Array<{quantity:Number}>}} objFromJSON
    * @returns {Number|NaN}
    * @memberof UpdateHeaderBasket

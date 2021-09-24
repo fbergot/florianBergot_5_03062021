@@ -30,6 +30,7 @@ export default class CustomConfirm extends HTMLElement {
     /**
      * Get totalPrice item in local storage
      * @use LocalStorage class
+     * @use objError obj
      * @param {String} key
      * @returns {String}
      * @memberof CustomConfirm
@@ -50,6 +51,7 @@ export default class CustomConfirm extends HTMLElement {
      * Get id of commande
      * @use LocalStorage class
      * @use Utils class
+     * @use objError obj
      * @param {String} key
      * @returns {String}
      * @memberof CustomConfirm
@@ -69,7 +71,7 @@ export default class CustomConfirm extends HTMLElement {
     }
 
     /**
-     *
+     * build structure of table
      * @return {String}
      * @memberof CustomConfirm
      */
@@ -89,7 +91,7 @@ export default class CustomConfirm extends HTMLElement {
     }
 
     /**
-     * Build the line product in table
+     * Build the lines of products in table
      * @use Utils class
      * @use objError obj
      * @param {{lenses:Array<String>, _id:String, name:String,
